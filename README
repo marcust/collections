@@ -1,0 +1,37 @@
+So here it is, my best guess for bringing sanity back to collections.
+
+The idea here is that the specifics of what an implementation does and can goes
+back into the interface and not the implementation. Today, the way to have immutable lists
+is to implement the List interface and throw exceptions on add(). That is not really
+what it should be. The structure here is simpler:
+
+A IList is basically an iterable list of objects. It comes in two subtypes, an
+immutable and a mutable type. The add() method is only defined in the mutable type, as
+are all other functions that can mutate the list. An IImmutableList simply does not
+have an add() function. 
+
+Basically, it is an integration wrapper around the old Java Collections Framework
+and the new and shiny Google Collections. 
+
+Additional to the concepts in Java Collections, we have the following concepts:
+
+- Unmodifiable: Meaning a Collection that CAN be changed through a different
+  reference, but the reference you got at your hand can NOT be modified by you.
+  
+- Immutable: Meaning a Collection that will always stay the same, nobody can
+  modify it.
+  
+- View: A view is a just a layer above another backing Collection, not a copy.
+  Views can be modifiable which means that the modifications will be seen in the backing collection,
+  or unmodifiable which means that you might see changes to the backing collection,
+  but you can not change it. A view can be immutable as well, if the underlying collection
+  is immutable in itself.
+  
+THE API IS NOT YET STABLE. Feedback is welcome!
+
+Things I consider:
+
+ - Making the I*List Interfaces more stackable, e.g. returning this in add and addAll
+ - Ordered and Unordered Interface structure
+ - Maps
+ - Sets  
