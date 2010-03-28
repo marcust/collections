@@ -23,13 +23,144 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.thiesen.collections.collection.ICollection;
+import org.thiesen.collections.common.ImmutableIterator;
+import org.thiesen.collections.common.ImmutableIteratorImpl;
+import org.thiesen.collections.common.ImmutableSetView;
 import org.thiesen.collections.common.MutableSetView;
+import org.thiesen.collections.set.IImmutableSetView;
 import org.thiesen.collections.set.IMutableSetView;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 
 class SetViews {
+
+    private static class IImmutableSetViewImpl<E> implements IImmutableSetView<E> {
+
+        private final Set<E> _set;
+
+        private IImmutableSetViewImpl( final Set<E> set ) {
+            _set = set;
+        }
+
+        @Override
+        public ImmutableSetView<E> asCollectionsView() {
+            return new ImmutableSetViewImpl<E>( _set );
+            
+        }
+
+        @Override
+        public boolean containsAll( final Collection<?> c ) {
+            return _set.containsAll( c );
+        }
+
+        @Override
+        public Set<E> copyToMutableCollections() {
+            return Sets.newHashSet( _set );
+        }
+
+        @Override
+        public IImmutableSetView<E> filter( final Predicate<E> predicate ) {
+            return new IImmutableSetViewImpl<E>( Sets.filter( _set, predicate ) );
+        }
+
+        @Override
+        public ImmutableIterator<E> iterator() {
+            return ImmutableIteratorImpl.wrap( _set.iterator() );
+        }
+
+        @Override
+        public boolean contains( final Object o ) {
+            return _set.contains( o );
+        }
+
+        @Override
+        public boolean containsAll( final ICollection<?> c ) {
+            return _set.containsAll( c.asCollectionsView() );
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return _set.isEmpty();
+        }
+
+        @Override
+        public int size() {
+            return _set.size();
+        }
+
+        @Override
+        public Object[] toArray() {
+            return _set.toArray();
+        }
+
+        @Override
+        public <T> T[] toArray( final T[] a ) {
+            return _set.toArray( a );
+        }
+    }
+
+    private static class ImmutableSetViewImpl<E> implements ImmutableSetView<E> {
+
+        private final Set<E> _set;
+
+        public ImmutableSetViewImpl( final Set<E> set ) {
+            _set = set;
+        }
+
+        public boolean add( @SuppressWarnings( "unused" ) final E e ) {
+            throw new UnsupportedOperationException("Immutable Set View");
+        }
+
+        public boolean addAll( @SuppressWarnings( "unused" ) final Collection<? extends E> c ) {
+            throw new UnsupportedOperationException("Immutable Set View");
+        }
+
+        public void clear() {
+            throw new UnsupportedOperationException("Immutable Set View");
+        }
+
+        public boolean contains( final Object o ) {
+            return _set.contains( o );
+        }
+
+        public boolean containsAll( final Collection<?> c ) {
+            return _set.containsAll( c );
+        }
+
+        public boolean isEmpty() {
+            return _set.isEmpty();
+        }
+
+        public ImmutableIterator<E> iterator() {
+            return ImmutableIteratorImpl.wrap( _set.iterator() );
+        }
+
+        public boolean remove( @SuppressWarnings( "unused" ) final Object o ) {
+            throw new UnsupportedOperationException("Immutable Set View");
+        }
+
+        public boolean removeAll( @SuppressWarnings( "unused" ) final Collection<?> c ) {
+            throw new UnsupportedOperationException("Immutable Set View");
+        }
+
+        public boolean retainAll( @SuppressWarnings( "unused" ) final Collection<?> c ) {
+            throw new UnsupportedOperationException("Immutable Set View");
+        }
+
+        public int size() {
+            return _set.size();
+        }
+
+        public Object[] toArray() {
+            return _set.toArray();
+        }
+
+        public <T> T[] toArray( final T[] a ) {
+            return _set.toArray( a );
+        }
+        
+    }
 
     private static class MutableSetViewImpl<E> implements MutableSetView<E> {
 
@@ -183,6 +314,14 @@ class SetViews {
     
     static <E> MutableSetView<E> asMutableSetView( final Set<E> set ) {
         return new MutableSetViewImpl<E>( set );
+    }
+    
+    static <E> ImmutableSetView<E> asImmutableSetView( final Set<E> set ) {
+        return new ImmutableSetViewImpl<E>( set );
+    }
+    
+    static <E> IImmutableSetView<E> asIImmutableSetView( final Set<E> set ) {
+        return new IImmutableSetViewImpl<E>( set );
     }
     
 }

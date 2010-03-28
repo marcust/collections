@@ -128,6 +128,11 @@ public abstract class AbstractDelegatingMutableIList<E> implements IMutableList<
     }
 
     @Override
+    public IUnmodifiableListView<E> asUnmodifiableView() {
+        return ListViews.asIUnmodifiableListView( _delegate );
+    }
+
+    @Override
     public MutableListView<E> asCollectionsView() {
         return ListViews.asMutableListView( _delegate );
     }

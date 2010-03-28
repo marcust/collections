@@ -285,8 +285,12 @@ public class ListViews {
         public ImmutableList<E> immutableCopy() {
             return ImmutableList.copyOf( this );
         }
-    
-        
+
+        @Override
+        public IUnmodifiableListView<E> asUnmodifiableView() {
+            return new UnmodifiableListViewImpl<E>( _list );
+        }
+
     }
 
     private static class IUnmodifiableListViewImpl<E>

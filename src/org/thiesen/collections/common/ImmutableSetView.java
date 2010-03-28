@@ -16,31 +16,10 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.set;
+package org.thiesen.collections.common;
 
-import java.util.Collection;
+public interface ImmutableSetView<E> extends SetView<E> {
 
-import org.thiesen.collections.common.MutableSetView;
-
-import com.google.common.base.Predicate;
-
-public interface IMutableSet<E> extends ISet<E> {
-
-    boolean add(E e);
-
-    boolean remove(Object o);
-
-    boolean addAll(Collection<? extends E> c);
+    // marker interface
     
-    boolean retainAll(Collection<?> c);
-    
-    boolean removeAll(Collection<?> c);
-
-    void clear();
-    
-    @Override
-    public IMutableSetView<E> filter( final Predicate<E> predicate );
-    
-    @Override
-    public MutableSetView<E> asCollectionsView();
 }

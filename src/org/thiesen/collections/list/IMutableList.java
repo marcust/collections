@@ -38,4 +38,6 @@ public interface IMutableList<E> extends IList<E>, IMutableCollection<E> {
 
     public ImmutableList<E> immutableCopy();
     
+    public IUnmodifiableListView<E> asUnmodifiableView();
+    
 }

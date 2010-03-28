@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.SetView;
+import org.thiesen.collections.common.MutableSetView;
 import org.thiesen.collections.set.IMutableSet;
 import org.thiesen.collections.set.IMutableSetView;
 
@@ -80,7 +80,7 @@ public abstract class AbstractDelegatingMutableSet<E>
     }
 
     @Override
-    public SetView<E> asCollectionsView() {
+    public MutableSetView<E> asCollectionsView() {
         return SetViews.asMutableSetView( _set );
     }
 

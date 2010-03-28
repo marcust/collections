@@ -18,10 +18,21 @@
  */
 package org.thiesen.collections.set;
 
-import java.util.Set;
+import org.thiesen.collections.common.ImmutableIterator;
+import org.thiesen.collections.common.ImmutableSetView;
 
-public interface IImmutableSet<E> extends Set<E> {
+import com.google.common.base.Predicate;
 
-    // marker interface
+
+public interface IImmutableSet<E> extends ISet<E> {
+
+    @Override
+    public IImmutableSetView<E> filter( final Predicate<E> predicate );
+    
+    @Override
+    public ImmutableSetView<E> asCollectionsView();
+    
+    @Override
+    public ImmutableIterator<E> iterator();
     
 }
