@@ -18,26 +18,13 @@
  */
 package org.thiesen.collections.set;
 
-import java.util.Collection;
+import org.thiesen.collections.set.views.IUnmodifiableSortedSetView;
 
-import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.view.set.SetView;
-import org.thiesen.collections.set.views.ISetView;
+public interface IUnmodifiableSortedSet<E> extends ISortedSet<E> {
 
-import com.google.common.base.Predicate;
-
-
-public interface ISet<E> extends Iterable<E>, ICollection<E> {
-
-    boolean containsAll(Collection<?> c);
-
-    @Override
-    public java.util.Set<E> copyToMutableCollections();
-
-    @Override
-    public SetView<E> asCollectionsView();
+    IUnmodifiableSortedSetView<E> subSet(E fromElement, E toElement);
     
-    ISetView<E> filter( Predicate<E> predicate );
-
-
+    IUnmodifiableSortedSetView<E> headSet(E toElement);
+    
+    IUnmodifiableSortedSetView<E> tailSet(E fromElement);
 }

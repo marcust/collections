@@ -16,28 +16,31 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.set;
+package org.thiesen.collections.map;
 
-import java.util.Collection;
+import java.util.Map;
 
-import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.view.set.SetView;
-import org.thiesen.collections.set.views.ISetView;
+import org.thiesen.collections.collection.views.IUnmodifiableCollectionView;
+import org.thiesen.collections.common.view.map.UnmodifiableSortedMapView;
+import org.thiesen.collections.map.views.IUnmodifiableSortedMapView;
+import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
-import com.google.common.base.Predicate;
+public interface IUnmodfiableSortedMap<K, V> extends ISortedMap<K, V>, IUnmodifiableMap<K, V> {
 
-
-public interface ISet<E> extends Iterable<E>, ICollection<E> {
-
-    boolean containsAll(Collection<?> c);
-
-    @Override
-    public java.util.Set<E> copyToMutableCollections();
-
-    @Override
-    public SetView<E> asCollectionsView();
+    IUnmodifiableSortedMapView<K,V> subMap(K fromKey, K toKey);
     
-    ISetView<E> filter( Predicate<E> predicate );
+    IUnmodifiableSortedMapView<K,V> headMap(K toKey);
+    
+    IUnmodifiableSortedMapView<K,V> tailMap(K fromKey);
+
+    IUnmodifiableSetView<K> keySet();
+    
+    IUnmodifiableCollectionView<V> values();
+    
+    IUnmodifiableSetView<Map.Entry<K, V>> entrySet();
+    
+    UnmodifiableSortedMapView<K,V> asMapView();
+    
 
 
 }

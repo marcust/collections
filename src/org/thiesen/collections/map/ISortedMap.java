@@ -16,28 +16,36 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.set;
+package org.thiesen.collections.map;
 
-import java.util.Collection;
+import java.util.Comparator;
+import java.util.Map;
 
-import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.view.set.SetView;
+import org.thiesen.collections.collection.views.ICollectionView;
+import org.thiesen.collections.common.view.map.SortedMapView;
+import org.thiesen.collections.map.views.ISortedMapView;
 import org.thiesen.collections.set.views.ISetView;
 
-import com.google.common.base.Predicate;
 
-
-public interface ISet<E> extends Iterable<E>, ICollection<E> {
-
-    boolean containsAll(Collection<?> c);
-
-    @Override
-    public java.util.Set<E> copyToMutableCollections();
-
-    @Override
-    public SetView<E> asCollectionsView();
+public interface ISortedMap<K, V> extends IMap<K, V> {
     
-    ISetView<E> filter( Predicate<E> predicate );
+    Comparator<? super K> comparator();
 
+    ISortedMapView<K,V> subMap(K fromKey, K toKey);
+    
+    ISortedMapView<K,V> headMap(K toKey);
+    
+    ISortedMapView<K,V> tailMap(K fromKey);
 
+    K firstKey();
+    
+    K lastKey();
+    
+    ISetView<K> keySet();
+    
+    ICollectionView<V> values();
+    
+    ISetView<Map.Entry<K, V>> entrySet();
+    
+    SortedMapView<K,V> asMapView();
 }

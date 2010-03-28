@@ -19,24 +19,17 @@
 package org.thiesen.collections.map.impl;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
-import org.thiesen.collections.collection.impl.CollectionViews;
-import org.thiesen.collections.collection.views.IMutableCollectionView;
-import org.thiesen.collections.common.view.map.MutableMapView;
 import org.thiesen.collections.map.IMap;
-import org.thiesen.collections.map.IMutableMap;
-import org.thiesen.collections.set.impl.SetViews;
-import org.thiesen.collections.set.views.IMutableSetView;
 
 import com.google.common.collect.Maps;
 
-public class MutableHashMap<K, V> implements IMutableMap<K, V> {
+public class MutableHashMap<K, V>
+    extends AbstractDelegatingMutableIMap<K,V> {
 
-    private final Map<K, V> _delegate;
 
     private MutableHashMap( final Map<K,V> delegate ) {
-        _delegate = delegate;
+        super( delegate );
     }
     
     public static <K,V> MutableHashMap<K,V> copyOf( final IMap<? extends K, ? extends V> entries ) {
@@ -45,73 +38,6 @@ public class MutableHashMap<K, V> implements IMutableMap<K, V> {
     
     public static <K,V> MutableHashMap<K,V> create() {
         return new MutableHashMap<K, V>( Maps.<K, V>newHashMap() );
-    }
-    
-    
-    
-    @Override
-    public void clear() {
-        _delegate.clear();
-    }
-
-    @Override
-    public IMutableSetView<K> keySet() {
-        return SetViews.asIMutableSetView( _delegate.keySet() );
-    }
-
-    @Override
-    public V put( final K key, final V value ) {
-        return _delegate.put( key, value );
-    }
-
-    @Override
-    public void putAll( final Map<? extends K, ? extends V> m ) {
-        _delegate.putAll( m );
-    }
-
-    @Override
-    public V remove( final Object key ) {
-        return _delegate.remove( key );
-    }
-
-    @Override
-    public IMutableCollectionView<V> values() {
-        return CollectionViews.asMutableCollectionView( _delegate.values() );
-    }
-
-    @Override
-    public boolean containsKey( final Object key ) {
-        return _delegate.containsKey( key );
-    }
-
-    @Override
-    public boolean containsValue( final Object value ) {
-        return _delegate.containsValue( value );
-    }
-
-    @Override
-    public IMutableSetView<Entry<K, V>> entrySet() {
-        return SetViews.asIMutableSetView( _delegate.entrySet() );
-    }
-
-    @Override
-    public V get( final Object key ) {
-        return _delegate.get( key );
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return _delegate.isEmpty();
-    }
-
-    @Override
-    public int size() {
-        return _delegate.size();
-    }
-
-    @Override
-    public MutableMapView<K, V> asMapView() {
-        return MapViews.asMutableMapView( _delegate );
     }
 
 }

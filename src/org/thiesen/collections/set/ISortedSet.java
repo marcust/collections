@@ -18,26 +18,22 @@
  */
 package org.thiesen.collections.set;
 
-import java.util.Collection;
+import java.util.Comparator;
 
-import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.view.set.SetView;
-import org.thiesen.collections.set.views.ISetView;
+import org.thiesen.collections.set.views.ISortedSetView;
 
-import com.google.common.base.Predicate;
+public interface ISortedSet<E> extends ISet<E> {
 
+    Comparator<? super E> comparator();
 
-public interface ISet<E> extends Iterable<E>, ICollection<E> {
+    E first();
 
-    boolean containsAll(Collection<?> c);
-
-    @Override
-    public java.util.Set<E> copyToMutableCollections();
-
-    @Override
-    public SetView<E> asCollectionsView();
+    E last();
+ 
+    ISortedSetView<E> subSet(E fromElement, E toElement);
     
-    ISetView<E> filter( Predicate<E> predicate );
-
-
+    ISortedSetView<E> headSet(E toElement);
+    
+    ISortedSetView<E> tailSet(E fromElement);
+    
 }

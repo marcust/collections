@@ -16,28 +16,30 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.set;
+package org.thiesen.collections.map;
 
-import java.util.Collection;
+import java.util.Map;
 
-import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.view.set.SetView;
-import org.thiesen.collections.set.views.ISetView;
+import org.thiesen.collections.collection.views.IMutableCollectionView;
+import org.thiesen.collections.common.view.map.MutableSortedMapView;
+import org.thiesen.collections.map.views.IMutableSortedMapView;
+import org.thiesen.collections.set.views.IMutableSetView;
 
-import com.google.common.base.Predicate;
+public interface IMutableSortedMap<K, V> extends IMutableMap<K, V>, ISortedMap<K, V> {
 
-
-public interface ISet<E> extends Iterable<E>, ICollection<E> {
-
-    boolean containsAll(Collection<?> c);
-
-    @Override
-    public java.util.Set<E> copyToMutableCollections();
-
-    @Override
-    public SetView<E> asCollectionsView();
+    IMutableSortedMapView<K,V> subMap(K fromKey, K toKey);
     
-    ISetView<E> filter( Predicate<E> predicate );
+    IMutableSortedMapView<K,V> headMap(K toKey);
+    
+    IMutableSortedMapView<K,V> tailMap(K fromKey);
 
+    IMutableSetView<K> keySet();
+    
+    IMutableCollectionView<V> values();
+    
+    IMutableSetView<Map.Entry<K, V>> entrySet();
+    
+    MutableSortedMapView<K,V> asMapView();
 
+    
 }

@@ -16,28 +16,29 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.set;
+package org.thiesen.collections.map.impl;
 
-import java.util.Collection;
+import java.util.Map;
 
-import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.view.set.SetView;
-import org.thiesen.collections.set.views.ISetView;
+import org.thiesen.collections.map.IMap;
 
-import com.google.common.base.Predicate;
+import com.google.common.collect.Maps;
+
+public class MutableLinkedHashMap<K, V>
+    extends AbstractDelegatingMutableIMap<K,V> {
 
 
-public interface ISet<E> extends Iterable<E>, ICollection<E> {
-
-    boolean containsAll(Collection<?> c);
-
-    @Override
-    public java.util.Set<E> copyToMutableCollections();
-
-    @Override
-    public SetView<E> asCollectionsView();
+    private MutableLinkedHashMap( final Map<K,V> delegate ) {
+        super( delegate );
+    }
     
-    ISetView<E> filter( Predicate<E> predicate );
-
+    public static <K,V> MutableLinkedHashMap<K,V> copyOf( final IMap<? extends K, ? extends V> entries ) {
+        return new MutableLinkedHashMap<K, V>( Maps.newLinkedHashMap( entries.asMapView() ) );
+        
+    }
+    
+    public static <K,V> MutableLinkedHashMap<K,V> create() {
+        return new MutableLinkedHashMap<K, V>( Maps.<K, V>newLinkedHashMap() );
+    }
 
 }
