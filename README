@@ -33,5 +33,4 @@ Things I consider:
 
  - Making the I*List Interfaces more stackable, e.g. returning this in add and addAll
  - Ordered and Unordered Interface structure
- - Maps
- - Sets  
+ - See TODO
