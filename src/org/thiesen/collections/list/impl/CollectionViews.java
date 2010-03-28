@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.collection.IMutableCollection;
 import org.thiesen.collections.collection.IMutableCollectionView;
 import org.thiesen.collections.collection.IUnmodifiableCollectionView;
 
@@ -38,9 +37,8 @@ class CollectionViews {
 
         private final Collection<T> _collection;
 
-        @SuppressWarnings( "unchecked" )
-        protected IUnmodifiableCollectionViewImpl( final Collection<? extends T> collection ) {
-            _collection = (Collection<T>) collection;
+        protected IUnmodifiableCollectionViewImpl( final Collection<T> collection ) {
+            _collection = collection;
         }
 
         @Override
@@ -100,9 +98,8 @@ class CollectionViews {
 
         private final Collection<E> _collection;
 
-        @SuppressWarnings( "unchecked" )
-        protected IMutableCollectionViewImpl( final Collection<? extends E> collection ) {
-            _collection = (Collection<E>) collection;
+        protected IMutableCollectionViewImpl( final Collection<E> collection ) {
+            _collection = collection;
         }
 
         @Override
@@ -207,9 +204,8 @@ class CollectionViews {
 
         private final ICollection<T> _collection;
 
-        @SuppressWarnings( "unchecked" )
-        protected UnmodifiableCollectionViewImpl( final ICollection<? extends T> collection ) {
-            _collection = (ICollection<T>) collection;
+        protected UnmodifiableCollectionViewImpl( final ICollection<T> collection ) {
+            _collection = collection;
         }
 
         @Override
@@ -284,11 +280,7 @@ class CollectionViews {
 
     }
 
-    public static <E> IMutableCollection<E> asMutableCollection( final Collection<? extends E> collection ) {
-        return new IMutableCollectionViewImpl<E>( collection );
-    }
-    
-    public static <E> IMutableCollectionView<E> asMutableCollectionView( final Collection<? extends E> collection ) {
+    public static <E> IMutableCollectionView<E> asMutableCollectionView( final Collection<E> collection ) {
         return new IMutableCollectionViewImpl<E>( collection );
     }
     

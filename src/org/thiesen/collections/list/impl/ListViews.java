@@ -45,9 +45,8 @@ public class ListViews {
 
         private final List<E> _delegate;
 
-        @SuppressWarnings( "unchecked" )
-        public ImmutableListViewImpl( final List<? extends E> list ) {
-            _delegate = (List<E>) list;
+        public ImmutableListViewImpl( final List<E> list ) {
+            _delegate = list;
         }
 
         @Override
@@ -86,9 +85,8 @@ public class ListViews {
 
         private final List<E> _list;
 
-        @SuppressWarnings( "unchecked" )
-        private IImmutableListViewImpl( final List<? extends E> list ) {
-            _list = (List<E>) list;
+        private IImmutableListViewImpl( final List<E> list ) {
+            _list = list;
             
         }
 
@@ -161,10 +159,8 @@ public class ListViews {
 
         private final List<E> _list;
 
-        @SuppressWarnings( "unchecked" )
-        //FIXME(MT): Fix the whole co- and contravariance stuff
-        public IMutableListViewImpl( final List<? extends E> list ) {
-            _list = (List<E>) list;
+        public IMutableListViewImpl( final List<E> list ) {
+            _list = list;
         }
 
         @Override
@@ -298,9 +294,8 @@ public class ListViews {
 
         private final List<E> _list;
 
-        @SuppressWarnings( "unchecked" )
-        protected IUnmodifiableListViewImpl( final List<? extends E> list ) {
-            _list = (List<E>) list;
+        protected IUnmodifiableListViewImpl( final List<E> list ) {
+            _list = list;
         }
 
         @Override
@@ -371,9 +366,8 @@ public class ListViews {
 
         public List<E> _list;
 
-        @SuppressWarnings( "unchecked" )
-        public UnmodifiableListViewImpl( final List<? extends E> list ) {
-            _list = (List<E>) list;
+        public UnmodifiableListViewImpl( final List<E> list ) {
+            _list = list;
         }
 
         @Override
@@ -446,10 +440,9 @@ public class ListViews {
 
         private final List<E> _list;
 
-        @SuppressWarnings( "unchecked" )
-        protected MutableListViewImpl( final List<? extends E> list ) {
+        protected MutableListViewImpl( final List<E> list ) {
           
-            _list = (List<E>) list;
+            _list = list;
         }
 
         @Override
@@ -459,24 +452,24 @@ public class ListViews {
 
     }
     
-    public static <E> MutableListView<E> asMutableListView( final List<? extends E> list ) {
+    public static <E> MutableListView<E> asMutableListView( final List<E> list ) {
         return new MutableListViewImpl<E>( list );
     }
     
-    public static <E> IUnmodifiableListView<E> asIUnmodifiableListView( final List<? extends E> list ) {
+    public static <E> IUnmodifiableListView<E> asIUnmodifiableListView( final List<E> list ) {
         return new UnmodifiableListViewImpl<E>( list );
     }
     
     
-    public static <E> IMutableListView<E> asIMutableListView( final List<? extends E> list ) {
+    public static <E> IMutableListView<E> asIMutableListView( final List<E> list ) {
         return new IMutableListViewImpl<E>( list );
     }
     
-    public static <E> IImmutableListView<E> asIImmutableListView( final List<? extends E> list ) {
+    public static <E> IImmutableListView<E> asIImmutableListView( final List<E> list ) {
         return new IImmutableListViewImpl<E>( list );
     }
     
-    public static <E> ImmutableListView<E> asImmutableListView( final List<? extends E> list ) {
+    public static <E> ImmutableListView<E> asImmutableListView( final List<E> list ) {
         return new ImmutableListViewImpl<E>( list );
     }
 }
