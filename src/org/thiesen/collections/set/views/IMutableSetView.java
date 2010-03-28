@@ -16,7 +16,9 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.set;
+package org.thiesen.collections.set.views;
+
+import org.thiesen.collections.set.IMutableSet;
 
 
 public interface IMutableSetView<E> extends ISetView<E>, IMutableSet<E> {

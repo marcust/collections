@@ -16,11 +16,10 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.set;
+package org.thiesen.collections.map.views;
 
+import org.thiesen.collections.map.IImmutableMap;
 
-public interface IImmutableSetView<E> extends ISetView<E>, IImmutableSet<E> {
+public interface IImmutableMapView<K, V> extends IMapView<K, V>, IImmutableMap<K, V> {
 
-    // marker interface
-    
 }

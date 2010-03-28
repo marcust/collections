@@ -20,6 +20,7 @@ package org.thiesen.collections.set;
 
 import org.thiesen.collections.common.ImmutableIterator;
 import org.thiesen.collections.common.ImmutableSetView;
+import org.thiesen.collections.set.views.IImmutableSetView;
 
 import com.google.common.base.Predicate;
 

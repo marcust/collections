@@ -26,7 +26,7 @@ import org.thiesen.collections.common.ImmutableIterator;
 import org.thiesen.collections.common.ImmutableIteratorImpl;
 import org.thiesen.collections.common.ImmutableSetView;
 import org.thiesen.collections.set.IImmutableSet;
-import org.thiesen.collections.set.IImmutableSetView;
+import org.thiesen.collections.set.views.IImmutableSetView;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;

@@ -22,6 +22,7 @@ import java.util.Collection;
 
 import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.common.SetView;
+import org.thiesen.collections.set.views.ISetView;
 
 import com.google.common.base.Predicate;
 

@@ -31,10 +31,10 @@ import org.thiesen.collections.common.MutableSetView;
 import org.thiesen.collections.common.UnmodifiableIteratorImpl;
 import org.thiesen.collections.common.UnmodifiableSetView;
 import org.thiesen.collections.set.IImmutableSet;
-import org.thiesen.collections.set.IImmutableSetView;
 import org.thiesen.collections.set.IMutableSet;
-import org.thiesen.collections.set.IMutableSetView;
-import org.thiesen.collections.set.IUnmodifiableSetView;
+import org.thiesen.collections.set.views.IImmutableSetView;
+import org.thiesen.collections.set.views.IMutableSetView;
+import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;

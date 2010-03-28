@@ -26,7 +26,7 @@ import org.thiesen.collections.common.ImmutableIteratorImpl;
 import org.thiesen.collections.common.ImmutableListView;
 import org.thiesen.collections.list.IImmutableRandomAccessList;
 import org.thiesen.collections.list.IMutableList;
-import org.thiesen.collections.list.IUnmodifiableListView;
+import org.thiesen.collections.list.views.IUnmodifiableListView;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;

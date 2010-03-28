@@ -16,17 +16,17 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.list;
+package org.thiesen.collections.list.views;
 
-import org.thiesen.collections.collection.IUnmodifiableCollectionView;
+import org.thiesen.collections.collection.IMutableCollectionView;
+import org.thiesen.collections.list.IMutableList;
 
 
-public interface IUnmodifiableListView<E> extends 
-    IList<E>,
+public interface IMutableListView<E> extends 
+    IMutableList<E>, 
     IListView<E>,
-    IUnmodifiableCollectionView<E>,
-    IUnmodifiableList<E> {
+    IMutableCollectionView<E> {
 
-    // marker interface
+    // just a marker interface
     
 }

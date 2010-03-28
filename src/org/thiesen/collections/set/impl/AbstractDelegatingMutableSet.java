@@ -26,8 +26,8 @@ import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.common.MutableSetView;
 import org.thiesen.collections.set.IImmutableSet;
 import org.thiesen.collections.set.IMutableSet;
-import org.thiesen.collections.set.IMutableSetView;
-import org.thiesen.collections.set.IUnmodifiableSetView;
+import org.thiesen.collections.set.views.IMutableSetView;
+import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
@@ -129,8 +129,7 @@ public abstract class AbstractDelegatingMutableSet<E>
     
     @Override
     public IUnmodifiableSetView<E> asUnmodifiableView() {
-        throw new UnsupportedOperationException("Auto generated method stub");
-        
+       return SetViews.asIUnmodifiableSetView( _set );
     }
     
 }

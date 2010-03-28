@@ -29,9 +29,9 @@ import org.thiesen.collections.common.ImmutableListView;
 import org.thiesen.collections.common.ListView;
 import org.thiesen.collections.common.MutableListView;
 import org.thiesen.collections.common.UnmodifiableIteratorImpl;
-import org.thiesen.collections.list.IImmutableListView;
-import org.thiesen.collections.list.IMutableListView;
-import org.thiesen.collections.list.IUnmodifiableListView;
+import org.thiesen.collections.list.views.IImmutableListView;
+import org.thiesen.collections.list.views.IMutableListView;
+import org.thiesen.collections.list.views.IUnmodifiableListView;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;

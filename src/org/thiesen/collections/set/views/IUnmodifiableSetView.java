@@ -16,23 +16,14 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.set;
+package org.thiesen.collections.set.views;
 
-import org.thiesen.collections.common.UnmodifiableSetView;
-import org.thiesen.collections.set.views.IUnmodifiableSetView;
+import org.thiesen.collections.set.IUnmodifiableSet;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.UnmodifiableIterator;
+public interface IUnmodifiableSetView<E> extends 
+    ISetView<E>,
+    IUnmodifiableSet<E> {
 
-public interface IUnmodifiableSet<E> extends ISet<E> {
-
-    @Override
-    public UnmodifiableIterator<E> iterator();
-    
-    @Override
-    public IUnmodifiableSetView<E> filter( final Predicate<E> predicate );
-    
-    @Override
-    public UnmodifiableSetView<E> asCollectionsView();
+    // marker interface
     
 }

@@ -25,8 +25,8 @@ import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.collection.IMutableCollectionView;
 import org.thiesen.collections.common.MutableListView;
 import org.thiesen.collections.list.IMutableList;
-import org.thiesen.collections.list.IMutableListView;
-import org.thiesen.collections.list.IUnmodifiableListView;
+import org.thiesen.collections.list.views.IMutableListView;
+import org.thiesen.collections.list.views.IUnmodifiableListView;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;

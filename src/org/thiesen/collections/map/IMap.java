@@ -16,12 +16,7 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.list;
+package org.thiesen.collections.map;
+public interface IMap<K, V> {
 
-import org.thiesen.collections.collection.ICollectionView;
-
-public interface IListView<E> extends ICollectionView<E>, IList<E> {
-
-    // marker interface
-    
 }

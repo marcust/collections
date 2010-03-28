@@ -16,12 +16,12 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.set;
+package org.thiesen.collections.set.views;
 
-import org.thiesen.collections.collection.ICollectionView;
+import org.thiesen.collections.set.IImmutableSet;
 
 
-public interface ISetView<E> extends ISet<E>, ICollectionView<E> {
+public interface IImmutableSetView<E> extends ISetView<E>, IImmutableSet<E> {
 
     // marker interface
     

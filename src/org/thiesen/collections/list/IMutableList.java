@@ -22,6 +22,8 @@ import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.collection.IMutableCollection;
 import org.thiesen.collections.common.MutableListView;
 import org.thiesen.collections.list.impl.ImmutableList;
+import org.thiesen.collections.list.views.IMutableListView;
+import org.thiesen.collections.list.views.IUnmodifiableListView;
 
 public interface IMutableList<E> extends IList<E>, IMutableCollection<E> {
 
