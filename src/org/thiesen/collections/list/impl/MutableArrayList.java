@@ -19,142 +19,46 @@
 package org.thiesen.collections.list.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
 
 import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.collection.IMutableCollectionView;
-import org.thiesen.collections.common.MutableListView;
-import org.thiesen.collections.list.IMutableListView;
 import org.thiesen.collections.list.IMutableRandomAccessList;
-import org.thiesen.collections.list.IUnmodifiableListView;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 
-public class MutableArrayList<E> implements IMutableRandomAccessList<E>, Iterable<E> {
+public class MutableArrayList<E> extends AbstractDelegatingMutableIList<E>
+    implements IMutableRandomAccessList<E> {
  
     private final ArrayList<E> _arrayList;
 
     private MutableArrayList( final ArrayList<E> arrayList ) {
+        super( arrayList );
         _arrayList = arrayList;
     }
 
     public static <T> MutableArrayList<T> withInitialCapacity( final int capacity ) {
-        return new MutableArrayList<T>( new ArrayList<T>( capacity ) );
+        return new MutableArrayList<T>( Lists.<T>newArrayListWithCapacity(  capacity ) );
+    }
+    
+    public static <T> MutableArrayList<T> withExpectedSize( final int capacity ) {
+        return new MutableArrayList<T>( Lists.<T>newArrayListWithExpectedSize( capacity ) );
     }
     
     public static <T> MutableArrayList<T> copyOf( final ICollection<? extends T> values ) {
-        return new MutableArrayList<T>( new ArrayList<T>( values.asCollectionsView() ) );
+        return new MutableArrayList<T>( Lists.newArrayList( values.asCollectionsView() ) );
+    }
+
+    public static <T> MutableArrayList<T> copyOf( final Iterable<T> values ) {
+        return new MutableArrayList<T>( Lists.newArrayList( values ) );
     }
     
-    public boolean add( final E e ) {
-        return _arrayList.add( e );
+    public static <T> MutableArrayList<T> copyOf( final T... values ) {
+        return new MutableArrayList<T>( Lists.newArrayList( Arrays.asList( values ) ) );
     }
-
-    public void add( final int index, final E element ) {
-        _arrayList.add( index, element );
-    }
-
-    public boolean addAll( final ICollection<? extends E> c ) {
-        return _arrayList.addAll( c.copyToCollections() );
-    }
-
-    public boolean addAll( final int index, final ICollection<? extends E> c ) {
-        return _arrayList.addAll( index, c.copyToCollections() );
-    }
-
-    public void clear() {
-        _arrayList.clear();
-    }
-
-    public boolean contains( final Object o ) {
-        return _arrayList.contains( o );
-    }
-
-    public boolean containsAll( final ICollection<?> c ) {
-        return _arrayList.containsAll( c.copyToCollections() );
-    }
-
-    public E get( final int index ) {
-        return _arrayList.get( index );
-    }
-
-    public int indexOf( final Object o ) {
-        return _arrayList.indexOf( o );
-    }
-
-    public boolean isEmpty() {
-        return _arrayList.isEmpty();
-    }
-
-    public Iterator<E> iterator() {
-        return _arrayList.iterator();
-    }
-
-    public int lastIndexOf( final Object o ) {
-        return _arrayList.lastIndexOf( o );
-    }
-
-    public E remove( final int index ) {
-        return _arrayList.remove( index );
-    }
-
-    public boolean remove( final Object o ) {
-        return _arrayList.remove( o );
-    }
-
-    public boolean removeAll( final ICollection<?> c ) {
-        return _arrayList.removeAll( c.copyToCollections() );
-    }
-
-    public boolean retainAll( final ICollection<?> c ) {
-        return _arrayList.retainAll( c.copyToCollections() );
-    }
-
-    public E set( final int index, final E element ) {
-        return _arrayList.set( index, element );
-    }
-
-    public int size() {
-        return _arrayList.size();
-    }
-
-    public Object[] toArray() {
-        return _arrayList.toArray();
-    }
-
-    @Override
-    public IMutableListView<E> subList( final int fromIndex, final int toIndex ) {
-        return ListViews.asIMutableListView( _arrayList.subList( fromIndex, toIndex ) );
-    }
-
+    
     @SuppressWarnings( "unchecked" )
     @Override
-    public java.util.List<E> copyToCollections() {
+    public java.util.List<E> copyToMutableCollections() {
         return (java.util.List<E>) _arrayList.clone();
-    }
-
-    @Override
-    public <T> IUnmodifiableListView<T> transform( final Function<E, T> transformFunction ) {
-        return ListViews.asUnmodifiableListView( Lists.transform( _arrayList, transformFunction ) );
-    }
-
-    @Override
-    public MutableListView<E> asCollectionsView() {
-        return ListViews.asMutableListView( _arrayList );
-    }
-
-    @Override
-    public <T> T[] toArray( final T[] a ) {
-        return _arrayList.toArray( a );
-    }
-
-    @Override
-    public IMutableCollectionView<E> filter( final Predicate<E> predicate ) {
-        return CollectionViews.asMutableCollectionView( Collections2.filter(  _arrayList, predicate ) );
-    }
-    
-    
+    }    
 }

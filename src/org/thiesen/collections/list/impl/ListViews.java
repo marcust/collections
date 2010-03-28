@@ -18,14 +18,17 @@
  */
 package org.thiesen.collections.list.impl;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.collection.IMutableCollectionView;
+import org.thiesen.collections.common.ImmutableListView;
 import org.thiesen.collections.common.ListView;
 import org.thiesen.collections.common.MutableListView;
 import org.thiesen.collections.common.UnmodifiableIteratorImpl;
+import org.thiesen.collections.list.IImmutableListView;
 import org.thiesen.collections.list.IMutableListView;
 import org.thiesen.collections.list.IUnmodifiableListView;
 
@@ -38,11 +41,128 @@ import com.google.common.collect.UnmodifiableIterator;
 
 public class ListViews {
 
+    private static class ImmutableListViewImpl<E> extends ForwardingList<E> implements ImmutableListView<E> {
+
+        private final List<E> _delegate;
+
+        @SuppressWarnings( "unchecked" )
+        public ImmutableListViewImpl( final List<? extends E> list ) {
+            _delegate = (List<E>) list;
+        }
+
+        @Override
+        protected List<E> delegate() {
+            return _delegate;
+        }
+
+        @Override
+        public void add( @SuppressWarnings( "unused" ) final int index, @SuppressWarnings( "unused" ) final E element ) {
+            throw new UnsupportedOperationException("Immutable List View");
+            
+        }
+
+        @Override
+        public boolean addAll( @SuppressWarnings( "unused" ) final int index, @SuppressWarnings( "unused" ) final Collection<? extends E> elements ) {
+            throw new UnsupportedOperationException("Immutable List View");
+            
+        }
+
+        @Override
+        public E set( @SuppressWarnings( "unused" ) final int index, @SuppressWarnings( "unused" ) final E element ) {
+            throw new UnsupportedOperationException("Immutable List View");
+            
+        }
+
+        @Override
+        public List<E> subList( @SuppressWarnings( "unused" ) final int fromIndex, @SuppressWarnings( "unused" ) final int toIndex ) {
+            throw new UnsupportedOperationException("Immutable List View");
+            
+        }
+                
+        
+    }
+
+    private static class IImmutableListViewImpl<E> implements IImmutableListView<E> {
+
+        private final List<E> _list;
+
+        @SuppressWarnings( "unchecked" )
+        private IImmutableListViewImpl( final List<? extends E> list ) {
+            _list = (List<E>) list;
+            
+        }
+
+        @Override
+        public ImmutableListView<E> asCollectionsView() {
+            return new ImmutableListViewImpl<E>( _list );
+        }
+
+        @Override
+        public boolean contains( final Object o ) {
+            return _list.contains( o );
+        }
+
+        @Override
+        public boolean containsAll( final ICollection<?> c ) {
+            return _list.containsAll( c.asCollectionsView() );
+        }
+
+        @Override
+        public List<E> copyToMutableCollections() {
+            return Lists.newArrayList( _list );
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return _list.isEmpty();
+        }
+
+        @Override
+        public int size() {
+            return _list.size();
+        }
+
+        @Override
+        public Object[] toArray() {
+            return _list.toArray();
+        }
+
+        @Override
+        public <T> T[] toArray( final T[] a ) {
+            return _list.toArray( a );
+            
+        }
+
+        @Override
+        public <T> IImmutableListView<T> transform( final Function<E, T> transformFunction ) {
+            return new IImmutableListViewImpl<T>( Lists.transform( _list, transformFunction ) );
+            
+        }
+
+        @Override
+        public Iterator<E> iterator() {
+            return _list.iterator();
+        }
+
+        @Override
+        public int indexOf( final Object o ) {
+            return _list.indexOf( o );
+        }
+
+        @Override
+        public int lastIndexOf( final Object o ) {
+            return _list.lastIndexOf( o );
+        }
+
+
+    }
+
     private static class IMutableListViewImpl<E> implements IMutableListView<E> {
 
         private final List<E> _list;
 
         @SuppressWarnings( "unchecked" )
+        //FIXME(MT): Fix the whole co- and contravariance stuff
         public IMutableListViewImpl( final List<? extends E> list ) {
             _list = (List<E>) list;
         }
@@ -63,11 +183,6 @@ public class ListViews {
         }
 
         @Override
-        public E set( final int index, final E element ) {
-            return _list.set( index, element );
-        }
-
-        @Override
         public IMutableListView<E> subList( final int fromIndex, final int toIndex ) {
             return new IMutableListViewImpl<E>( _list.subList( fromIndex, toIndex ) );
             
@@ -79,7 +194,7 @@ public class ListViews {
         }
 
         @Override
-        public List<E> copyToCollections() {
+        public List<E> copyToMutableCollections() {
             return Lists.newArrayList( _list );
         }
 
@@ -169,6 +284,11 @@ public class ListViews {
         public boolean retainAll( final ICollection<?> c ) {
             return _list.retainAll( c.asCollectionsView() );
         }
+
+        @Override
+        public ImmutableList<E> immutableCopy() {
+            return ImmutableList.copyOf( this );
+        }
     
         
     }
@@ -184,7 +304,7 @@ public class ListViews {
         }
 
         @Override
-        public List<E> copyToCollections() {
+        public List<E> copyToMutableCollections() {
             return Lists.newArrayList( _list );
         }
 
@@ -211,11 +331,6 @@ public class ListViews {
         @Override
         public boolean containsAll( final ICollection<?> c ) {
             return _list.containsAll( c.asCollectionsView() );
-        }
-
-        @Override
-        public IMutableCollectionView<E> filter( final Predicate<E> predicate ) {
-            return new CollectionViews.IMutableCollectionViewImpl<E>( Collections2.filter( _list, predicate ) );
         }
 
         @Override
@@ -251,7 +366,7 @@ public class ListViews {
 
     }
 
-    static class UnmodifiableListViewImpl<E> 
+    private static class UnmodifiableListViewImpl<E> 
         implements IUnmodifiableListView<E> {
 
         public List<E> _list;
@@ -262,7 +377,7 @@ public class ListViews {
         }
 
         @Override
-        public List<E> copyToCollections() {
+        public List<E> copyToMutableCollections() {
             return Lists.newArrayList( _list );
         }
 
@@ -289,11 +404,6 @@ public class ListViews {
         @Override
         public boolean containsAll( final ICollection<?> c ) {
             return _list.containsAll( c.asCollectionsView() );
-        }
-
-        @Override
-        public IMutableCollectionView<E> filter( final Predicate<E> predicate ) {
-            return new CollectionViews.IMutableCollectionViewImpl<E>( Collections2.filter( _list, predicate ) );
         }
 
         @Override
@@ -330,7 +440,7 @@ public class ListViews {
                 
     }
 
-    static class MutableListViewImpl<E> 
+    private static class MutableListViewImpl<E> 
         extends ForwardingList<E>
         implements MutableListView<E> {
 
@@ -353,7 +463,7 @@ public class ListViews {
         return new MutableListViewImpl<E>( list );
     }
     
-    public static <E> IUnmodifiableListView<E> asUnmodifiableListView( final List<? extends E> list ) {
+    public static <E> IUnmodifiableListView<E> asIUnmodifiableListView( final List<? extends E> list ) {
         return new UnmodifiableListViewImpl<E>( list );
     }
     
@@ -362,5 +472,11 @@ public class ListViews {
         return new IMutableListViewImpl<E>( list );
     }
     
+    public static <E> IImmutableListView<E> asIImmutableListView( final List<? extends E> list ) {
+        return new IImmutableListViewImpl<E>( list );
+    }
     
+    public static <E> ImmutableListView<E> asImmutableListView( final List<? extends E> list ) {
+        return new ImmutableListViewImpl<E>( list );
+    }
 }

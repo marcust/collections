@@ -18,9 +18,8 @@
  */
 package org.thiesen.collections.list;
 
-import org.thiesen.collections.common.ListView;
 
-public interface IImmutableListView<E> extends ListView<E> {
+public interface IImmutableListView<E> extends IListView<E> {
 
     // marker interface
     

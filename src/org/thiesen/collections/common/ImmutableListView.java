@@ -16,24 +16,11 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.collection;
+package org.thiesen.collections.common;
 
-import com.google.common.base.Predicate;
 
-public interface IMutableCollection<E> extends ICollection<E>, Iterable<E> {
+public interface ImmutableListView<E> extends ListView<E> {
 
-    boolean add(E e);
-    
-    boolean remove(E o);
-    
-    boolean addAll(ICollection<? extends E> c);
-    
-    boolean removeAll(ICollection<?> c);
-    
-    boolean retainAll(ICollection<?> c);
-    
-    void clear();
-    
-    public IMutableCollectionView<E> filter( final Predicate<E> predicate );
+    // marker interface only
     
 }

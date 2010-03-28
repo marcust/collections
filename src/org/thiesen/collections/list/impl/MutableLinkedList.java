@@ -16,24 +16,36 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.collection;
+package org.thiesen.collections.list.impl;
 
-import com.google.common.base.Predicate;
+import java.util.LinkedList;
+import java.util.List;
 
-public interface IMutableCollection<E> extends ICollection<E>, Iterable<E> {
+import com.google.common.collect.Lists;
 
-    boolean add(E e);
+public class MutableLinkedList<E> extends AbstractDelegatingMutableIList<E>  {
+
+    private final LinkedList<E> _linkedList;
+
+    private MutableLinkedList( final LinkedList<E> list ) {
+        super( list );
+        _linkedList = list;
+    }
     
-    boolean remove(E o);
+    public static <T> MutableLinkedList<T> create() {
+        return new MutableLinkedList<T>( new LinkedList<T>() );
+    }
     
-    boolean addAll(ICollection<? extends E> c);
+    public static <T> MutableLinkedList<T> copyOf( final Iterable<T> elements ) {
+        return new MutableLinkedList<T>( Lists.newLinkedList( elements ) );
+    }
     
-    boolean removeAll(ICollection<?> c);
-    
-    boolean retainAll(ICollection<?> c);
-    
-    void clear();
-    
-    public IMutableCollectionView<E> filter( final Predicate<E> predicate );
-    
+    @SuppressWarnings( "unchecked" )
+    @Override
+    public List<E> copyToMutableCollections() {
+        return (List<E>) _linkedList.clone();
+
+    }
+
+
 }

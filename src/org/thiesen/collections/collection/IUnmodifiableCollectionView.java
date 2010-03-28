@@ -19,7 +19,9 @@
 package org.thiesen.collections.collection;
 
 
-public interface IUnmodifiableCollectionView<E> extends IUnmodifiableCollection<E> {
+public interface IUnmodifiableCollectionView<E> extends 
+    IUnmodifiableCollection<E>,
+    ICollectionView<E> {
 
     // marker inteface only
     

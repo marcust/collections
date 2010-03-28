@@ -31,11 +31,11 @@ public interface IList<E> extends ICollection<E> {
     int lastIndexOf(Object o);
     
     @Override
-    public java.util.List<E> copyToCollections();
+    public java.util.List<E> copyToMutableCollections();
 
     @Override
     public ListView<E> asCollectionsView();
 
-    <T> IUnmodifiableListView<T> transform( Function<E, T> transformFunction );
+    <T> IListView<T> transform( Function<E, T> transformFunction );
     
 }

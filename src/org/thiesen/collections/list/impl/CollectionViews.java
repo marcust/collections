@@ -50,17 +50,12 @@ class CollectionViews {
 
         @Override
         public boolean containsAll( final ICollection<?> c ) {
-            return _collection.containsAll( c.copyToCollections() );
+            return _collection.containsAll( c.copyToMutableCollections() );
         }
 
         @Override
-        public Collection<T> copyToCollections() {
+        public Collection<T> copyToMutableCollections() {
             return Lists.newArrayList( _collection );
-        }
-
-        @Override
-        public IMutableCollectionView<T> filter( final Predicate<T> predicate ) {
-            return new IMutableCollectionViewImpl<T>( Collections2.filter( _collection, predicate ) );
         }
 
         @Override
@@ -186,7 +181,7 @@ class CollectionViews {
         }
 
         @Override
-        public Collection<E> copyToCollections() {
+        public Collection<E> copyToMutableCollections() {
             return Lists.newArrayList( _collection );
         }
 

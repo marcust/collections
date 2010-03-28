@@ -21,7 +21,6 @@ package org.thiesen.collections.collection;
 import org.thiesen.collections.common.CollectionView;
 
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 
 
 public interface ICollection<E> extends Iterable<E>  {
@@ -38,12 +37,10 @@ public interface ICollection<E> extends Iterable<E>  {
     
     <T> T[] toArray(T[] a);
     
-    public java.util.Collection<E> copyToCollections();
+    public java.util.Collection<E> copyToMutableCollections();
     
     public CollectionView<E> asCollectionsView();
     
-    public <T> IUnmodifiableCollectionView<T> transform( final Function<E, T> transformFunction );
-    
-    public IMutableCollectionView<E> filter( final Predicate<E> predicate );
+    public <T> ICollectionView<T> transform( final Function<E, T> transformFunction );
     
 }

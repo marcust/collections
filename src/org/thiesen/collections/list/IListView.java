@@ -20,7 +20,7 @@ package org.thiesen.collections.list;
 
 import org.thiesen.collections.collection.ICollectionView;
 
-public interface IListView<E> extends ICollectionView<E> {
+public interface IListView<E> extends ICollectionView<E>, IList<E> {
 
     // marker interface
     

@@ -21,6 +21,6 @@ package org.thiesen.collections.list;
 
 public interface IMutableRandomAccessList<E> extends IMutableList<E>, IRandomAccessList<E> {
 
-    // derived functions only
+    E set(int index, E element);
     
 }
