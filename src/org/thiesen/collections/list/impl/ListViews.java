@@ -291,7 +291,7 @@ public class ListViews {
 
         @Override
         public IUnmodifiableListView<E> asUnmodifiableView() {
-            return new UnmodifiableListViewImpl<E>( _list );
+            return new IUnmodifiableListViewImpl<E>( _list );
         }
 
     }
@@ -368,78 +368,6 @@ public class ListViews {
 
     }
 
-    private static class UnmodifiableListViewImpl<E> 
-        implements IUnmodifiableListView<E> {
-
-        public List<E> _list;
-
-        private UnmodifiableListViewImpl( final List<E> list ) {
-            _list = Collections.unmodifiableList( list );
-        }
-
-        @Override
-        public List<E> copyToMutableCollections() {
-            return Lists.newArrayList( _list );
-        }
-
-        @Override
-        public int indexOf( final Object o ) {
-            return _list.indexOf( o );
-        }
-
-        @Override
-        public int lastIndexOf( final Object o ) {
-            return _list.lastIndexOf( o );
-        }
-
-        @Override
-        public ListView<E> asCollectionsView() {
-            return new MutableListViewImpl<E>( _list );
-        }
-
-        @Override
-        public boolean contains( final Object o ) {
-            return _list.contains( o );
-        }
-
-        @Override
-        public boolean containsAll( final ICollection<?> c ) {
-            return _list.containsAll( c.asCollectionsView() );
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return _list.isEmpty();
-        }
-
-        @Override
-        public int size() {
-            return _list.size();
-        }
-
-        @Override
-        public Object[] toArray() {
-            return _list.toArray();
-        }
-
-        @Override
-        public <T> T[] toArray( final T[] a ) {
-            return _list.toArray( a );
-            
-        }
-
-        @Override
-        public <T> IUnmodifiableListView<T> transform( final Function<E, T> transformFunction ) {
-            return new IUnmodifiableListViewImpl<T>( Lists.transform( _list, transformFunction ) );
-            
-        }
-
-        @Override
-        public UnmodifiableIterator<E> iterator() {
-            return UnmodifiableIteratorImpl.wrap( _list.iterator() );
-        }
-                
-    }
 
     private static class MutableListViewImpl<E> 
         extends ForwardingList<E>
@@ -464,7 +392,7 @@ public class ListViews {
     }
     
     static <E> IUnmodifiableListView<E> asIUnmodifiableListView( final List<E> list ) {
-        return new UnmodifiableListViewImpl<E>( list );
+        return new IUnmodifiableListViewImpl<E>( list );
     }
     
     
