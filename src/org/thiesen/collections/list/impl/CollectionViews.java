@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.collection.IMutableCollectionView;
+import org.thiesen.collections.collection.views.IMutableCollectionView;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;

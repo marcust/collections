@@ -17,6 +17,29 @@
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.thiesen.collections.map;
+
+import java.util.Map;
+
+import org.thiesen.collections.collection.views.ICollectionView;
+import org.thiesen.collections.set.views.ISetView;
+
+
 public interface IMap<K, V> {
 
+    int size();
+    
+    boolean isEmpty();
+    
+    boolean containsKey(Object key);
+    
+    boolean containsValue(Object value);
+    
+    V get(Object key);
+    
+    ISetView<K> keySet();
+    
+    ICollectionView<V> values();
+    
+    ISetView<Map.Entry<K, V>> entrySet();
+    
 }

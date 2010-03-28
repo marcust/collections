@@ -18,7 +18,7 @@
  */
 package org.thiesen.collections.set.views;
 
-import org.thiesen.collections.collection.ICollectionView;
+import org.thiesen.collections.collection.views.ICollectionView;
 import org.thiesen.collections.set.ISet;
 
 

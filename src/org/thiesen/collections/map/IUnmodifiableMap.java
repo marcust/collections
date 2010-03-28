@@ -17,6 +17,17 @@
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.thiesen.collections.map;
+
+import java.util.Map;
+
+import org.thiesen.collections.collection.views.IUnmodifiableCollectionView;
+import org.thiesen.collections.set.views.IUnmodifiableSetView;
+
 public interface IUnmodifiableMap<K, V> extends IMap<K, V> {
 
+    IUnmodifiableSetView<K> keySet();
+    
+    IUnmodifiableCollectionView<V> values();
+    
+    IUnmodifiableSetView<Map.Entry<K, V>> entrySet();
 }

@@ -17,6 +17,25 @@
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.thiesen.collections.map;
+
+import java.util.Map;
+
+import org.thiesen.collections.collection.views.IMutableCollectionView;
+import org.thiesen.collections.set.views.IMutableSetView;
+
 public interface IMutableMap<K, V> extends IMap<K, V> {
 
+    V put(K key, V value);
+    
+    V remove(Object key);
+    
+    void putAll(Map<? extends K, ? extends V> m);
+    
+    void clear();
+    
+    IMutableSetView<K> keySet();
+    
+    IMutableCollectionView<V> values();
+    
+    
 }

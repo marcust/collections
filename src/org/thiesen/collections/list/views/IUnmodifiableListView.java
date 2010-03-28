@@ -18,7 +18,7 @@
  */
 package org.thiesen.collections.list.views;
 
-import org.thiesen.collections.collection.IUnmodifiableCollectionView;
+import org.thiesen.collections.collection.views.IUnmodifiableCollectionView;
 import org.thiesen.collections.list.IList;
 import org.thiesen.collections.list.IUnmodifiableList;
 

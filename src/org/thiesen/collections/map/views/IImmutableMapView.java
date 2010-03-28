@@ -21,5 +21,7 @@ package org.thiesen.collections.map.views;
 import org.thiesen.collections.map.IImmutableMap;
 
 public interface IImmutableMapView<K, V> extends IMapView<K, V>, IImmutableMap<K, V> {
+    
+    // marker interface
 
 }

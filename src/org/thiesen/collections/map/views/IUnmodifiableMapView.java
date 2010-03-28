@@ -22,4 +22,6 @@ import org.thiesen.collections.map.IUnmodifiableMap;
 
 public interface IUnmodifiableMapView<K, V> extends IUnmodifiableMap<K, V>, IMapView<K, V> {
 
+    // marker interface
+    
 }

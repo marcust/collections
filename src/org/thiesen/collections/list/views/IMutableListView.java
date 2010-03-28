@@ -18,7 +18,7 @@
  */
 package org.thiesen.collections.list.views;
 
-import org.thiesen.collections.collection.IMutableCollectionView;
+import org.thiesen.collections.collection.views.IMutableCollectionView;
 import org.thiesen.collections.list.IMutableList;
 
 

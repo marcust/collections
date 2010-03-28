@@ -18,6 +18,8 @@
  */
 package org.thiesen.collections.collection;
 
+import org.thiesen.collections.collection.views.IMutableCollectionView;
+
 import com.google.common.base.Predicate;
 
 public interface IMutableCollection<E> extends ICollection<E>, Iterable<E> {

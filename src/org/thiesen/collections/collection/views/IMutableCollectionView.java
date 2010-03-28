@@ -16,19 +16,16 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.map;
+package org.thiesen.collections.collection.views;
 
-import java.util.Map;
+import org.thiesen.collections.collection.IMutableCollection;
 
-import org.thiesen.collections.collection.views.IImmutableCollectionView;
-import org.thiesen.collections.set.views.IImmutableSetView;
 
-public interface IImmutableMap<K, V> extends IMap<K, V> {
 
-    IImmutableSetView<K> keySet();
-    
-    IImmutableCollectionView<V> values();
-    
-    IImmutableSetView<Map.Entry<K, V>> entrySet();
+public interface IMutableCollectionView<E> extends 
+    IMutableCollection<E>, 
+    ICollectionView<E> {
+
+    // marker interface
     
 }

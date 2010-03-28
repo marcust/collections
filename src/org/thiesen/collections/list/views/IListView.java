@@ -18,7 +18,7 @@
  */
 package org.thiesen.collections.list.views;
 
-import org.thiesen.collections.collection.ICollectionView;
+import org.thiesen.collections.collection.views.ICollectionView;
 import org.thiesen.collections.list.IList;
 
 public interface IListView<E> extends ICollectionView<E>, IList<E> {

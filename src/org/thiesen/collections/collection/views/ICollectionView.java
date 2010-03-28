@@ -16,7 +16,9 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.collection;
+package org.thiesen.collections.collection.views;
+
+import org.thiesen.collections.collection.ICollection;
 
 
 public interface ICollectionView<E> extends 
