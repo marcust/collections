@@ -159,7 +159,7 @@ public class ListViews {
 
         private final List<E> _list;
 
-        public IMutableListViewImpl( final List<E> list ) {
+        private IMutableListViewImpl( final List<E> list ) {
             _list = list;
         }
 
@@ -366,7 +366,7 @@ public class ListViews {
 
         public List<E> _list;
 
-        public UnmodifiableListViewImpl( final List<E> list ) {
+        private UnmodifiableListViewImpl( final List<E> list ) {
             _list = list;
         }
 
@@ -452,24 +452,24 @@ public class ListViews {
 
     }
     
-    public static <E> MutableListView<E> asMutableListView( final List<E> list ) {
+    static <E> MutableListView<E> asMutableListView( final List<E> list ) {
         return new MutableListViewImpl<E>( list );
     }
     
-    public static <E> IUnmodifiableListView<E> asIUnmodifiableListView( final List<E> list ) {
+    static <E> IUnmodifiableListView<E> asIUnmodifiableListView( final List<E> list ) {
         return new UnmodifiableListViewImpl<E>( list );
     }
     
     
-    public static <E> IMutableListView<E> asIMutableListView( final List<E> list ) {
+    static <E> IMutableListView<E> asIMutableListView( final List<E> list ) {
         return new IMutableListViewImpl<E>( list );
     }
     
-    public static <E> IImmutableListView<E> asIImmutableListView( final List<E> list ) {
+    static <E> IImmutableListView<E> asIImmutableListView( final List<E> list ) {
         return new IImmutableListViewImpl<E>( list );
     }
     
-    public static <E> ImmutableListView<E> asImmutableListView( final List<E> list ) {
+    static <E> ImmutableListView<E> asImmutableListView( final List<E> list ) {
         return new ImmutableListViewImpl<E>( list );
     }
 }

@@ -23,9 +23,7 @@ import java.util.Iterator;
 
 import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.collection.IMutableCollectionView;
-import org.thiesen.collections.collection.IUnmodifiableCollectionView;
 
-import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
@@ -33,72 +31,11 @@ import com.google.common.collect.Lists;
 
 class CollectionViews {
 
-    static class IUnmodifiableCollectionViewImpl<T> implements IUnmodifiableCollectionView<T> {
-
-        private final Collection<T> _collection;
-
-        protected IUnmodifiableCollectionViewImpl( final Collection<T> collection ) {
-            _collection = collection;
-        }
-
-        @Override
-        public boolean contains( final Object o ) {
-            return _collection.contains( o );
-        }
-
-        @Override
-        public boolean containsAll( final ICollection<?> c ) {
-            return _collection.containsAll( c.copyToMutableCollections() );
-        }
-
-        @Override
-        public Collection<T> copyToMutableCollections() {
-            return Lists.newArrayList( _collection );
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return _collection.isEmpty();
-        }
-
-        @Override
-        public int size() {
-            return _collection.size();
-        }
-
-        @Override
-        public Object[] toArray() {
-            return _collection.toArray();
-        }
-
-        @Override
-        public <E> E[] toArray( final E[] a ) {
-            return _collection.toArray( a );
-        }
-
-        @Override
-        public org.thiesen.collections.common.CollectionView<T> asCollectionsView() {
-            return new UnmodifiableCollectionViewImpl<T>( this );
-        }
-
-        @Override
-        public <E> IUnmodifiableCollectionView<E> transform( final Function<T, E> transformFunction ) {
-            return new IUnmodifiableCollectionViewImpl<E>( Collections2.transform( _collection, transformFunction ) );
-        }
-
-        @Override
-        public Iterator<T> iterator() {
-            return _collection.iterator();
-        }
-
-        
-    }
-
     static class IMutableCollectionViewImpl<E> implements IMutableCollectionView<E> {
 
         private final Collection<E> _collection;
 
-        protected IMutableCollectionViewImpl( final Collection<E> collection ) {
+        IMutableCollectionViewImpl( final Collection<E> collection ) {
             _collection = collection;
         }
 
@@ -192,19 +129,16 @@ class CollectionViews {
             return new UnmodifiableCollectionViewImpl<E>( this );
         }
 
-        @Override
-        public <T> IUnmodifiableCollectionView<T> transform( final Function<E, T> transformFunction ) {
-            return new IUnmodifiableCollectionViewImpl<T>( Collections2.transform( _collection, transformFunction ) );            
-        }
+
 
     }
 
-    static class UnmodifiableCollectionViewImpl<T>
+    private static class UnmodifiableCollectionViewImpl<T>
         implements org.thiesen.collections.common.UnmodifiableCollectionView<T> {
 
         private final ICollection<T> _collection;
 
-        protected UnmodifiableCollectionViewImpl( final ICollection<T> collection ) {
+        private UnmodifiableCollectionViewImpl( final ICollection<T> collection ) {
             _collection = collection;
         }
 
@@ -280,7 +214,7 @@ class CollectionViews {
 
     }
 
-    public static <E> IMutableCollectionView<E> asMutableCollectionView( final Collection<E> collection ) {
+    static <E> IMutableCollectionView<E> asMutableCollectionView( final Collection<E> collection ) {
         return new IMutableCollectionViewImpl<E>( collection );
     }
     

@@ -19,7 +19,6 @@
 package org.thiesen.collections.list.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.list.IMutableRandomAccessList;
@@ -53,7 +52,7 @@ public class MutableArrayList<E> extends AbstractDelegatingMutableIList<E>
     }
     
     public static <T> MutableArrayList<T> copyOf( final T... values ) {
-        return new MutableArrayList<T>( Lists.newArrayList( Arrays.asList( values ) ) );
+        return new MutableArrayList<T>( Lists.newArrayList( values ) );
     }
     
     @SuppressWarnings( "unchecked" )

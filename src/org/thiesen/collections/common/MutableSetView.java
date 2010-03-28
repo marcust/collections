@@ -16,28 +16,11 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.collection;
-
-import org.thiesen.collections.common.CollectionView;
+package org.thiesen.collections.common;
 
 
-public interface ICollection<E> extends Iterable<E>  {
+public interface MutableSetView<E> extends SetView<E> {
 
-    public boolean contains(Object o);
-    
-    public boolean containsAll(ICollection<?> c);
-  
-    public boolean isEmpty();
-    
-    int size();
-    
-    public Object[] toArray();
-    
-    <T> T[] toArray(T[] a);
-    
-    public java.util.Collection<E> copyToMutableCollections();
-    
-    public CollectionView<E> asCollectionsView();
-    
+    // marker interface
     
 }

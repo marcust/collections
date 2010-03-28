@@ -16,28 +16,31 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.collection;
+package org.thiesen.collections.set.impl;
 
-import org.thiesen.collections.common.CollectionView;
+import java.util.EnumSet;
+import java.util.Set;
 
+public class MutableEnumSet<E extends Enum<E>> extends AbstractDelegatingMutableSet<E> {
 
-public interface ICollection<E> extends Iterable<E>  {
+    private final EnumSet<E> _enumSet;
 
-    public boolean contains(Object o);
+    private MutableEnumSet( final EnumSet<E> set ) {
+        super( set );
+        _enumSet = set;
+    }
     
-    public boolean containsAll(ICollection<?> c);
-  
-    public boolean isEmpty();
+    public static <T extends Enum<T>> MutableEnumSet<T> allOf( final Class<T> elementType ) {
+        return new MutableEnumSet<T>( EnumSet.allOf( elementType ) );
+    }
+
+    public static <E extends Enum<E>> MutableEnumSet<E> complementOf( final MutableEnumSet<E> s ) {
+        return new MutableEnumSet<E>( EnumSet.<E>complementOf( s._enumSet ) );
+    }
     
-    int size();
-    
-    public Object[] toArray();
-    
-    <T> T[] toArray(T[] a);
-    
-    public java.util.Collection<E> copyToMutableCollections();
-    
-    public CollectionView<E> asCollectionsView();
-    
+    @Override
+    public Set<E> copyToMutableCollections() {
+        return _enumSet.clone();
+    }
     
 }
