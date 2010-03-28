@@ -16,16 +16,8 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.list;
-
-import org.thiesen.collections.collection.IUnmodifiableCollectionView;
-
-
-public interface IUnmodifiableListView<E> extends 
-    IList<E>,
-    IListView<E>,
-    IUnmodifiableCollectionView<E>,
-    IUnmodifiableList<E> {
+package org.thiesen.collections.common;
+public interface UnmodifiableSetView<E> extends SetView<E> {
 
     // marker interface
     

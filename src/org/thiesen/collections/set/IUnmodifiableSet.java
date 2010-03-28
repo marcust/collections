@@ -17,8 +17,21 @@
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.thiesen.collections.set;
-public interface IUnmodifiableSet<T> {
 
-    // marker interface
+import org.thiesen.collections.common.UnmodifiableSetView;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.UnmodifiableIterator;
+
+public interface IUnmodifiableSet<E> extends ISet<E> {
+
+    @Override
+    public UnmodifiableIterator<E> iterator();
+    
+    @Override
+    public IUnmodifiableSetView<E> filter( final Predicate<E> predicate );
+    
+    @Override
+    public UnmodifiableSetView<E> asCollectionsView();
     
 }

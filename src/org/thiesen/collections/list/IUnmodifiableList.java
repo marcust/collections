@@ -18,15 +18,11 @@
  */
 package org.thiesen.collections.list;
 
-import org.thiesen.collections.collection.IUnmodifiableCollectionView;
+import com.google.common.collect.UnmodifiableIterator;
 
+public interface IUnmodifiableList<E> extends IList<E> {
 
-public interface IUnmodifiableListView<E> extends 
-    IList<E>,
-    IListView<E>,
-    IUnmodifiableCollectionView<E>,
-    IUnmodifiableList<E> {
-
-    // marker interface
+    @Override
+    public UnmodifiableIterator<E> iterator();
     
 }
