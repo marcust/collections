@@ -25,11 +25,11 @@ import com.google.common.collect.Sets;
 
 public class MutableLinkedHashSet<E> extends AbstractDelegatingMutableSet<E> {
 
-    private final LinkedHashSet<E> _linkdedHashSet;
+    private final LinkedHashSet<E> _linkedHashSet;
 
     private MutableLinkedHashSet( final LinkedHashSet<E> set ) {
         super( set );
-        _linkdedHashSet = set;
+        _linkedHashSet = set;
     }
     
     public static <T> MutableLinkedHashSet<T> create() {
@@ -43,7 +43,7 @@ public class MutableLinkedHashSet<E> extends AbstractDelegatingMutableSet<E> {
     @SuppressWarnings( "unchecked" )
     @Override
     public Set<E> copyToMutableCollections() {
-        return (Set<E>) _linkdedHashSet.clone();
+        return (Set<E>) _linkedHashSet.clone();
     }
 
 }

@@ -16,11 +16,8 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.common;
-
-import java.util.Collection;
-
-public interface CollectionView<E> extends Collection<E> {
+package org.thiesen.collections.common.view.map;
+public interface ImmutableMapView<K, V> extends MapView<K, V> {
 
     // marker interface
     

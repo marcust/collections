@@ -26,11 +26,11 @@ import com.google.common.collect.Sets;
 public class MutableHashSet<E>
     extends AbstractDelegatingMutableSet<E> {
 
-    private final HashSet<E> _set;
+    private final HashSet<E> _hashSet;
 
     private MutableHashSet( final HashSet<E> set ) {
         super( set );
-        _set = set;
+        _hashSet = set;
     }
     
     public static <T> MutableHashSet<T> withExpectedSize( final int size ) {
@@ -49,7 +49,7 @@ public class MutableHashSet<E>
     @SuppressWarnings( "unchecked" )
     @Override
     public Set<E> copyToMutableCollections() {
-        return (Set<E>) _set.clone();
+        return (Set<E>) _hashSet.clone();
     }
     
   

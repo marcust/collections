@@ -18,7 +18,7 @@
  */
 package org.thiesen.collections.list;
 
-import org.thiesen.collections.common.ImmutableListView;
+import org.thiesen.collections.common.view.list.ImmutableListView;
 
 
 public interface IImmutableRandomAccessList<E> 

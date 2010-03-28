@@ -21,6 +21,7 @@ package org.thiesen.collections.map;
 import java.util.Map;
 
 import org.thiesen.collections.collection.views.ICollectionView;
+import org.thiesen.collections.common.view.map.MapView;
 import org.thiesen.collections.set.views.ISetView;
 
 
@@ -41,5 +42,7 @@ public interface IMap<K, V> {
     ICollectionView<V> values();
     
     ISetView<Map.Entry<K, V>> entrySet();
+ 
+    MapView<K,V> asMapView();
     
 }

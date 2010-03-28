@@ -22,8 +22,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.thiesen.collections.collection.ICollection;
+import org.thiesen.collections.collection.impl.CollectionViews;
 import org.thiesen.collections.collection.views.IMutableCollectionView;
-import org.thiesen.collections.common.MutableListView;
+import org.thiesen.collections.common.view.list.MutableListView;
 import org.thiesen.collections.list.IMutableList;
 import org.thiesen.collections.list.views.IMutableListView;
 import org.thiesen.collections.list.views.IUnmodifiableListView;

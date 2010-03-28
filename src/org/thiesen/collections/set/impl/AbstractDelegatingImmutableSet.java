@@ -22,9 +22,9 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.ImmutableIterator;
-import org.thiesen.collections.common.ImmutableIteratorImpl;
-import org.thiesen.collections.common.ImmutableSetView;
+import org.thiesen.collections.common.iterator.ImmutableIterator;
+import org.thiesen.collections.common.iterator.ImmutableIteratorImpl;
+import org.thiesen.collections.common.view.set.ImmutableSetView;
 import org.thiesen.collections.set.IImmutableSet;
 import org.thiesen.collections.set.views.IImmutableSetView;
 

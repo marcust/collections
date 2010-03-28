@@ -20,7 +20,7 @@ package org.thiesen.collections.set;
 
 import java.util.Collection;
 
-import org.thiesen.collections.common.MutableSetView;
+import org.thiesen.collections.common.view.set.MutableSetView;
 import org.thiesen.collections.set.views.IMutableSetView;
 import org.thiesen.collections.set.views.IUnmodifiableSetView;
 

@@ -16,10 +16,8 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.common;
-
-
-public interface UnmodifiableCollectionView<E> extends CollectionView<E> {
+package org.thiesen.collections.common.view.collection;
+public interface ImmutableCollectionView<E> extends CollectionView<E> {
 
     // marker interface
     

@@ -18,7 +18,7 @@
  */
 package org.thiesen.collections.collection;
 
-import org.thiesen.collections.common.CollectionView;
+import org.thiesen.collections.common.view.collection.CollectionView;
 
 
 public interface ICollection<E> extends Iterable<E>  {

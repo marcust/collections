@@ -16,11 +16,12 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.common;
+package org.thiesen.collections.common.view.set;
 
 
-public interface ImmutableIterable<T> extends Iterable<T> {
 
-    public ImmutableIterator<T> iterator();
+public interface MutableSetView<E> extends SetView<E> {
+
+    // marker interface
     
 }

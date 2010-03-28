@@ -16,27 +16,33 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.set;
+package org.thiesen.collections.common.iterator;
 
-import java.util.Collection;
+import java.util.Iterator;
 
-import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.view.set.SetView;
-import org.thiesen.collections.set.views.ISetView;
+import com.google.common.collect.UnmodifiableIterator;
 
-import com.google.common.base.Predicate;
+public class ImmutableIteratorImpl<E> extends UnmodifiableIterator<E> 
+    implements ImmutableIterator<E> {
 
+    private final Iterator<E> _wrapped;
 
-public interface ISet<E> extends Iterable<E>, ICollection<E> {
-
-    boolean containsAll(Collection<?> c);
-
-    @Override
-    public java.util.Set<E> copyToMutableCollections();
-
-    @Override
-    public SetView<E> asCollectionsView();
+    private ImmutableIteratorImpl( final Iterator<E> wrappee ) {
+        _wrapped = wrappee;
+    }
     
-    ISetView<E> filter( Predicate<E> predicate );
+    public static <T> ImmutableIteratorImpl<T> wrap( final Iterator<T> wrappee ) {
+        return new ImmutableIteratorImpl<T>( wrappee );
+    }
+    
+    @Override
+    public boolean hasNext() {
+        return _wrapped.hasNext();
+    }
+
+    @Override
+    public E next() {
+        return _wrapped.next();
+    }
 
 }

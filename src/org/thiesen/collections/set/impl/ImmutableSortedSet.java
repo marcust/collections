@@ -27,11 +27,11 @@ import org.thiesen.collections.set.IMutableSet;
 public class ImmutableSortedSet<E> 
     extends AbstractDelegatingImmutableSet<E> {
     
-    private final SortedSet<E> _set;
+    private final SortedSet<E> _sortedSet;
 
     private ImmutableSortedSet( final com.google.common.collect.ImmutableSortedSet<E> set ) {
         super( set );        
-        _set = set;
+        _sortedSet = set;
     }
     
     public static <T> ImmutableSortedSet<T> copyOf( final Iterable<T> elements ) {
@@ -44,7 +44,7 @@ public class ImmutableSortedSet<E>
 
     @Override
     public IMutableSet<E> mutableCopy() {
-        return MutableTreeSet.<E>copyOf( _set.comparator(), _set );
+        return MutableTreeSet.<E>copyOf( _sortedSet.comparator(), _sortedSet );
     }
 
 

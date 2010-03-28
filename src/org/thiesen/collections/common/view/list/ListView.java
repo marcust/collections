@@ -16,11 +16,15 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.common;
+package org.thiesen.collections.common.view.list;
+
+import java.util.List;
+
+import org.thiesen.collections.common.view.collection.CollectionView;
 
 
-public interface ImmutableListView<E> extends ListView<E> {
+public interface ListView<E> extends List<E>, CollectionView<E> {
 
-    // marker interface only
+    // marker interface
     
 }

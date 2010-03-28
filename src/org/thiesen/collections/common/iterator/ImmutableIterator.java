@@ -16,33 +16,12 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.common;
+package org.thiesen.collections.common.iterator;
 
 import java.util.Iterator;
 
-import com.google.common.collect.UnmodifiableIterator;
+public interface ImmutableIterator<T> extends Iterator<T> {
 
-public class ImmutableIteratorImpl<E> extends UnmodifiableIterator<E> 
-    implements ImmutableIterator<E> {
-
-    private final Iterator<E> _wrapped;
-
-    private ImmutableIteratorImpl( final Iterator<E> wrappee ) {
-        _wrapped = wrappee;
-    }
+    // Marker Interface
     
-    public static <T> ImmutableIteratorImpl<T> wrap( final Iterator<T> wrappee ) {
-        return new ImmutableIteratorImpl<T>( wrappee );
-    }
-    
-    @Override
-    public boolean hasNext() {
-        return _wrapped.hasNext();
-    }
-
-    @Override
-    public E next() {
-        return _wrapped.next();
-    }
-
 }

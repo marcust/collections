@@ -24,12 +24,12 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.ImmutableIterator;
-import org.thiesen.collections.common.ImmutableIteratorImpl;
-import org.thiesen.collections.common.ImmutableSetView;
-import org.thiesen.collections.common.MutableSetView;
-import org.thiesen.collections.common.UnmodifiableIteratorImpl;
-import org.thiesen.collections.common.UnmodifiableSetView;
+import org.thiesen.collections.common.iterator.ImmutableIterator;
+import org.thiesen.collections.common.iterator.ImmutableIteratorImpl;
+import org.thiesen.collections.common.iterator.UnmodifiableIteratorImpl;
+import org.thiesen.collections.common.view.set.ImmutableSetView;
+import org.thiesen.collections.common.view.set.MutableSetView;
+import org.thiesen.collections.common.view.set.UnmodifiableSetView;
 import org.thiesen.collections.set.IImmutableSet;
 import org.thiesen.collections.set.IMutableSet;
 import org.thiesen.collections.set.views.IImmutableSetView;
@@ -37,448 +37,315 @@ import org.thiesen.collections.set.views.IMutableSetView;
 import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.ForwardingSet;
 import com.google.common.collect.Sets;
 import com.google.common.collect.UnmodifiableIterator;
 
-class SetViews {
+public class SetViews {
     
     // FIXME(MT): The Views do not honor the difference between sorted und unsorted
 
-    private static class UnmodifiableSetViewImpl<E> implements UnmodifiableSetView<E> {
+    private static class UnmodifiableSetViewImpl<E> 
+        extends ForwardingSet<E>
+        implements UnmodifiableSetView<E> {
 
-        private final Set<E> _set;
+        private final Set<E> _delegate;
 
         public UnmodifiableSetViewImpl( final Set<E> set ) {
-            _set = Collections.unmodifiableSet( set );
+            _delegate = Collections.unmodifiableSet( set );
         }
 
-        public boolean add( @SuppressWarnings( "unused" ) final E e ) {
-            throw new UnsupportedOperationException("Unmodifiable View");
+        @Override
+        protected Set<E> delegate() {
+            return _delegate;
         }
-
-        public boolean addAll( @SuppressWarnings( "unused" ) final Collection<? extends E> c ) {
-            throw new UnsupportedOperationException("Unmodifiable View");
-        }
-
-        public void clear() {
-            throw new UnsupportedOperationException("Unmodifiable View");
-        }
-
-        public boolean contains( final Object o ) {
-            return _set.contains( o );
-        }
-
-        public boolean containsAll( final Collection<?> c ) {
-            return _set.containsAll( c );
-        }
-
-        public boolean isEmpty() {
-            return _set.isEmpty();
-        }
-
-        public UnmodifiableIterator<E> iterator() {
-            return UnmodifiableIteratorImpl.wrap( _set.iterator() );
-        }
-
-        public boolean remove( @SuppressWarnings( "unused" ) final Object o ) {
-            throw new UnsupportedOperationException("Unmodifiable View");
-        }
-
-        public boolean removeAll( @SuppressWarnings( "unused" ) final Collection<?> c ) {
-            throw new UnsupportedOperationException("Unmodifiable View");
-        }
-
-        public boolean retainAll( @SuppressWarnings( "unused" ) final Collection<?> c ) {
-            throw new UnsupportedOperationException("Unmodifiable View");
-        }
-
-        public int size() {
-            return _set.size();
-        }
-
-        public Object[] toArray() {
-            return _set.toArray();
-        }
-
-        public <T> T[] toArray( final T[] a ) {
-            return _set.toArray( a );
-        }
-
         
     }
 
     private static class IUnmodifiableSetViewImpl<E> implements IUnmodifiableSetView<E> {
 
-        private final Set<E> _set;
+        private final Set<E> _delegate;
 
         public IUnmodifiableSetViewImpl( final Set<E> set ) {
-            _set = Collections.unmodifiableSet( set );
+            _delegate = Collections.unmodifiableSet( set );
         }
         
         @Override
         public UnmodifiableSetView<E> asCollectionsView() {
-            return new UnmodifiableSetViewImpl<E>( _set );
+            return new UnmodifiableSetViewImpl<E>( _delegate );
         }
 
         @Override
         public boolean containsAll( final Collection<?> c ) {
-            return _set.containsAll( c );
+            return _delegate.containsAll( c );
         }
 
         @Override
         public Set<E> copyToMutableCollections() {
-            return Sets.newHashSet( _set );
+            return Sets.newHashSet( _delegate );
         }
 
         @Override
         public IUnmodifiableSetView<E> filter( final Predicate<E> predicate ) {
-            return new IUnmodifiableSetViewImpl<E>( Sets.filter( _set, predicate ) );
+            return new IUnmodifiableSetViewImpl<E>( Sets.filter( _delegate, predicate ) );
         }
 
         @Override
         public UnmodifiableIterator<E> iterator() {
-            return UnmodifiableIteratorImpl.wrap( _set.iterator() );
+            return UnmodifiableIteratorImpl.wrap( _delegate.iterator() );
         }
 
         @Override
         public boolean contains( final Object o ) {
-            return _set.contains( o );
+            return _delegate.contains( o );
         }
 
         @Override
         public boolean containsAll( final ICollection<?> c ) {
-            return _set.containsAll( c.asCollectionsView() );
+            return _delegate.containsAll( c.asCollectionsView() );
         }
 
         @Override
         public boolean isEmpty() {
-            return _set.isEmpty();
+            return _delegate.isEmpty();
         }
 
         @Override
         public int size() {
-            return _set.size();
+            return _delegate.size();
         }
 
         @Override
         public Object[] toArray() {
-            return _set.toArray();
+            return _delegate.toArray();
         }
 
         @Override
         public <T> T[] toArray( final T[] a ) {
-            return _set.toArray( a );
+            return _delegate.toArray( a );
         }
 
     }
 
-    private static class ImmutableSetViewImpl<E> implements ImmutableSetView<E> {
+    private static class ImmutableSetViewImpl<E> 
+        extends ForwardingSet<E>
+        implements ImmutableSetView<E> {
 
-        private final Set<E> _set;
+        private final Set<E> _delegate;
 
         public ImmutableSetViewImpl( final Set<E> set ) {
-            _set = Collections.unmodifiableSet( set );
+            _delegate = Collections.unmodifiableSet( set );
         }
 
-        public boolean add( @SuppressWarnings( "unused" ) final E e ) {
-            throw new UnsupportedOperationException("Immutable Set View");
+        @Override
+        protected Set<E> delegate() {
+            return _delegate;
         }
 
-        public boolean addAll( @SuppressWarnings( "unused" ) final Collection<? extends E> c ) {
-            throw new UnsupportedOperationException("Immutable Set View");
-        }
-
-        public void clear() {
-            throw new UnsupportedOperationException("Immutable Set View");
-        }
-
-        public boolean contains( final Object o ) {
-            return _set.contains( o );
-        }
-
-        public boolean containsAll( final Collection<?> c ) {
-            return _set.containsAll( c );
-        }
-
-        public boolean isEmpty() {
-            return _set.isEmpty();
-        }
-
-        public ImmutableIterator<E> iterator() {
-            return ImmutableIteratorImpl.wrap( _set.iterator() );
-        }
-
-        public boolean remove( @SuppressWarnings( "unused" ) final Object o ) {
-            throw new UnsupportedOperationException("Immutable Set View");
-        }
-
-        public boolean removeAll( @SuppressWarnings( "unused" ) final Collection<?> c ) {
-            throw new UnsupportedOperationException("Immutable Set View");
-        }
-
-        public boolean retainAll( @SuppressWarnings( "unused" ) final Collection<?> c ) {
-            throw new UnsupportedOperationException("Immutable Set View");
-        }
-
-        public int size() {
-            return _set.size();
-        }
-
-        public Object[] toArray() {
-            return _set.toArray();
-        }
-
-        public <T> T[] toArray( final T[] a ) {
-            return _set.toArray( a );
-        }
-
+       
     }
 
     private static class IImmutableSetViewImpl<E> implements IImmutableSetView<E> {
 
-        private final Set<E> _set;
+        private final Set<E> _delegate;
 
         private IImmutableSetViewImpl( final Set<E> set ) {
-            _set = Collections.unmodifiableSet( set );
+            _delegate = Collections.unmodifiableSet( set );
         }
 
         @Override
         public ImmutableSetView<E> asCollectionsView() {
-            return new ImmutableSetViewImpl<E>( _set );
+            return new ImmutableSetViewImpl<E>( _delegate );
             
         }
 
         @Override
         public boolean containsAll( final Collection<?> c ) {
-            return _set.containsAll( c );
+            return _delegate.containsAll( c );
         }
 
         @Override
         public Set<E> copyToMutableCollections() {
-            return Sets.newHashSet( _set );
+            return Sets.newHashSet( _delegate );
         }
 
         @Override
         public IImmutableSetView<E> filter( final Predicate<E> predicate ) {
-            return new IImmutableSetViewImpl<E>( Sets.filter( _set, predicate ) );
+            return new IImmutableSetViewImpl<E>( Sets.filter( _delegate, predicate ) );
         }
 
         @Override
         public ImmutableIterator<E> iterator() {
-            return ImmutableIteratorImpl.wrap( _set.iterator() );
+            return ImmutableIteratorImpl.wrap( _delegate.iterator() );
         }
 
         @Override
         public boolean contains( final Object o ) {
-            return _set.contains( o );
+            return _delegate.contains( o );
         }
 
         @Override
         public boolean containsAll( final ICollection<?> c ) {
-            return _set.containsAll( c.asCollectionsView() );
+            return _delegate.containsAll( c.asCollectionsView() );
         }
 
         @Override
         public boolean isEmpty() {
-            return _set.isEmpty();
+            return _delegate.isEmpty();
         }
 
         @Override
         public int size() {
-            return _set.size();
+            return _delegate.size();
         }
 
         @Override
         public Object[] toArray() {
-            return _set.toArray();
+            return _delegate.toArray();
         }
 
         @Override
         public <T> T[] toArray( final T[] a ) {
-            return _set.toArray( a );
+            return _delegate.toArray( a );
         }
 
         @Override
         public IMutableSet<E> mutableCopy() {
-            return MutableHashSet.copyOf( _set );
+            return MutableHashSet.copyOf( _delegate );
         }
     }
 
 
 
-    private static class MutableSetViewImpl<E> implements MutableSetView<E> {
+    private static class MutableSetViewImpl<E> 
+        extends ForwardingSet<E>
+        implements MutableSetView<E> {
 
-        private final Set<E> _set;
+        private final Set<E> _delegate;
 
         public MutableSetViewImpl( final Set<E> set ) {
-            _set = set;
+            _delegate = set;
         }
 
-        public boolean add( final E e ) {
-            return _set.add( e );
+        @Override
+        protected Set<E> delegate() {
+            return _delegate;
         }
 
-        public boolean addAll( final Collection<? extends E> c ) {
-            return _set.addAll( c );
-        }
-
-        public void clear() {
-            _set.clear();
-        }
-
-        public boolean contains( final Object o ) {
-            return _set.contains( o );
-        }
-
-        public boolean containsAll( final Collection<?> c ) {
-            return _set.containsAll( c );
-        }
-
-        public boolean isEmpty() {
-            return _set.isEmpty();
-        }
-
-        public Iterator<E> iterator() {
-            return _set.iterator();
-        }
-
-        public boolean remove( final Object o ) {
-            return _set.remove( o );
-        }
-
-        public boolean removeAll( final Collection<?> c ) {
-            return _set.removeAll( c );
-        }
-
-        public boolean retainAll( final Collection<?> c ) {
-            return _set.retainAll( c );
-        }
-
-        public int size() {
-            return _set.size();
-        }
-
-        public Object[] toArray() {
-            return _set.toArray();
-        }
-
-        public <T> T[] toArray( final T[] a ) {
-            return _set.toArray( a );
-        }
         
     }
 
     private static class IMutableSetViewImpl<E> implements IMutableSetView<E> {
 
-        private final Set<E> _set;
+        private final Set<E> _delegate;
 
         public IMutableSetViewImpl( final Set<E> set ) {
-            _set = set;
+            _delegate = set;
         }
 
         public boolean add( final E e ) {
-            return _set.add( e );
+            return _delegate.add( e );
         }
 
         public boolean addAll( final Collection<? extends E> c ) {
-            return _set.addAll( c );
+            return _delegate.addAll( c );
         }
 
         public void clear() {
-            _set.clear();
+            _delegate.clear();
         }
 
         public boolean contains( final Object o ) {
-            return _set.contains( o );
+            return _delegate.contains( o );
         }
 
         public boolean containsAll( final Collection<?> c ) {
-            return _set.containsAll( c );
+            return _delegate.containsAll( c );
         }
 
         public boolean isEmpty() {
-            return _set.isEmpty();
+            return _delegate.isEmpty();
         }
 
         public Iterator<E> iterator() {
-            return _set.iterator();
+            return _delegate.iterator();
         }
 
         public boolean remove( final Object o ) {
-            return _set.remove( o );
+            return _delegate.remove( o );
         }
 
         public boolean removeAll( final Collection<?> c ) {
-            return _set.removeAll( c );
+            return _delegate.removeAll( c );
         }
 
         public boolean retainAll( final Collection<?> c ) {
-            return _set.retainAll( c );
+            return _delegate.retainAll( c );
         }
 
         public int size() {
-            return _set.size();
+            return _delegate.size();
         }
 
         public Object[] toArray() {
-            return _set.toArray();
+            return _delegate.toArray();
         }
 
         public <T> T[] toArray( final T[] a ) {
-            return _set.toArray( a );
+            return _delegate.toArray( a );
         }
 
         @Override
         public MutableSetView<E> asCollectionsView() {
-            return new MutableSetViewImpl<E>( _set );
+            return new MutableSetViewImpl<E>( _delegate );
         }
 
         @Override
         public Set<E> copyToMutableCollections() {
-            return Sets.newHashSet( _set );
+            return Sets.newHashSet( _delegate );
         }
 
         @Override
         public IMutableSetView<E> filter( final Predicate<E> predicate ) {
-            return new IMutableSetViewImpl<E>( Sets.filter( _set, predicate ) );
+            return new IMutableSetViewImpl<E>( Sets.filter( _delegate, predicate ) );
             
         }
 
         @Override
         public boolean containsAll( final ICollection<?> c ) {
-            return _set.containsAll( c.asCollectionsView() );
+            return _delegate.containsAll( c.asCollectionsView() );
         }
 
         @Override
         public IImmutableSet<E> immutableCopy() {
-            return ImmutableSet.copyOf( _set );
+            return ImmutableSet.copyOf( _delegate );
         }
 
         @Override
         public IUnmodifiableSetView<E> asUnmodifiableView() {
-            return new IUnmodifiableSetViewImpl<E>( _set );
+            return new IUnmodifiableSetViewImpl<E>( _delegate );
         }
         
  
     }
 
-    static <E> IMutableSetView<E> asIMutableSetView( final Set<E> set ) {
+    public static <E> IMutableSetView<E> asIMutableSetView( final Set<E> set ) {
         return new IMutableSetViewImpl<E>( set );
     }
     
-    static <E> MutableSetView<E> asMutableSetView( final Set<E> set ) {
+    public static <E> MutableSetView<E> asMutableSetView( final Set<E> set ) {
         return new MutableSetViewImpl<E>( set );
     }
     
-    static <E> ImmutableSetView<E> asImmutableSetView( final Set<E> set ) {
+    public static <E> ImmutableSetView<E> asImmutableSetView( final Set<E> set ) {
         return new ImmutableSetViewImpl<E>( set );
     }
     
-    static <E> IImmutableSetView<E> asIImmutableSetView( final Set<E> set ) {
+    public static <E> IImmutableSetView<E> asIImmutableSetView( final Set<E> set ) {
         return new IImmutableSetViewImpl<E>( set );
     }
     
-    static <E> IUnmodifiableSetView<E> asIUnmodifiableSetView( final Set<E> set ) {
+    public static <E> IUnmodifiableSetView<E> asIUnmodifiableSetView( final Set<E> set ) {
         return new IUnmodifiableSetViewImpl<E>( set );
     }
     

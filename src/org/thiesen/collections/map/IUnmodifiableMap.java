@@ -21,6 +21,7 @@ package org.thiesen.collections.map;
 import java.util.Map;
 
 import org.thiesen.collections.collection.views.IUnmodifiableCollectionView;
+import org.thiesen.collections.common.view.map.UnmodifiableMapView;
 import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
 public interface IUnmodifiableMap<K, V> extends IMap<K, V> {
@@ -30,4 +31,7 @@ public interface IUnmodifiableMap<K, V> extends IMap<K, V> {
     IUnmodifiableCollectionView<V> values();
     
     IUnmodifiableSetView<Map.Entry<K, V>> entrySet();
+    
+    UnmodifiableMapView<K,V> asMapView();
+
 }

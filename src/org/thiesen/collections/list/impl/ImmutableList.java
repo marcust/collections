@@ -21,9 +21,9 @@ package org.thiesen.collections.list.impl;
 import java.util.List;
 
 import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.ImmutableIterator;
-import org.thiesen.collections.common.ImmutableIteratorImpl;
-import org.thiesen.collections.common.ImmutableListView;
+import org.thiesen.collections.common.iterator.ImmutableIterator;
+import org.thiesen.collections.common.iterator.ImmutableIteratorImpl;
+import org.thiesen.collections.common.view.list.ImmutableListView;
 import org.thiesen.collections.list.IImmutableRandomAccessList;
 import org.thiesen.collections.list.IMutableList;
 import org.thiesen.collections.list.views.IUnmodifiableListView;

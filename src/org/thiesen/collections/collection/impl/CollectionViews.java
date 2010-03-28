@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.list.impl;
+package org.thiesen.collections.collection.impl;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,13 +29,13 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 
 
-class CollectionViews {
+public class CollectionViews {
 
-    static class IMutableCollectionViewImpl<E> implements IMutableCollectionView<E> {
+    private static class IMutableCollectionViewImpl<E> implements IMutableCollectionView<E> {
 
         private final Collection<E> _collection;
 
-        IMutableCollectionViewImpl( final Collection<E> collection ) {
+        private IMutableCollectionViewImpl( final Collection<E> collection ) {
             _collection = collection;
         }
 
@@ -125,7 +125,7 @@ class CollectionViews {
         }
 
         @Override
-        public org.thiesen.collections.common.CollectionView<E> asCollectionsView() {
+        public org.thiesen.collections.common.view.collection.CollectionView<E> asCollectionsView() {
             return new UnmodifiableCollectionViewImpl<E>( this );
         }
 
@@ -134,7 +134,7 @@ class CollectionViews {
     }
 
     private static class UnmodifiableCollectionViewImpl<T>
-        implements org.thiesen.collections.common.UnmodifiableCollectionView<T> {
+        implements org.thiesen.collections.common.view.collection.UnmodifiableCollectionView<T> {
 
         private final ICollection<T> _collection;
 
@@ -214,7 +214,7 @@ class CollectionViews {
 
     }
 
-    static <E> IMutableCollectionView<E> asMutableCollectionView( final Collection<E> collection ) {
+    public static <E> IMutableCollectionView<E> asMutableCollectionView( final Collection<E> collection ) {
         return new IMutableCollectionViewImpl<E>( collection );
     }
     

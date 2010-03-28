@@ -19,7 +19,7 @@
 package org.thiesen.collections.list;
 
 import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.ListView;
+import org.thiesen.collections.common.view.list.ListView;
 import org.thiesen.collections.list.views.IListView;
 
 import com.google.common.base.Function;

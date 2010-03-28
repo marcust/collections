@@ -16,12 +16,32 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.common;
+package org.thiesen.collections.common.iterator;
 
-import java.util.Map;
+import java.util.Iterator;
 
-public interface MapView<K, V> extends Map<K, V> {
+import com.google.common.collect.UnmodifiableIterator;
 
-    // marker interface
+public class UnmodifiableIteratorImpl<E> extends UnmodifiableIterator<E> {
+
+    private final Iterator<E> _wrapped;
+
+    private UnmodifiableIteratorImpl( final Iterator<E> wrappee ) {
+        _wrapped = wrappee;
+    }
     
+    public static <T> UnmodifiableIterator<T> wrap( final Iterator<T> wrappee ) {
+        return new UnmodifiableIteratorImpl<T>( wrappee );
+    }
+    
+    @Override
+    public boolean hasNext() {
+        return _wrapped.hasNext();
+    }
+
+    @Override
+    public E next() {
+        return _wrapped.next();
+    }
+
 }

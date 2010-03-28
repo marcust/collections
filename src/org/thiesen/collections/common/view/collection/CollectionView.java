@@ -16,27 +16,12 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.thiesen.collections.set;
+package org.thiesen.collections.common.view.collection;
 
 import java.util.Collection;
 
-import org.thiesen.collections.collection.ICollection;
-import org.thiesen.collections.common.view.set.SetView;
-import org.thiesen.collections.set.views.ISetView;
+public interface CollectionView<E> extends Collection<E> {
 
-import com.google.common.base.Predicate;
-
-
-public interface ISet<E> extends Iterable<E>, ICollection<E> {
-
-    boolean containsAll(Collection<?> c);
-
-    @Override
-    public java.util.Set<E> copyToMutableCollections();
-
-    @Override
-    public SetView<E> asCollectionsView();
+    // marker interface
     
-    ISetView<E> filter( Predicate<E> predicate );
-
 }

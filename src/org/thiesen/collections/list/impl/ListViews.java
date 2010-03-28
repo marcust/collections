@@ -24,11 +24,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.thiesen.collections.collection.ICollection;
+import org.thiesen.collections.collection.impl.CollectionViews;
 import org.thiesen.collections.collection.views.IMutableCollectionView;
-import org.thiesen.collections.common.ImmutableListView;
-import org.thiesen.collections.common.ListView;
-import org.thiesen.collections.common.MutableListView;
-import org.thiesen.collections.common.UnmodifiableIteratorImpl;
+import org.thiesen.collections.common.iterator.UnmodifiableIteratorImpl;
+import org.thiesen.collections.common.view.list.ImmutableListView;
+import org.thiesen.collections.common.view.list.ListView;
+import org.thiesen.collections.common.view.list.MutableListView;
 import org.thiesen.collections.list.views.IImmutableListView;
 import org.thiesen.collections.list.views.IMutableListView;
 import org.thiesen.collections.list.views.IUnmodifiableListView;
@@ -42,11 +43,13 @@ import com.google.common.collect.UnmodifiableIterator;
 
 public class ListViews {
 
-    private static class ImmutableListViewImpl<E> extends ForwardingList<E> implements ImmutableListView<E> {
+    private static class ImmutableListViewImpl<E> 
+        extends ForwardingList<E> 
+        implements ImmutableListView<E> {
 
         private final List<E> _delegate;
 
-        public ImmutableListViewImpl( final List<E> list ) {
+        private ImmutableListViewImpl( final List<E> list ) {
             _delegate = Collections.unmodifiableList( list );
         }
 
@@ -88,7 +91,6 @@ public class ListViews {
 
         private IImmutableListViewImpl( final List<E> list ) {
             _list = Collections.unmodifiableList( list );
-            
         }
 
         @Override
@@ -222,7 +224,7 @@ public class ListViews {
 
         @Override
         public IMutableCollectionView<E> filter( final Predicate<E> predicate ) {
-            return new CollectionViews.IMutableCollectionViewImpl<E>( Collections2.filter( _list, predicate ) );
+            return CollectionViews.asMutableCollectionView( Collections2.filter( _list, predicate ) );
         }
 
         @Override
@@ -299,7 +301,7 @@ public class ListViews {
 
         private final List<E> _list;
 
-        protected IUnmodifiableListViewImpl( final List<E> list ) {
+        private IUnmodifiableListViewImpl( final List<E> list ) {
             _list = Collections.unmodifiableList( list );
         }
 

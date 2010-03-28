@@ -26,11 +26,11 @@ import org.thiesen.collections.set.IMutableSet;
 public class ImmutableSet<E> 
     extends AbstractDelegatingImmutableSet<E> {
     
-    private final Set<E> _set;
+    private final Set<E> _immutableSet;
 
     private ImmutableSet( final com.google.common.collect.ImmutableSet<E> set ) {
         super( set );
-        _set = set;
+        _immutableSet = set;
     }
     
     public static <T> ImmutableSet<T> copyOf( final Iterable<T> elements ) {
@@ -43,7 +43,7 @@ public class ImmutableSet<E>
 
     @Override
     public IMutableSet<E> mutableCopy() {
-        return MutableHashSet.copyOf( _set );
+        return MutableHashSet.copyOf( _immutableSet );
     }
     
 }

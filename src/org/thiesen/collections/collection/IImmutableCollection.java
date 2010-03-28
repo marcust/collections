@@ -18,7 +18,7 @@
  */
 package org.thiesen.collections.collection;
 
-import org.thiesen.collections.common.ImmutableIterable;
+import org.thiesen.collections.common.iterator.ImmutableIterable;
 
 
 public interface IImmutableCollection<E> extends IUnmodifiableCollection<E>, ImmutableIterable<E> {

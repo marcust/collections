@@ -18,7 +18,7 @@
  */
 package org.thiesen.collections.set;
 
-import org.thiesen.collections.common.UnmodifiableSetView;
+import org.thiesen.collections.common.view.set.UnmodifiableSetView;
 import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
 import com.google.common.base.Predicate;
