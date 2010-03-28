@@ -19,13 +19,19 @@
 package org.thiesen.collections.set.impl;
 
 import java.util.Comparator;
+import java.util.SortedSet;
+
+import org.thiesen.collections.set.IMutableSet;
 
 
 public class ImmutableSortedSet<E> 
     extends AbstractDelegatingImmutableSet<E> {
     
-    private ImmutableSortedSet( final com.google.common.collect.ImmutableSet<E> set ) {
+    private final SortedSet<E> _set;
+
+    private ImmutableSortedSet( final com.google.common.collect.ImmutableSortedSet<E> set ) {
         super( set );        
+        _set = set;
     }
     
     public static <T> ImmutableSortedSet<T> copyOf( final Iterable<T> elements ) {
@@ -34,6 +40,11 @@ public class ImmutableSortedSet<E>
 
     public static <T> ImmutableSortedSet<T> copyOf( final Comparator<? super T> comparator, final Iterable<T> elements ) {
         return new ImmutableSortedSet<T>( com.google.common.collect.ImmutableSortedSet.copyOf( comparator, elements ) );
+    }
+
+    @Override
+    public IMutableSet<E> mutableCopy() {
+        return MutableTreeSet.<E>copyOf( _set.comparator(), _set );
     }
 
 

@@ -19,6 +19,7 @@
 package org.thiesen.collections.list.impl;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class ListViews {
         private final List<E> _delegate;
 
         public ImmutableListViewImpl( final List<E> list ) {
-            _delegate = list;
+            _delegate = Collections.unmodifiableList( list );
         }
 
         @Override
@@ -86,7 +87,7 @@ public class ListViews {
         private final List<E> _list;
 
         private IImmutableListViewImpl( final List<E> list ) {
-            _list = list;
+            _list = Collections.unmodifiableList( list );
             
         }
 
@@ -299,7 +300,7 @@ public class ListViews {
         private final List<E> _list;
 
         protected IUnmodifiableListViewImpl( final List<E> list ) {
-            _list = list;
+            _list = Collections.unmodifiableList( list );
         }
 
         @Override
@@ -371,7 +372,7 @@ public class ListViews {
         public List<E> _list;
 
         private UnmodifiableListViewImpl( final List<E> list ) {
-            _list = list;
+            _list = Collections.unmodifiableList( list );
         }
 
         @Override

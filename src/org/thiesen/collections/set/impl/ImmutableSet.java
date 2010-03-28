@@ -18,12 +18,19 @@
  */
 package org.thiesen.collections.set.impl;
 
+import java.util.Set;
+
+import org.thiesen.collections.set.IMutableSet;
+
 
 public class ImmutableSet<E> 
     extends AbstractDelegatingImmutableSet<E> {
     
+    private final Set<E> _set;
+
     private ImmutableSet( final com.google.common.collect.ImmutableSet<E> set ) {
-        super( set );        
+        super( set );
+        _set = set;
     }
     
     public static <T> ImmutableSet<T> copyOf( final Iterable<T> elements ) {
@@ -32,6 +39,11 @@ public class ImmutableSet<E>
 
     public static <T> ImmutableSet<T> of( final T... elements ) {
         return new ImmutableSet<T>( com.google.common.collect.ImmutableSet.of( elements ) );
+    }
+
+    @Override
+    public IMutableSet<E> mutableCopy() {
+        return MutableHashSet.copyOf( _set );
     }
     
 }

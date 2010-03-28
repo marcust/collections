@@ -17,34 +17,8 @@
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.thiesen.collections.set;
+public interface IUnmodifiableSet<T> {
 
-import java.util.Collection;
-
-import org.thiesen.collections.common.MutableSetView;
-
-import com.google.common.base.Predicate;
-
-public interface IMutableSet<E> extends ISet<E> {
-
-    boolean add(E e);
-
-    boolean remove(Object o);
-
-    boolean addAll(Collection<? extends E> c);
+    // marker interface
     
-    boolean retainAll(Collection<?> c);
-    
-    boolean removeAll(Collection<?> c);
-
-    void clear();
-    
-    @Override
-    public IMutableSetView<E> filter( final Predicate<E> predicate );
-    
-    @Override
-    public MutableSetView<E> asCollectionsView();
-    
-    public IImmutableSet<E> immutableCopy();
-    
-    public IUnmodifiableSetView<E> asUnmodifiableView();
 }

@@ -22,6 +22,9 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.thiesen.collections.set.IImmutableSet;
+
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 
 public class MutableTreeSet<E> extends AbstractDelegatingMutableSet<E> {
@@ -45,11 +48,24 @@ public class MutableTreeSet<E> extends AbstractDelegatingMutableSet<E> {
         return new MutableTreeSet<T>( Sets.<T>newTreeSet( elements ) );
     }
     
+    public static <T> MutableTreeSet<T> copyOf(
+            final Comparator<? super T> comparator,
+            final Iterable<T> elements ) {
+        final TreeSet<T> newTreeSet = Sets.<T>newTreeSet( comparator );
+        Iterables.addAll( newTreeSet, elements );
+        return new MutableTreeSet<T>( newTreeSet );
+    }
+    
     
     @SuppressWarnings( "unchecked" )
     @Override
     public Set<E> copyToMutableCollections() {
         return (Set<E>) _treeSet.clone();
+    }
+
+    @Override
+    public IImmutableSet<E> immutableCopy() {
+        return ImmutableSortedSet.copyOf( _treeSet.comparator(), _treeSet );
     }
 
 }

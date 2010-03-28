@@ -35,4 +35,5 @@ public interface IImmutableSet<E> extends ISet<E> {
     @Override
     public ImmutableIterator<E> iterator();
     
+    public IMutableSet<E> mutableCopy();
 }

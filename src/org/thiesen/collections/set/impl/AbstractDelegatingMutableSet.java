@@ -24,8 +24,10 @@ import java.util.Set;
 
 import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.common.MutableSetView;
+import org.thiesen.collections.set.IImmutableSet;
 import org.thiesen.collections.set.IMutableSet;
 import org.thiesen.collections.set.IMutableSetView;
+import org.thiesen.collections.set.IUnmodifiableSetView;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
@@ -120,6 +122,15 @@ public abstract class AbstractDelegatingMutableSet<E>
         return SetViews.asIMutableSetView( Sets.filter( _set, predicate ) );
     }
 
+    @Override
+    public IImmutableSet<E> immutableCopy() {
+        return ImmutableSet.copyOf( _set );
+    }
     
+    @Override
+    public IUnmodifiableSetView<E> asUnmodifiableView() {
+        throw new UnsupportedOperationException("Auto generated method stub");
+        
+    }
     
 }
