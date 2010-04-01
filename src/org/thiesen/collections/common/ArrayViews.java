@@ -18,15 +18,19 @@
  */
 package org.thiesen.collections.common;
 
-import org.thiesen.collections.common.view.list.MutableListView;
+import java.util.Arrays;
+
+import org.thiesen.collections.common.view.list.UnmodifiableListView;
+import org.thiesen.collections.list.impl.ListViews;
+import org.thiesen.collections.list.views.IUnmodifiableListView;
 
 public class ArrayViews {
 
-    public static <E> MutableListView<E> asMutableListView( final E... entries ) {
-        return null;
+    public static <E> IUnmodifiableListView<E> asIUnmodifiableListView( final E... entries ) {
+        return ListViews.asIUnmodifiableListView( Arrays.asList( entries ) );
     }
     
-    public static <E> MutableListView<E> asUnmodifiableListView( final E... entries ) {
-        return null;
+    public static <E> UnmodifiableListView<E> asUnmodifiableListView( final E... entries ) {
+        return ListViews.asUnmodifiableListView( Arrays.asList( entries ) );
     }
 }

@@ -448,10 +448,13 @@ public class ListViews {
         return new MutableListViewImpl<E>( list );
     }
     
-    static <E> IUnmodifiableListView<E> asIUnmodifiableListView( final List<E> list ) {
+    public static <E> IUnmodifiableListView<E> asIUnmodifiableListView( final List<E> list ) {
         return new IUnmodifiableListViewImpl<E>( list );
     }
     
+    public static <E> UnmodifiableListView<E> asUnmodifiableListView( final List<E> list ) {
+        return new UnmodifiableListViewImpl<E>( list );
+    }
     
     static <E> IMutableListView<E> asIMutableListView( final List<E> list ) {
         return new IMutableListViewImpl<E>( list );
