@@ -17,8 +17,11 @@
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.thiesen.collections.set.views;
+
+import org.thiesen.collections.common.view.set.UnmodifiableSortedSetView;
+
 public interface IUnmodifiableSortedSetView<E> extends IUnmodifiableSetView<E>, ISortedSetView<E> {
 
-    // empty interface
+    UnmodifiableSortedSetView<E> asCollectionsView();
     
 }

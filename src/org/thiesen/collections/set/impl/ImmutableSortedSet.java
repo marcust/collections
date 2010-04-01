@@ -21,12 +21,16 @@ package org.thiesen.collections.set.impl;
 import java.util.Comparator;
 import java.util.SortedSet;
 
-import org.thiesen.collections.set.IMutableSet;
+import org.thiesen.collections.common.view.set.ImmutableSortedSetView;
+import org.thiesen.collections.set.IImmutableSortedSet;
+import org.thiesen.collections.set.IMutableSortedSet;
+import org.thiesen.collections.set.views.IImmutableSortedSetView;
 
 
 public class ImmutableSortedSet<E> 
-    extends AbstractDelegatingImmutableSet<E> {
-    
+    extends AbstractDelegatingImmutableSet<E> 
+    implements IImmutableSortedSet<E> {
+
     private final SortedSet<E> _sortedSet;
 
     private ImmutableSortedSet( final com.google.common.collect.ImmutableSortedSet<E> set ) {
@@ -43,10 +47,42 @@ public class ImmutableSortedSet<E>
     }
 
     @Override
-    public IMutableSet<E> mutableCopy() {
+    public IMutableSortedSet<E> mutableCopy() {
         return MutableTreeSet.<E>copyOf( _sortedSet.comparator(), _sortedSet );
     }
 
+    @Override
+    public IImmutableSortedSetView<E> headSet( final E toElement ) {
+        return SetViews.asIImmutableSortedSetView( _sortedSet.headSet( toElement ) );
+    }
 
-    
+    @Override
+    public IImmutableSortedSetView<E> subSet( final E fromElement, final E toElement ) {
+        return SetViews.asIImmutableSortedSetView( _sortedSet.subSet( fromElement, toElement ) );
+    }
+
+    @Override
+    public IImmutableSortedSetView<E> tailSet( final E fromElement ) {
+        return SetViews.asIImmutableSortedSetView( _sortedSet.tailSet( fromElement ) );
+    }
+
+    @Override
+    public Comparator<? super E> comparator() {
+        return _sortedSet.comparator();
+    }
+
+    @Override
+    public E first() {
+        return _sortedSet.first();
+    }
+
+    @Override
+    public E last() {
+        return _sortedSet.last();
+    }
+
+    @Override
+    public ImmutableSortedSetView<E> asCollectionsView() {
+        return SetViews.asImmutableSortedSetView( _sortedSet );
+    }
 }

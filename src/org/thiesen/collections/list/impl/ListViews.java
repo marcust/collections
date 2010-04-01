@@ -159,11 +159,6 @@ public class ListViews {
         }
 
         @Override
-        public boolean containsAll( final ICollection<?> c ) {
-            return _list.containsAll( c.asCollectionsView() );
-        }
-
-        @Override
         public List<E> copyToMutableCollections() {
             return Lists.newArrayList( _list );
         }
@@ -280,11 +275,6 @@ public class ListViews {
         }
 
         @Override
-        public boolean containsAll( final ICollection<?> c ) {
-            return _list.containsAll( c.asCollectionsView() );
-        }
-
-        @Override
         public IMutableCollectionView<E> filter( final Predicate<E> predicate ) {
             return CollectionViews.asMutableCollectionView( Collections2.filter( _list, predicate ) );
         }
@@ -382,11 +372,6 @@ public class ListViews {
         @Override
         public <T> IUnmodifiableListView<T> transform( final Function<E, T> transformFunction ) {
             return new IUnmodifiableListViewImpl<T>( Lists.transform( _list, transformFunction ) );
-        }
-
-        @Override
-        public boolean containsAll( final ICollection<?> c ) {
-            return _list.containsAll( c.asCollectionsView() );
         }
 
         @Override

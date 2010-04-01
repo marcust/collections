@@ -18,9 +18,10 @@
  */
 package org.thiesen.collections.set;
 
+import org.thiesen.collections.common.view.set.ImmutableSortedSetView;
 import org.thiesen.collections.set.views.IImmutableSortedSetView;
 
-public interface IImmutableSortedSet<E> extends ISortedSet<E> {
+public interface IImmutableSortedSet<E> extends ISortedSet<E>, IImmutableSet<E> {
 
     IImmutableSortedSetView<E> subSet(E fromElement, E toElement);
     
@@ -28,4 +29,8 @@ public interface IImmutableSortedSet<E> extends ISortedSet<E> {
     
     IImmutableSortedSetView<E> tailSet(E fromElement);
     
+    public IMutableSortedSet<E> mutableCopy();
+
+    ImmutableSortedSetView<E> asCollectionsView();
+
 }

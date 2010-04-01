@@ -22,12 +22,18 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.thiesen.collections.set.IImmutableSet;
+import org.thiesen.collections.common.view.set.MutableSortedSetView;
+import org.thiesen.collections.set.IImmutableSortedSet;
+import org.thiesen.collections.set.IMutableSortedSet;
+import org.thiesen.collections.set.ISortedSet;
+import org.thiesen.collections.set.views.IMutableSortedSetView;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 
-public class MutableTreeSet<E> extends AbstractDelegatingMutableSet<E> {
+public class MutableTreeSet<E> 
+    extends AbstractDelegatingMutableSet<E> 
+    implements IMutableSortedSet<E> {
 
     private final TreeSet<E> _treeSet;
 
@@ -48,6 +54,11 @@ public class MutableTreeSet<E> extends AbstractDelegatingMutableSet<E> {
         return new MutableTreeSet<T>( Sets.<T>newTreeSet( elements ) );
     }
     
+    public static <T> MutableTreeSet<T> copyOf( final ISortedSet<T> elements ) {
+        return new MutableTreeSet<T>( new TreeSet<T>( elements.asCollectionsView() ) );
+    }
+    
+    
     public static <T> MutableTreeSet<T> copyOf(
             final Comparator<? super T> comparator,
             final Iterable<T> elements ) {
@@ -64,8 +75,42 @@ public class MutableTreeSet<E> extends AbstractDelegatingMutableSet<E> {
     }
 
     @Override
-    public IImmutableSet<E> immutableCopy() {
+    public IImmutableSortedSet<E> immutableCopy() {
         return ImmutableSortedSet.copyOf( _treeSet.comparator(), _treeSet );
     }
 
+    @Override
+    public Comparator<? super E> comparator() {
+        return _treeSet.comparator();
+    }
+
+    @Override
+    public E first() {
+        return _treeSet.first();
+    }
+
+    @Override
+    public IMutableSortedSetView<E> headSet( final E toElement ) {
+        return SetViews.asIMutableSortedSetView( _treeSet.headSet( toElement ) );
+    }
+
+    @Override
+    public E last() {
+        return _treeSet.last();
+    }
+
+    @Override
+    public IMutableSortedSetView<E> subSet( final E fromElement, final E toElement ) {
+        return SetViews.asIMutableSortedSetView( _treeSet.subSet( fromElement, toElement ) );
+    }
+
+    @Override
+    public IMutableSortedSetView<E> tailSet( final E fromElement ) {
+        return SetViews.asIMutableSortedSetView( _treeSet.tailSet( fromElement ) );
+    }
+
+    @Override
+    public MutableSortedSetView<E> asCollectionsView() {
+        return SetViews.asMutableSortedSetView( _treeSet );
+    }
 }

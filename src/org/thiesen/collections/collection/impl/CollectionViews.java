@@ -19,16 +19,20 @@
 package org.thiesen.collections.collection.impl;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.collection.IMutableCollection;
 import org.thiesen.collections.collection.views.IImmutableCollectionView;
 import org.thiesen.collections.collection.views.IMutableCollectionView;
+import org.thiesen.collections.collection.views.IUnmodifiableCollectionView;
 import org.thiesen.collections.common.iterator.ImmutableIterator;
 import org.thiesen.collections.common.iterator.ImmutableIteratorImpl;
+import org.thiesen.collections.common.iterator.UnmodifiableIteratorImpl;
 import org.thiesen.collections.common.view.collection.ImmutableCollectionView;
 import org.thiesen.collections.common.view.collection.MutableCollectionView;
+import org.thiesen.collections.common.view.collection.UnmodifiableCollectionView;
 import org.thiesen.collections.list.impl.MutableArrayList;
 
 import com.google.common.base.Predicate;
@@ -37,10 +41,68 @@ import com.google.common.collect.ForwardingCollection;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.UnmodifiableIterator;
 
 
 public class CollectionViews {
     
+    private static class IUnmodifiableCollectionViewImpl<E> 
+        implements IUnmodifiableCollectionView<E> {
+
+        private final Collection<E> _delegate;
+
+        public IUnmodifiableCollectionViewImpl( final Collection<E> collection ) {
+            _delegate = Collections.unmodifiableCollection( collection );
+        }
+
+        @Override
+        public UnmodifiableCollectionView<E> asCollectionsView() {
+            return new UnmodifiableCollectionViewImpl<E>( this );
+        }
+
+        @Override
+        public boolean contains( final Object o ) {
+            return _delegate.contains( o );
+        }
+
+        @Override
+        public boolean containsAll( final Iterable<?> c ) {
+            return Collections3.containsAll( _delegate, c );
+        }
+
+        @Override
+        public Collection<E> copyToMutableCollections() {
+            return Lists.newArrayList( _delegate );
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return _delegate.isEmpty();
+        }
+
+        @Override
+        public int size() {
+            return _delegate.size();
+        }
+
+        @Override
+        public Object[] toArray() {
+            return _delegate.toArray();
+        }
+
+        @Override
+        public <T> T[] toArray( final T[] a ) {
+            return _delegate.toArray( a );
+        }
+
+        @Override
+        public UnmodifiableIterator<E> iterator() {
+            return UnmodifiableIteratorImpl.wrap( _delegate.iterator() );
+        }
+
+        
+    }
+
     private static abstract class AbstractICollection<E> implements ICollection<E> {
     
 
@@ -162,11 +224,6 @@ public class CollectionViews {
         }
 
         @Override
-        public boolean containsAll( final ICollection<?> c ) {
-            return _delegate.containsAll( c.asCollectionsView() );
-        }
-
-        @Override
         public Collection<E> copyToMutableCollections() {
             return Lists.newArrayList( _delegate );
         }
@@ -261,11 +318,6 @@ public class CollectionViews {
         @Override
         public boolean add( final E e ) {
             return _collection.add( e );
-        }
-
-        @Override
-        public boolean containsAll( final ICollection<?> c ) {
-            return _collection.containsAll( c.asCollectionsView() );
         }
 
         @Override
@@ -402,4 +454,8 @@ public class CollectionViews {
         return new IImmutableCollectionViewImpl<E>( collection );
     }
 
+    public static <E> IUnmodifiableCollectionView<E> asIUnmodifiableCollectionView( final Collection<E> collection ) {
+        return new IUnmodifiableCollectionViewImpl<E>( collection );
+    }
+    
 }

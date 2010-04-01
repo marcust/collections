@@ -20,6 +20,7 @@ package org.thiesen.collections.set;
 
 import java.util.Comparator;
 
+import org.thiesen.collections.common.view.set.SortedSetView;
 import org.thiesen.collections.set.views.ISortedSetView;
 
 public interface ISortedSet<E> extends ISet<E> {
@@ -35,5 +36,8 @@ public interface ISortedSet<E> extends ISet<E> {
     ISortedSetView<E> headSet(E toElement);
     
     ISortedSetView<E> tailSet(E fromElement);
+    
+    @Override
+    public SortedSetView<E> asCollectionsView();
     
 }

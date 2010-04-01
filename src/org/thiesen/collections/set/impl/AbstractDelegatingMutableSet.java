@@ -18,11 +18,10 @@
  */
 package org.thiesen.collections.set.impl;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.thiesen.collections.collection.ICollection;
+import org.thiesen.collections.collection.impl.Collections3;
 import org.thiesen.collections.common.view.set.MutableSetView;
 import org.thiesen.collections.set.IImmutableSet;
 import org.thiesen.collections.set.views.IMutableSetView;
@@ -57,8 +56,8 @@ public abstract class AbstractDelegatingMutableSet<E>
     }
 
     @Override
-    public boolean containsAll( final Collection<?> c ) {
-        return _delegate.containsAll( c );
+    public boolean containsAll( final Iterable<?> i ) {
+        return Collections3.containsAll( _delegate, i );
     }
 
     @Override
@@ -74,12 +73,6 @@ public abstract class AbstractDelegatingMutableSet<E>
     @Override
     public boolean contains( final Object o ) {
         return _delegate.contains( o );
-    }
-
-    @Override
-    public boolean containsAll( final ICollection<?> c ) {
-        return _delegate.containsAll( c.asCollectionsView() );
-
     }
 
     @Override

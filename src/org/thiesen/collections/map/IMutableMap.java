@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.thiesen.collections.collection.views.IMutableCollectionView;
 import org.thiesen.collections.common.view.map.MutableMapView;
+import org.thiesen.collections.map.views.IUnmodifiableMapView;
 import org.thiesen.collections.set.views.IMutableSetView;
 
 public interface IMutableMap<K, V> extends IMap<K, V> {
@@ -43,4 +44,6 @@ public interface IMutableMap<K, V> extends IMap<K, V> {
     MutableMapView<K,V> asMapView();
     
     IImmutableMap<K,V> immutableCopy();
+    
+    IUnmodifiableMapView<K,V> asUnmodifiableView();
 }

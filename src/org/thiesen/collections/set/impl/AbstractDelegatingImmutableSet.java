@@ -21,7 +21,6 @@ package org.thiesen.collections.set.impl;
 import java.util.Collection;
 import java.util.Set;
 
-import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.collection.impl.Collections3;
 import org.thiesen.collections.common.iterator.ImmutableIterator;
 import org.thiesen.collections.common.iterator.ImmutableIteratorImpl;
@@ -70,8 +69,8 @@ abstract class AbstractDelegatingImmutableSet<E>
     }
 
     @Override
-    public boolean containsAll( final ICollection<?> c ) {
-        return _set.containsAll( c.asCollectionsView() );
+    public boolean containsAll( final Iterable<?> i ) {
+        return Collections3.containsAll( _set, i );
     }
 
     @Override
@@ -94,11 +93,4 @@ abstract class AbstractDelegatingImmutableSet<E>
         return SetViews.asIImmutableSetView( Sets.filter( _set, predicate ) );
     }
 
-    @Override
-    public boolean containsAll( final Iterable<?> i ) {
-        return Collections3.containsAll( _set, i );
-    }
-    
-    
-    
 }

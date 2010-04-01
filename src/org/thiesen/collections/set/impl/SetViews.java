@@ -18,35 +18,301 @@
  */
 package org.thiesen.collections.set.impl;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.collection.impl.Collections3;
 import org.thiesen.collections.common.iterator.ImmutableIterator;
 import org.thiesen.collections.common.iterator.ImmutableIteratorImpl;
 import org.thiesen.collections.common.iterator.UnmodifiableIteratorImpl;
 import org.thiesen.collections.common.view.set.ImmutableSetView;
+import org.thiesen.collections.common.view.set.ImmutableSortedSetView;
 import org.thiesen.collections.common.view.set.MutableSetView;
+import org.thiesen.collections.common.view.set.MutableSortedSetView;
 import org.thiesen.collections.common.view.set.UnmodifiableSetView;
 import org.thiesen.collections.set.IImmutableSet;
+import org.thiesen.collections.set.IImmutableSortedSet;
 import org.thiesen.collections.set.IMutableSet;
+import org.thiesen.collections.set.IMutableSortedSet;
 import org.thiesen.collections.set.ISet;
 import org.thiesen.collections.set.views.IImmutableSetView;
+import org.thiesen.collections.set.views.IImmutableSortedSetView;
 import org.thiesen.collections.set.views.IMutableSetView;
+import org.thiesen.collections.set.views.IMutableSortedSetView;
 import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.ForwardingSet;
+import com.google.common.collect.ForwardingSortedSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.google.common.collect.UnmodifiableIterator;
 
 public class SetViews {
     
-    // FIXME(MT): The Views do not honor the difference between sorted und unsorted
+    private static class ImmutableSortedSetViewImpl<E> 
+        extends ForwardingSortedSet<E>
+        implements ImmutableSortedSetView<E> {
+
+        private final SortedSet<E> _delegate;
+
+        public ImmutableSortedSetViewImpl( final SortedSet<E> delegate ) {
+            _delegate = Collections.unmodifiableSortedSet( delegate );
+        }
+
+        @Override
+        protected SortedSet<E> delegate() {
+            return _delegate;
+        }
+
+    }
+
+    private static class IImmutableSortedSetViewImpl<E> implements IImmutableSortedSetView<E> {
+
+        private final SortedSet<E> _delegate;
+
+        public IImmutableSortedSetViewImpl( final SortedSet<E> set ) {
+            _delegate = Collections.unmodifiableSortedSet( set );
+        }
+
+        @Override
+        public ImmutableSortedSetView<E> asCollectionsView() {
+            return new ImmutableSortedSetViewImpl<E>( _delegate );
+        }
+
+        @Override
+        public Set<E> copyToMutableCollections() {
+            return new TreeSet<E>( _delegate );
+        }
+
+        @Override
+        public IImmutableSetView<E> filter( final Predicate<E> predicate ) {
+            return new IImmutableSetViewImpl<E>( Sets.filter( _delegate, predicate ) );
+        }
+
+        @Override
+        public ImmutableIterator<E> iterator() {
+            return ImmutableIteratorImpl.wrap( _delegate.iterator() );
+        }
+
+        @Override
+        public boolean contains( final Object o ) {
+            return _delegate.contains( o );
+        }
+
+        @Override
+        public boolean containsAll( final Iterable<?> c ) {
+            return Collections3.containsAll( _delegate, c );
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return _delegate.isEmpty();
+        }
+
+        @Override
+        public int size() {
+            return _delegate.size();
+        }
+
+        @Override
+        public Object[] toArray() {
+            return _delegate.toArray();
+        }
+
+        @Override
+        public <T> T[] toArray( final T[] a ) {
+            return _delegate.toArray( a );
+        }
+
+        @Override
+        public IMutableSortedSet<E> mutableCopy() {
+            return org.thiesen.collections.set.impl.MutableTreeSet.copyOf( this );
+        }
+
+        @Override
+        public Comparator<? super E> comparator() {
+            return _delegate.comparator();
+            
+        }
+
+        @Override
+        public E first() {
+            return _delegate.first();
+        }
+
+        @Override
+        public IImmutableSortedSetView<E> headSet( final E toElement ) {
+            return new IImmutableSortedSetViewImpl<E>( _delegate.headSet( toElement ) );
+        }
+
+        @Override
+        public E last() {
+            return _delegate.last();
+        }
+
+        @Override
+        public IImmutableSortedSetView<E> subSet( final E fromElement, final E toElement ) {
+            return new IImmutableSortedSetViewImpl<E>( _delegate.subSet( fromElement, toElement ) );
+        }
+
+        @Override
+        public IImmutableSortedSetView<E> tailSet( final E fromElement ) {
+            return new IImmutableSortedSetViewImpl<E>( _delegate.tailSet( fromElement ) );
+        }
+
+    }
+
+    private static class MutableSortedSetViewImpl<E>
+        extends ForwardingSortedSet<E>
+        implements MutableSortedSetView<E> {
+
+        private final SortedSet<E> _delegate;
+
+        public MutableSortedSetViewImpl( final SortedSet<E> delegate ) {
+            _delegate = delegate;
+        }
+
+        @Override
+        protected SortedSet<E> delegate() {
+            return _delegate;
+        }
+
+    }
+
+    private static class IMutableSortedSetViewImpl<E> implements IMutableSortedSetView<E> {
+
+        private final SortedSet<E> _set;
+
+        public IMutableSortedSetViewImpl( final SortedSet<E> set ) {
+            _set = set;
+        }
+
+        @Override
+        public MutableSortedSetView<E> asCollectionsView() {
+            return new MutableSortedSetViewImpl<E>( _set ); 
+        }
+
+        @Override
+        public Comparator<? super E> comparator() {
+            return _set.comparator();
+        }
+
+        @Override
+        public E first() {
+            return _set.first();
+        }
+
+        @Override
+        public IMutableSortedSetView<E> headSet( final E toElement ) {
+            return new IMutableSortedSetViewImpl<E>( _set.headSet( toElement ) );
+        }
+
+        @Override
+        public E last() {
+            return _set.last();
+        }
+
+        @Override
+        public IMutableSortedSetView<E> subSet( final E fromElement, final E toElement ) {
+            return new IMutableSortedSetViewImpl<E>( _set.subSet( fromElement, toElement ) );
+        }
+
+        @Override
+        public IMutableSortedSetView<E> tailSet( final E fromElement ) {
+            return new IMutableSortedSetViewImpl<E>( _set.tailSet( fromElement ) );
+        }
+
+        @Override
+        public Set<E> copyToMutableCollections() {
+            return new TreeSet<E>( _set );           
+        }
+
+        @Override
+        public IMutableSetView<E> filter( final Predicate<E> predicate ) {
+            return new IMutableSetViewImpl<E>( Sets.filter( _set, predicate ) );
+        }
+
+        @Override
+        public Iterator<E> iterator() {
+            return _set.iterator();
+        }
+
+        @Override
+        public boolean contains( final Object o ) {
+            return _set.contains( o );
+        }
+
+        @Override
+        public boolean containsAll( final Iterable<?> c ) {
+            return Collections3.containsAll( _set, c );
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return _set.isEmpty();
+        }
+
+        @Override
+        public int size() {
+            return _set.size();
+        }
+
+        @Override
+        public Object[] toArray() {
+            return _set.toArray();
+        }
+
+        @Override
+        public <T> T[] toArray( final T[] a ) {
+            return _set.toArray( a );
+        }
+
+        @Override
+        public boolean add( final E e ) {
+            return _set.add( e );
+        }
+
+        @Override
+        public boolean addAll( final Iterable<? extends E> c ) {
+            return Iterables.addAll( _set, c );
+        }
+
+        @Override
+        public IUnmodifiableSetView<E> asUnmodifiableView() {
+            return new IUnmodifiableSetViewImpl<E>( _set );
+        }
+
+        @Override
+        public void clear() {
+            _set.clear();
+        }
+
+        @Override
+        public IImmutableSortedSet<E> immutableCopy() {
+            return ImmutableSortedSet.copyOf( this );
+        }
+
+        @Override
+        public boolean remove( final Object o ) {
+            return _set.remove( o );
+        }
+
+        @Override
+        public boolean removeAll( final Iterable<?> c ) {
+            return Collections3.removeAll( _set, c );
+        }
+
+        @Override
+        public boolean retainAll( final Iterable<?> c ) {
+            return Collections3.removeAll( _set, c );
+        }
+
+    }
 
     static abstract class AbstractISet<E> implements ISet<E> {
         
@@ -113,8 +379,8 @@ public class SetViews {
         }
 
         @Override
-        public boolean containsAll( final Collection<?> c ) {
-            return _delegate.containsAll( c );
+        public boolean containsAll( final Iterable<?> c ) {
+            return Collections3.containsAll( _delegate, c );
         }
 
         @Override
@@ -135,11 +401,6 @@ public class SetViews {
         @Override
         public boolean contains( final Object o ) {
             return _delegate.contains( o );
-        }
-
-        @Override
-        public boolean containsAll( final ICollection<?> c ) {
-            return _delegate.containsAll( c.asCollectionsView() );
         }
 
         @Override
@@ -204,11 +465,6 @@ public class SetViews {
         }
 
         @Override
-        public boolean containsAll( final Collection<?> c ) {
-            return _delegate.containsAll( c );
-        }
-
-        @Override
         public Set<E> copyToMutableCollections() {
             return Sets.newHashSet( _delegate );
         }
@@ -229,8 +485,8 @@ public class SetViews {
         }
 
         @Override
-        public boolean containsAll( final ICollection<?> c ) {
-            return _delegate.containsAll( c.asCollectionsView() );
+        public boolean containsAll( final Iterable<?> c ) {
+            return Collections3.containsAll( _delegate, c );
         }
 
         @Override
@@ -306,10 +562,6 @@ public class SetViews {
             return _delegate.contains( o );
         }
 
-        public boolean containsAll( final Collection<?> c ) {
-            return _delegate.containsAll( c );
-        }
-
         public boolean isEmpty() {
             return _delegate.isEmpty();
         }
@@ -351,8 +603,8 @@ public class SetViews {
         }
 
         @Override
-        public boolean containsAll( final ICollection<?> c ) {
-            return _delegate.containsAll( c.asCollectionsView() );
+        public boolean containsAll( final Iterable<?> c ) {
+            return Collections3.containsAll( _delegate, c );
         }
 
         @Override
@@ -393,4 +645,19 @@ public class SetViews {
         return new IUnmodifiableSetViewImpl<E>( set );
     }
     
+    public static <E> IMutableSortedSetView<E> asIMutableSortedSetView( final SortedSet<E> set ) {
+        return new IMutableSortedSetViewImpl<E>( set );
+    }
+    
+    public static <E> MutableSortedSetView<E> asMutableSortedSetView( final SortedSet<E> set ) {
+        return new MutableSortedSetViewImpl<E>( set );
+    }
+    
+    public static <E> IImmutableSortedSetView<E> asIImmutableSortedSetView( final SortedSet<E> set ) {
+        return new IImmutableSortedSetViewImpl<E>( set );
+    }
+    
+    public static <E> ImmutableSortedSetView<E> asImmutableSortedSetView( final SortedSet<E> set ) {
+        return new ImmutableSortedSetViewImpl<E>( set );
+    }
 }

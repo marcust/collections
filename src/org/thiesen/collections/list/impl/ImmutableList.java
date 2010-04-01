@@ -20,7 +20,6 @@ package org.thiesen.collections.list.impl;
 
 import java.util.List;
 
-import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.common.iterator.ImmutableIterator;
 import org.thiesen.collections.common.iterator.ImmutableIteratorImpl;
 import org.thiesen.collections.common.view.list.ImmutableListView;
@@ -79,11 +78,6 @@ public class ImmutableList<E>
     @Override
     public boolean contains( final Object o ) {
         return _list.contains( o );
-    }
-
-    @Override
-    public boolean containsAll( final ICollection<?> c ) {
-        return _list.containsAll( c.asCollectionsView() );
     }
 
     @Override

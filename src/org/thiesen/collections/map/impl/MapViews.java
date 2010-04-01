@@ -18,6 +18,7 @@
  */
 package org.thiesen.collections.map.impl;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedMap;
@@ -26,17 +27,21 @@ import java.util.Map.Entry;
 import org.thiesen.collections.collection.impl.CollectionViews;
 import org.thiesen.collections.collection.views.IImmutableCollectionView;
 import org.thiesen.collections.collection.views.IMutableCollectionView;
+import org.thiesen.collections.collection.views.IUnmodifiableCollectionView;
 import org.thiesen.collections.common.view.map.ImmutableMapView;
 import org.thiesen.collections.common.view.map.ImmutableSortedMapView;
 import org.thiesen.collections.common.view.map.MutableMapView;
 import org.thiesen.collections.common.view.map.MutableSortedMapView;
+import org.thiesen.collections.common.view.map.UnmodifiableMapView;
 import org.thiesen.collections.map.IImmutableSortedMap;
 import org.thiesen.collections.map.IMutableMap;
 import org.thiesen.collections.map.views.IImmutableSortedMapView;
 import org.thiesen.collections.map.views.IMutableSortedMapView;
+import org.thiesen.collections.map.views.IUnmodifiableMapView;
 import org.thiesen.collections.set.impl.SetViews;
 import org.thiesen.collections.set.views.IImmutableSetView;
 import org.thiesen.collections.set.views.IMutableSetView;
+import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
 import com.google.common.collect.ForwardingMap;
 import com.google.common.collect.ForwardingSortedMap;
@@ -44,6 +49,79 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedMap;
 
 public class MapViews {
+
+    private static class UnmodifiableMapViewImpl<K,V> 
+        extends ForwardingMap<K, V>
+        implements UnmodifiableMapView<K, V> {
+
+        private final Map<K, V> _delegate;
+
+        public UnmodifiableMapViewImpl( final Map<K, V> map ) {
+            _delegate = Collections.unmodifiableMap( map );
+        }
+
+        @Override
+        protected Map<K, V> delegate() {
+            return _delegate;
+        }
+
+    }
+
+    private static class IUnmodifiableMapViewImpl<K, V> implements IUnmodifiableMapView<K, V> {
+
+        private final Map<K, V> _map;
+
+        public IUnmodifiableMapViewImpl( final Map<K, V> map ) {
+            _map = Collections.unmodifiableMap( map );
+        }
+
+        @Override
+        public UnmodifiableMapView<K, V> asMapView() {
+            return new UnmodifiableMapViewImpl<K,V>( _map );
+        }
+
+        @Override
+        public IUnmodifiableSetView<Entry<K, V>> entrySet() {
+            return SetViews.asIUnmodifiableSetView( _map.entrySet() );
+        }
+
+        @Override
+        public IUnmodifiableSetView<K> keySet() {
+            return SetViews.asIUnmodifiableSetView( _map.keySet() );
+
+        }
+
+        @Override
+        public IUnmodifiableCollectionView<V> values() {
+            return CollectionViews.asIUnmodifiableCollectionView( _map.values() );
+        }
+
+        @Override
+        public boolean containsKey( final Object key ) {
+            return _map.containsKey( key );
+        }
+
+        @Override
+        public boolean containsValue( final Object value ) {
+            return _map.containsValue( value );
+        }
+
+        @Override
+        public V get( final Object key ) {
+            return _map.get( key );
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return _map.isEmpty();
+        }
+
+        @Override
+        public int size() {
+            return _map.size();
+        }
+
+    }
 
     private static class MutableSortedMapViewImpl<K, V> 
         extends ForwardingSortedMap<K, V>
@@ -300,6 +378,12 @@ public class MapViews {
             return org.thiesen.collections.map.impl.ImmutableSortedMap.copyOf( this );
         }
 
+        @Override
+        public IUnmodifiableMapView<K, V> asUnmodifiableView() {
+            return MapViews.asIUnmodifiableMapView( _delegate );
+            
+        }
+
     }
 
     private static class SortedMapViewImpl<K,V>
@@ -359,6 +443,10 @@ public class MapViews {
     
     public static <K,V> ImmutableSortedMapView<K,V> asImmutableSortedMapView( final ImmutableSortedMap<K,V> map ) {
         return new ImmutableSortedMapViewImpl<K,V>( map );
+    }
+    
+    public static <K,V> IUnmodifiableMapView<K, V> asIUnmodifiableMapView( final Map<K,V> map ) {
+        return new IUnmodifiableMapViewImpl<K,V>( map );
     }
     
 }

@@ -25,6 +25,7 @@ import org.thiesen.collections.collection.impl.CollectionViews;
 import org.thiesen.collections.collection.views.IMutableCollectionView;
 import org.thiesen.collections.common.view.map.MutableMapView;
 import org.thiesen.collections.map.IMutableMap;
+import org.thiesen.collections.map.views.IUnmodifiableMapView;
 import org.thiesen.collections.set.impl.SetViews;
 import org.thiesen.collections.set.views.IMutableSetView;
 
@@ -101,6 +102,12 @@ abstract class AbstractDelegatingMutableIMap<K,V>
     public MutableMapView<K, V> asMapView() {
         return MapViews.asMutableMapView( _delegate );
     }
+    
+    @Override
+    public IUnmodifiableMapView<K, V> asUnmodifiableView() {
+        return MapViews.asIUnmodifiableMapView( _delegate );
+    }
+
 
     
 }
