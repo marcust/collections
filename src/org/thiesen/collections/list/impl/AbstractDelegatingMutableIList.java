@@ -25,7 +25,6 @@ import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.collection.impl.CollectionViews;
 import org.thiesen.collections.collection.views.IMutableCollectionView;
 import org.thiesen.collections.common.view.list.MutableListView;
-import org.thiesen.collections.list.IMutableList;
 import org.thiesen.collections.list.views.IMutableListView;
 import org.thiesen.collections.list.views.IUnmodifiableListView;
 
@@ -34,7 +33,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 
-public abstract class AbstractDelegatingMutableIList<E> implements IMutableList<E> {
+public abstract class AbstractDelegatingMutableIList<E> 
+    extends ListViews.AbstractIMutableList<E> {
 
     private final List<E> _delegate;
 
@@ -153,6 +153,10 @@ public abstract class AbstractDelegatingMutableIList<E> implements IMutableList<
         return ImmutableList.copyOf( _delegate );
     }
 
+    @Override
+    public List<E> delegate() {
+        return _delegate;
+    }
 
     
     

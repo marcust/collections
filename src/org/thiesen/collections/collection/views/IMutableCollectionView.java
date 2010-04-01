@@ -19,6 +19,7 @@
 package org.thiesen.collections.collection.views;
 
 import org.thiesen.collections.collection.IMutableCollection;
+import org.thiesen.collections.common.view.collection.MutableCollectionView;
 
 
 
@@ -26,6 +27,6 @@ public interface IMutableCollectionView<E> extends
     IMutableCollection<E>, 
     ICollectionView<E> {
 
-    // marker interface
+    public MutableCollectionView<E> asCollectionsView();
     
 }

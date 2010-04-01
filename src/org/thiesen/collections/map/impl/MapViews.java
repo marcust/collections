@@ -24,6 +24,7 @@ import java.util.Map.Entry;
 
 import org.thiesen.collections.collection.impl.CollectionViews;
 import org.thiesen.collections.collection.views.IMutableCollectionView;
+import org.thiesen.collections.common.view.map.ImmutableMapView;
 import org.thiesen.collections.common.view.map.MutableMapView;
 import org.thiesen.collections.common.view.map.MutableSortedMapView;
 import org.thiesen.collections.map.views.IMutableSortedMapView;
@@ -32,10 +33,28 @@ import org.thiesen.collections.set.views.IMutableSetView;
 
 import com.google.common.collect.ForwardingMap;
 import com.google.common.collect.ForwardingSortedMap;
+import com.google.common.collect.ImmutableMap;
 
 public class MapViews {
 
     
+    private static class ImmutableMapViewImpl<K,V> 
+        extends ForwardingMap<K, V>
+        implements ImmutableMapView<K, V> {
+
+        private final ImmutableMap<K, V> _delegate;
+
+        public ImmutableMapViewImpl( final ImmutableMap<K, V> delegate ) {
+            _delegate = delegate;
+        }
+
+        @Override
+        protected Map<K, V> delegate() {
+            return _delegate;
+        }
+
+    }
+
     private static class IMutableSortedMapViewImpl<K, V> implements IMutableSortedMapView<K, V> {
 
         private final SortedMap<K, V> _delegate;
@@ -159,6 +178,9 @@ public class MapViews {
         return new IMutableSortedMapViewImpl<K,V>( map );
     }
     
+    public static <K,V> ImmutableMapView<K,V> asImmutableMapView( final ImmutableMap<K, V> map ) {
+        return new ImmutableMapViewImpl<K,V>( map );
+    }
     
     
 }

@@ -31,7 +31,10 @@ import org.thiesen.collections.list.views.IUnmodifiableListView;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
-public class ImmutableList<E> implements IImmutableRandomAccessList<E> {
+public class ImmutableList<E>
+    extends ListViews.AbstractIList<E>
+    implements 
+    IImmutableRandomAccessList<E> {
 
     private final com.google.common.collect.ImmutableList<E> _list;
     
@@ -112,6 +115,11 @@ public class ImmutableList<E> implements IImmutableRandomAccessList<E> {
     public E get( final int index ) {
         return _list.get( index );
         
+    }
+
+    @Override
+    protected List<E> delegate() {
+        return _list;
     }
     
 }

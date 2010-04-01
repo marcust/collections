@@ -25,7 +25,6 @@ import java.util.Set;
 import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.common.view.set.MutableSetView;
 import org.thiesen.collections.set.IImmutableSet;
-import org.thiesen.collections.set.IMutableSet;
 import org.thiesen.collections.set.views.IMutableSetView;
 import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
@@ -33,7 +32,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 
 public abstract class AbstractDelegatingMutableSet<E> 
-    implements IMutableSet<E> {
+    extends SetViews.AbstractIMutableSet<E>
+    {
 
     private final Set<E> _delegate;
 
@@ -47,11 +47,6 @@ public abstract class AbstractDelegatingMutableSet<E>
     }
 
     @Override
-    public boolean addAll( final Collection<? extends E> c ) {
-        return _delegate.addAll( c );
-    }
-
-    @Override
     public void clear() {
         _delegate.clear();
     }
@@ -59,16 +54,6 @@ public abstract class AbstractDelegatingMutableSet<E>
     @Override
     public boolean remove( final Object o ) {
         return _delegate.remove( o );
-    }
-
-    @Override
-    public boolean removeAll( final Collection<?> c ) {
-        return _delegate.removeAll( c );
-    }
-
-    @Override
-    public boolean retainAll( final Collection<?> c ) {
-        return _delegate.retainAll( c );
     }
 
     @Override
@@ -130,6 +115,12 @@ public abstract class AbstractDelegatingMutableSet<E>
     @Override
     public IUnmodifiableSetView<E> asUnmodifiableView() {
        return SetViews.asIUnmodifiableSetView( _delegate );
+    }
+    
+
+    @Override
+    protected Set<E> delegate() {
+        return _delegate;
     }
     
 }

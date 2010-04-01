@@ -29,6 +29,8 @@ public interface IImmutableList<E> extends
 
     public IMutableList<E> mutableCopy();
     
-    ImmutableListView<E> asCollectionsView();
+    public ImmutableListView<E> asCollectionsView();
+    
+    
     
 }

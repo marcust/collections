@@ -18,6 +18,8 @@
  */
 package org.thiesen.collections.list;
 
+import org.thiesen.collections.common.view.list.UnmodifiableListView;
+
 import com.google.common.collect.UnmodifiableIterator;
 
 public interface IUnmodifiableList<E> extends IList<E> {
@@ -25,4 +27,6 @@ public interface IUnmodifiableList<E> extends IList<E> {
     @Override
     public UnmodifiableIterator<E> iterator();
     
+    @Override
+    public UnmodifiableListView<E> asCollectionsView();
 }

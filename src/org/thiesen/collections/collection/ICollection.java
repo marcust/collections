@@ -26,6 +26,8 @@ public interface ICollection<E> extends Iterable<E>  {
     public boolean contains(Object o);
     
     public boolean containsAll(ICollection<?> c);
+    
+    public boolean containsAll(Iterable<?> c);
   
     public boolean isEmpty();
     

@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.thiesen.collections.collection.ICollection;
+import org.thiesen.collections.collection.impl.Collections3;
 import org.thiesen.collections.common.iterator.ImmutableIterator;
 import org.thiesen.collections.common.iterator.ImmutableIteratorImpl;
 import org.thiesen.collections.common.view.set.ImmutableSetView;
@@ -31,7 +32,8 @@ import org.thiesen.collections.set.views.IImmutableSetView;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 
-abstract class AbstractDelegatingImmutableSet<E> implements IImmutableSet<E> {
+abstract class AbstractDelegatingImmutableSet<E> 
+    implements IImmutableSet<E> {
 
     private final Set<E> _set;
 
@@ -91,6 +93,12 @@ abstract class AbstractDelegatingImmutableSet<E> implements IImmutableSet<E> {
     public IImmutableSetView<E> filter( final Predicate<E> predicate ) {
         return SetViews.asIImmutableSetView( Sets.filter( _set, predicate ) );
     }
+
+    @Override
+    public boolean containsAll( final Iterable<?> i ) {
+        return Collections3.containsAll( _set, i );
+    }
+    
     
     
 }

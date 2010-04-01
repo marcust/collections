@@ -18,8 +18,6 @@
  */
 package org.thiesen.collections.set;
 
-import java.util.Collection;
-
 import org.thiesen.collections.common.view.set.MutableSetView;
 import org.thiesen.collections.set.views.IMutableSetView;
 import org.thiesen.collections.set.views.IUnmodifiableSetView;
@@ -32,11 +30,11 @@ public interface IMutableSet<E> extends ISet<E> {
 
     boolean remove(Object o);
 
-    boolean addAll(Collection<? extends E> c);
+    boolean addAll(Iterable<? extends E> c);
     
-    boolean retainAll(Collection<?> c);
+    boolean retainAll(Iterable<?> c);
     
-    boolean removeAll(Collection<?> c);
+    boolean removeAll(Iterable<?> c);
 
     void clear();
     

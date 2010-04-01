@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.thiesen.collections.collection.ICollection;
+import org.thiesen.collections.collection.impl.Collections3;
 import org.thiesen.collections.common.iterator.ImmutableIterator;
 import org.thiesen.collections.common.iterator.ImmutableIteratorImpl;
 import org.thiesen.collections.common.iterator.UnmodifiableIteratorImpl;
@@ -32,12 +33,14 @@ import org.thiesen.collections.common.view.set.MutableSetView;
 import org.thiesen.collections.common.view.set.UnmodifiableSetView;
 import org.thiesen.collections.set.IImmutableSet;
 import org.thiesen.collections.set.IMutableSet;
+import org.thiesen.collections.set.ISet;
 import org.thiesen.collections.set.views.IImmutableSetView;
 import org.thiesen.collections.set.views.IMutableSetView;
 import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.ForwardingSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.google.common.collect.UnmodifiableIterator;
 
@@ -45,6 +48,38 @@ public class SetViews {
     
     // FIXME(MT): The Views do not honor the difference between sorted und unsorted
 
+    static abstract class AbstractISet<E> implements ISet<E> {
+        
+        protected abstract Set<E> delegate();
+        
+
+        @Override
+        public boolean containsAll( final Iterable<?> c ) {
+            return Collections3.containsAll( delegate(), c );
+        }
+        
+    }
+    
+    static abstract class AbstractIMutableSet<E>
+        extends AbstractISet<E> implements IMutableSet<E> {
+        
+        @Override
+        public boolean removeAll( final Iterable<?> i ) {
+            return Collections3.removeAll( delegate(), i );
+        }
+        
+        @Override
+        public boolean retainAll( final Iterable<?> i ) {
+            return Collections3.retainAll( delegate(), i );
+        }
+        
+        @Override
+        public boolean addAll( final Iterable<? extends E> i ) {
+            return Iterables.addAll( delegate(), i );
+        }
+        
+    }
+    
     private static class UnmodifiableSetViewImpl<E> 
         extends ForwardingSet<E>
         implements UnmodifiableSetView<E> {
@@ -62,7 +97,9 @@ public class SetViews {
         
     }
 
-    private static class IUnmodifiableSetViewImpl<E> implements IUnmodifiableSetView<E> {
+    private static class IUnmodifiableSetViewImpl<E>
+        extends AbstractISet<E>
+        implements IUnmodifiableSetView<E> {
 
         private final Set<E> _delegate;
 
@@ -125,6 +162,11 @@ public class SetViews {
             return _delegate.toArray( a );
         }
 
+        @Override
+        protected Set<E> delegate() {
+            return _delegate;
+        }
+
     }
 
     private static class ImmutableSetViewImpl<E> 
@@ -145,7 +187,9 @@ public class SetViews {
        
     }
 
-    private static class IImmutableSetViewImpl<E> implements IImmutableSetView<E> {
+    private static class IImmutableSetViewImpl<E> 
+        extends AbstractISet<E>
+        implements IImmutableSetView<E> {
 
         private final Set<E> _delegate;
 
@@ -213,6 +257,11 @@ public class SetViews {
         public IMutableSet<E> mutableCopy() {
             return MutableHashSet.copyOf( _delegate );
         }
+
+        @Override
+        protected Set<E> delegate() {
+            return _delegate;
+        }
     }
 
 
@@ -235,7 +284,9 @@ public class SetViews {
         
     }
 
-    private static class IMutableSetViewImpl<E> implements IMutableSetView<E> {
+    private static class IMutableSetViewImpl<E> 
+        extends AbstractIMutableSet<E>
+        implements IMutableSetView<E> {
 
         private final Set<E> _delegate;
 
@@ -245,10 +296,6 @@ public class SetViews {
 
         public boolean add( final E e ) {
             return _delegate.add( e );
-        }
-
-        public boolean addAll( final Collection<? extends E> c ) {
-            return _delegate.addAll( c );
         }
 
         public void clear() {
@@ -273,14 +320,6 @@ public class SetViews {
 
         public boolean remove( final Object o ) {
             return _delegate.remove( o );
-        }
-
-        public boolean removeAll( final Collection<?> c ) {
-            return _delegate.removeAll( c );
-        }
-
-        public boolean retainAll( final Collection<?> c ) {
-            return _delegate.retainAll( c );
         }
 
         public int size() {
@@ -324,6 +363,11 @@ public class SetViews {
         @Override
         public IUnmodifiableSetView<E> asUnmodifiableView() {
             return new IUnmodifiableSetViewImpl<E>( _delegate );
+        }
+
+        @Override
+        protected Set<E> delegate() {
+            return _delegate;
         }
         
  

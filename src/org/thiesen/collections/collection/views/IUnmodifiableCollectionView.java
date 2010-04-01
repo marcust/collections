@@ -19,12 +19,13 @@
 package org.thiesen.collections.collection.views;
 
 import org.thiesen.collections.collection.IUnmodifiableCollection;
+import org.thiesen.collections.common.view.collection.UnmodifiableCollectionView;
 
 
 public interface IUnmodifiableCollectionView<E> extends 
     IUnmodifiableCollection<E>,
     ICollectionView<E> {
 
-    // marker inteface only
+    public UnmodifiableCollectionView<E> asCollectionsView();
     
 }

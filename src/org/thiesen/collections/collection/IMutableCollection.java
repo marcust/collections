@@ -26,13 +26,13 @@ public interface IMutableCollection<E> extends ICollection<E>, Iterable<E> {
 
     boolean add(E e);
     
-    boolean remove(E o);
+    boolean remove(Object o);
     
-    boolean addAll(ICollection<? extends E> c);
+    boolean addAll(Iterable<? extends E> c);
     
-    boolean removeAll(ICollection<?> c);
+    boolean removeAll(Iterable<?> c);
     
-    boolean retainAll(ICollection<?> c);
+    boolean retainAll(Iterable<?> c);
     
     void clear();
     

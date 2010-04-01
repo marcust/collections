@@ -22,16 +22,200 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.thiesen.collections.collection.ICollection;
+import org.thiesen.collections.collection.IMutableCollection;
+import org.thiesen.collections.collection.views.IImmutableCollectionView;
 import org.thiesen.collections.collection.views.IMutableCollectionView;
+import org.thiesen.collections.common.iterator.ImmutableIterator;
+import org.thiesen.collections.common.iterator.ImmutableIteratorImpl;
+import org.thiesen.collections.common.view.collection.ImmutableCollectionView;
+import org.thiesen.collections.common.view.collection.MutableCollectionView;
+import org.thiesen.collections.list.impl.MutableArrayList;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.ForwardingCollection;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 
 public class CollectionViews {
+    
+    private static abstract class AbstractICollection<E> implements ICollection<E> {
+    
 
-    private static class IMutableCollectionViewImpl<E> implements IMutableCollectionView<E> {
+        protected abstract Collection<E> delegate();
+        
+
+        @Override
+        public boolean containsAll( final Iterable<?> i ) {
+            return Collections3.containsAll( delegate(), i );
+        }
+        
+    }
+
+    private static class MutableCollectionViewImpl<E>
+    implements MutableCollectionView<E> {
+
+        private final IMutableCollectionViewImpl<E> _delegate;
+
+        public MutableCollectionViewImpl( final IMutableCollectionViewImpl<E> delegate ) {
+            _delegate = delegate;
+        }
+
+        public boolean add( final E e ) {
+            return _delegate.add( e );
+        }
+
+        public void clear() {
+            _delegate.clear();
+        }
+
+        public boolean contains( final Object o ) {
+            return _delegate.contains( o );
+        }
+
+        public boolean isEmpty() {
+            return _delegate.isEmpty();
+        }
+
+        public Iterator<E> iterator() {
+            return _delegate.iterator();
+        }
+
+        public boolean remove( final Object o ) {
+            return _delegate.remove( o );
+        }
+
+        public int size() {
+            return _delegate.size();
+        }
+
+        public Object[] toArray() {
+            return _delegate.toArray();
+        }
+
+        public <T> T[] toArray( final T[] a ) {
+            return _delegate.toArray( a );
+        }
+
+        @Override
+        public String toString() {
+            return _delegate.toString();
+        }
+
+        @Override
+        public boolean addAll( final Collection<? extends E> c ) {
+            return _delegate.addAll( c );
+
+        }
+
+        @Override
+        public boolean containsAll( final Collection<?> c ) {
+            return _delegate.containsAll( c );
+
+        }
+
+        @Override
+        public boolean removeAll( final Collection<?> c ) {
+            return _delegate.removeAll( c );
+        }
+
+        @Override
+        public boolean retainAll( final Collection<?> c ) {
+            return _delegate.retainAll( c );
+        }
+
+
+    }
+
+    private static class ImmutableCollectionViewImpl<E> 
+    extends ForwardingCollection<E>
+    implements ImmutableCollectionView<E> {
+
+        private final ImmutableCollection<E> _delegate;
+
+        public ImmutableCollectionViewImpl( final ImmutableCollection<E> delegate ) {
+            _delegate = delegate;
+        }
+
+        @Override
+        protected Collection<E> delegate() {
+            return _delegate;
+        }
+
+    }
+
+    private static class IImmutableCollectionViewImpl<E> 
+        extends AbstractICollection<E>
+        implements IImmutableCollectionView<E> {
+
+        private final ImmutableCollection<E> _delegate;
+
+        public IImmutableCollectionViewImpl( final ImmutableCollection<E> delegate ) {
+            _delegate = delegate;
+        }
+
+        @Override
+        public ImmutableCollectionView<E> asCollectionsView() {
+            return new ImmutableCollectionViewImpl<E>( _delegate );
+        }
+
+        @Override
+        public boolean containsAll( final ICollection<?> c ) {
+            return _delegate.containsAll( c.asCollectionsView() );
+        }
+
+        @Override
+        public Collection<E> copyToMutableCollections() {
+            return Lists.newArrayList( _delegate );
+        }
+
+        @Override
+        public IMutableCollection<E> copyToMutable() {
+            return MutableArrayList.copyOf( _delegate ); 
+        }
+
+        @Override
+        public boolean contains( final Object o ) {
+            return _delegate.contains( o );
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return _delegate.isEmpty();
+        }
+
+        @Override
+        public int size() {
+            return _delegate.size();
+        }
+
+        @Override
+        public Object[] toArray() {
+            return _delegate.toArray();
+        }
+
+        @Override
+        public <T> T[] toArray( final T[] a ) {
+            return _delegate.toArray( a );
+        }
+
+        @Override
+        public ImmutableIterator<E> iterator() {
+            return ImmutableIteratorImpl.wrap( _delegate.iterator() );
+        }
+
+        @Override
+        protected Collection<E> delegate() {
+            return _delegate;
+        }
+
+    }
+
+    private static class IMutableCollectionViewImpl<E>
+        extends AbstractICollection<E>
+        implements IMutableCollectionView<E> {
 
         private final Collection<E> _collection;
 
@@ -50,16 +234,6 @@ public class CollectionViews {
         }
 
         @Override
-        public boolean equals( final Object o ) {
-            return _collection.equals( o );
-        }
-
-        @Override
-        public int hashCode() {
-            return _collection.hashCode();
-        }
-
-        @Override
         public boolean isEmpty() {
             return _collection.isEmpty();
         }
@@ -67,11 +241,6 @@ public class CollectionViews {
         @Override
         public Iterator<E> iterator() {
             return _collection.iterator();
-        }
-
-        @Override
-        public boolean remove( final Object o ) {
-            return _collection.remove( o );
         }
 
         @Override
@@ -95,21 +264,6 @@ public class CollectionViews {
         }
 
         @Override
-        public boolean addAll( final ICollection<? extends E> c ) {
-            return _collection.addAll( c.asCollectionsView() );
-        }
-
-        @Override
-        public boolean removeAll( final ICollection<?> c ) {
-            return _collection.removeAll( c.asCollectionsView() );
-        }
-
-        @Override
-        public boolean retainAll( final ICollection<?> c ) {
-            return _collection.retainAll( c.asCollectionsView() );
-        }
-
-        @Override
         public boolean containsAll( final ICollection<?> c ) {
             return _collection.containsAll( c.asCollectionsView() );
         }
@@ -125,16 +279,42 @@ public class CollectionViews {
         }
 
         @Override
-        public org.thiesen.collections.common.view.collection.CollectionView<E> asCollectionsView() {
-            return new UnmodifiableCollectionViewImpl<E>( this );
+        public MutableCollectionView<E> asCollectionsView() {
+            return new MutableCollectionViewImpl<E>( this );
         }
 
+        @Override
+        public boolean addAll( final Iterable<? extends E> c ) {
+            return Iterables.addAll( _collection, c );
+        }
 
+        @Override
+        public boolean remove( final Object o ) {
+            return _collection.remove( o );
+        }
+
+        @Override
+        protected Collection<E> delegate() {
+            return _collection;
+        }
+
+        @Override
+        public boolean removeAll( final Iterable<?> i ) {
+            return Collections3.removeAll( _collection, i );
+            
+        }
+
+        @Override
+        public boolean retainAll( final Iterable<?> i ) {
+            return Collections3.retainAll( _collection, i );
+            
+        }
 
     }
 
+    @SuppressWarnings( "all" )
     private static class UnmodifiableCollectionViewImpl<T>
-        implements org.thiesen.collections.common.view.collection.UnmodifiableCollectionView<T> {
+    implements org.thiesen.collections.common.view.collection.UnmodifiableCollectionView<T> {
 
         private final ICollection<T> _collection;
 
@@ -175,31 +355,31 @@ public class CollectionViews {
         @Override
         public boolean addAll( @SuppressWarnings( "unused" ) final java.util.Collection<? extends T> c ) {
             throw new UnsupportedOperationException("Unmodifieable View");
-            
+
         }
 
         @Override
         public void clear() {
             throw new UnsupportedOperationException("Unmodifieable View");
-            
+
         }
 
         @Override
         public boolean containsAll( @SuppressWarnings( "unused" ) final java.util.Collection<?> c ) {
             throw new UnsupportedOperationException("Unmodifieable View");
-            
+
         }
 
         @Override
         public boolean remove( @SuppressWarnings( "unused" ) final Object o ) {
             throw new UnsupportedOperationException("Unmodifieable View");
-            
+
         }
 
         @Override
         public boolean removeAll( @SuppressWarnings( "unused" ) final java.util.Collection<?> c ) {
             throw new UnsupportedOperationException("Unmodifieable View");
-            
+
         }
 
         @Override
@@ -217,5 +397,9 @@ public class CollectionViews {
     public static <E> IMutableCollectionView<E> asMutableCollectionView( final Collection<E> collection ) {
         return new IMutableCollectionViewImpl<E>( collection );
     }
-    
+
+    public static <E> IImmutableCollectionView<E> asIImmutableCollectionView( final ImmutableCollection<E> collection ) {
+        return new IImmutableCollectionViewImpl<E>( collection );
+    }
+
 }

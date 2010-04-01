@@ -19,9 +19,10 @@
 package org.thiesen.collections.collection.views;
 
 import org.thiesen.collections.collection.IImmutableCollection;
+import org.thiesen.collections.common.view.collection.ImmutableCollectionView;
 
 public interface IImmutableCollectionView<E> extends ICollectionView<E>, IImmutableCollection<E> {
 
-    // marker interface
+    public ImmutableCollectionView<E> asCollectionsView();
     
 }

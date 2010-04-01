@@ -25,11 +25,14 @@ import java.util.List;
 
 import org.thiesen.collections.collection.ICollection;
 import org.thiesen.collections.collection.impl.CollectionViews;
+import org.thiesen.collections.collection.impl.Collections3;
 import org.thiesen.collections.collection.views.IMutableCollectionView;
 import org.thiesen.collections.common.iterator.UnmodifiableIteratorImpl;
 import org.thiesen.collections.common.view.list.ImmutableListView;
-import org.thiesen.collections.common.view.list.ListView;
 import org.thiesen.collections.common.view.list.MutableListView;
+import org.thiesen.collections.common.view.list.UnmodifiableListView;
+import org.thiesen.collections.list.IList;
+import org.thiesen.collections.list.IMutableList;
 import org.thiesen.collections.list.views.IImmutableListView;
 import org.thiesen.collections.list.views.IMutableListView;
 import org.thiesen.collections.list.views.IUnmodifiableListView;
@@ -38,11 +41,61 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ForwardingList;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.UnmodifiableIterator;
 
 public class ListViews {
 
+    private static class UnmodifiableListViewImpl<E>
+        extends ForwardingList<E>
+        implements UnmodifiableListView<E> {
+
+        private final List<E> _delegate;
+
+        public UnmodifiableListViewImpl( final List<E> delegate ) {
+            _delegate = Collections.unmodifiableList( delegate );
+        }
+
+        @Override
+        protected List<E> delegate() {
+            return _delegate;
+        }
+
+    }
+
+    static abstract class AbstractIList<E> implements IList<E> {
+        
+        protected abstract List<E> delegate();
+        
+
+        @Override
+        public boolean containsAll( final Iterable<?> c ) {
+            return Collections3.containsAll( delegate(), c );
+        }
+        
+    }
+    
+    static abstract class AbstractIMutableList<E>
+        extends AbstractIList<E> implements IMutableList<E> {
+        
+        @Override
+        public boolean removeAll( final Iterable<?> i ) {
+            return Collections3.removeAll( delegate(), i );
+        }
+        
+        @Override
+        public boolean retainAll( final Iterable<?> i ) {
+            return Collections3.retainAll( delegate(), i );
+        }
+        
+        @Override
+        public boolean addAll( final Iterable<? extends E> i ) {
+            return Iterables.addAll( delegate(), i );
+        }
+        
+    }
+    
     private static class ImmutableListViewImpl<E> 
         extends ForwardingList<E> 
         implements ImmutableListView<E> {
@@ -85,7 +138,9 @@ public class ListViews {
         
     }
 
-    private static class IImmutableListViewImpl<E> implements IImmutableListView<E> {
+    private static class IImmutableListViewImpl<E>
+        extends AbstractIList<E>
+        implements IImmutableListView<E> {
 
         private final List<E> _list;
 
@@ -155,10 +210,17 @@ public class ListViews {
             return _list.lastIndexOf( o );
         }
 
+        @Override
+        protected List<E> delegate() {
+            return _list;
+        }
+
 
     }
 
-    private static class IMutableListViewImpl<E> implements IMutableListView<E> {
+    private static class IMutableListViewImpl<E>
+        extends AbstractIMutableList<E>
+        implements IMutableListView<E> {
 
         private final List<E> _list;
 
@@ -260,28 +322,13 @@ public class ListViews {
         }
 
         @Override
-        public boolean addAll( final ICollection<? extends E> c ) {
-            return _list.addAll( c.asCollectionsView() );
-        }
-
-        @Override
         public void clear() {
             _list.clear();
         }
 
         @Override
-        public boolean remove( final E o ) {
+        public boolean remove( final Object o ) {
             return _list.remove( o );
-        }
-
-        @Override
-        public boolean removeAll( final ICollection<?> c ) {
-            return _list.removeAll( c.asCollectionsView() );
-        }
-
-        @Override
-        public boolean retainAll( final ICollection<?> c ) {
-            return _list.retainAll( c.asCollectionsView() );
         }
 
         @Override
@@ -294,9 +341,16 @@ public class ListViews {
             return new IUnmodifiableListViewImpl<E>( _list );
         }
 
+        @Override
+        protected List<E> delegate() {
+            return _list;
+        }
+
+
     }
 
     private static class IUnmodifiableListViewImpl<E>
+        extends AbstractIList<E>
         implements IUnmodifiableListView<E> {
 
         private final List<E> _list;
@@ -321,8 +375,8 @@ public class ListViews {
         }
 
         @Override
-        public ListView<E> asCollectionsView() {
-            return new MutableListViewImpl<E>( _list );
+        public UnmodifiableListView<E> asCollectionsView() {
+            return new UnmodifiableListViewImpl<E>( _list );
         }
 
         @Override
@@ -364,10 +418,13 @@ public class ListViews {
         public UnmodifiableIterator<E> iterator() {
             return UnmodifiableIteratorImpl.<E>wrap( _list.iterator() );
         }
-        
+
+        @Override
+        protected List<E> delegate() {
+            return _list;
+        }
 
     }
-
 
     private static class MutableListViewImpl<E> 
         extends ForwardingList<E>

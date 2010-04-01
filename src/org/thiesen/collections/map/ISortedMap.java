@@ -31,16 +31,16 @@ public interface ISortedMap<K, V> extends IMap<K, V> {
     
     Comparator<? super K> comparator();
 
+    K firstKey();
+    
+    K lastKey();
+    
     ISortedMapView<K,V> subMap(K fromKey, K toKey);
     
     ISortedMapView<K,V> headMap(K toKey);
     
     ISortedMapView<K,V> tailMap(K fromKey);
 
-    K firstKey();
-    
-    K lastKey();
-    
     ISetView<K> keySet();
     
     ICollectionView<V> values();
