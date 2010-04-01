@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.SortedMap;
 
 import org.thiesen.collections.common.view.map.MutableSortedMapView;
+import org.thiesen.collections.map.IImmutableSortedMap;
 import org.thiesen.collections.map.IMutableSortedMap;
 import org.thiesen.collections.map.ISortedMap;
 import org.thiesen.collections.map.views.IMutableSortedMapView;
@@ -77,6 +78,11 @@ public class MutableTreeMap<K, V>
     @Override
     public MutableSortedMapView<K,V> asMapView() {
         return MapViews.asMutableSortedMapView( _delegate );
+    }
+
+    @Override
+    public IImmutableSortedMap<K, V> immutableCopy() {
+        return ImmutableSortedMap.copyOf( this );
     }
 
 

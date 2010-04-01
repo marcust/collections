@@ -17,7 +17,10 @@
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.thiesen.collections.map.views;
-public interface ISortedMapView<K, V> extends IMapView<K, V> {
+
+import org.thiesen.collections.map.ISortedMap;
+
+public interface ISortedMapView<K, V> extends ISortedMap<K, V> {
 
     // empty interface
     

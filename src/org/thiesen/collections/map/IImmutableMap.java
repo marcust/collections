@@ -34,5 +34,7 @@ public interface IImmutableMap<K, V> extends IMap<K, V> {
 
     ImmutableMapView<K,V> asMapView();
     
+    IMutableMap<K,V> mutableCopy();
+    
 }
 

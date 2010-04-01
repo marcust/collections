@@ -18,26 +18,159 @@
  */
 package org.thiesen.collections.map.impl;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.Map.Entry;
 
 import org.thiesen.collections.collection.impl.CollectionViews;
+import org.thiesen.collections.collection.views.IImmutableCollectionView;
 import org.thiesen.collections.collection.views.IMutableCollectionView;
 import org.thiesen.collections.common.view.map.ImmutableMapView;
+import org.thiesen.collections.common.view.map.ImmutableSortedMapView;
 import org.thiesen.collections.common.view.map.MutableMapView;
 import org.thiesen.collections.common.view.map.MutableSortedMapView;
+import org.thiesen.collections.map.IImmutableSortedMap;
+import org.thiesen.collections.map.IMutableMap;
+import org.thiesen.collections.map.views.IImmutableSortedMapView;
 import org.thiesen.collections.map.views.IMutableSortedMapView;
 import org.thiesen.collections.set.impl.SetViews;
+import org.thiesen.collections.set.views.IImmutableSetView;
 import org.thiesen.collections.set.views.IMutableSetView;
 
 import com.google.common.collect.ForwardingMap;
 import com.google.common.collect.ForwardingSortedMap;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSortedMap;
 
 public class MapViews {
 
-    
+    private static class MutableSortedMapViewImpl<K, V> 
+        extends ForwardingSortedMap<K, V>
+        implements MutableSortedMapView<K, V> {
+
+        private final SortedMap<K, V> _delegate;
+
+        public MutableSortedMapViewImpl( final SortedMap<K, V> delegate ) {
+            _delegate = delegate;
+        }
+
+        @Override
+        protected SortedMap<K, V> delegate() {
+            return _delegate;
+        }
+
+    }
+
+    private static class ImmutableSortedMapViewImpl<K, V>
+        extends ForwardingSortedMap<K, V>
+        implements ImmutableSortedMapView<K, V> {
+
+        private final ImmutableSortedMap<K, V> _delegate;
+
+        public ImmutableSortedMapViewImpl( final ImmutableSortedMap<K, V> delegate ) {
+            _delegate = delegate;
+        }
+
+        @Override
+        protected SortedMap<K, V> delegate() {
+            return _delegate;
+        }
+
+    }
+
+    private static class IImmutableSortedMapViewImpl<K, V> 
+        implements IImmutableSortedMapView<K, V> {
+
+        public ImmutableSortedMap<K, V> _map;
+
+        public IImmutableSortedMapViewImpl( final ImmutableSortedMap<K, V> map ) {
+            _map = map;
+        }
+
+        @Override
+        public ImmutableSortedMapView<K, V> asMapView() {
+            return new ImmutableSortedMapViewImpl<K, V>( _map );
+        }
+
+        @Override
+        public boolean containsKey( final Object key ) {
+            return _map.containsKey( key );
+        }
+
+        @Override
+        public boolean containsValue( final Object value ) {
+            return _map.containsValue( value );
+            
+        }
+
+        @Override
+        public IImmutableSetView<Entry<K, V>> entrySet() {
+            return SetViews.asIImmutableSetView( _map.entrySet() );
+        }
+
+        @Override
+        public V get( final Object key ) {
+            return _map.get( key );
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return _map.isEmpty();
+        }
+
+        @Override
+        public IImmutableSetView<K> keySet() {
+            return SetViews.asIImmutableSetView( _map.keySet() );
+        }
+
+        @Override
+        public int size() {
+            return _map.size();
+        }
+
+        @Override
+        public IImmutableCollectionView<V> values() {
+            return CollectionViews.asIImmutableCollectionView( _map.values() );
+        }
+
+        @Override
+        public Comparator<? super K> comparator() {
+            return _map.comparator();
+        }
+
+        @Override
+        public K firstKey() {
+            return _map.firstKey();
+        }
+
+        @Override
+        public IImmutableSortedMapView<K, V> headMap( final K toKey ) {
+            return new IImmutableSortedMapViewImpl<K, V>( _map.headMap( toKey ) ); 
+        }
+
+        @Override
+        public K lastKey() {
+            return _map.lastKey();
+        }
+
+        @Override
+        public IImmutableSortedMapView<K, V> subMap( final K fromKey, final K toKey ) {
+            return new IImmutableSortedMapViewImpl<K, V>( _map.subMap( fromKey, toKey ) );
+        }
+
+        @Override
+        public IImmutableSortedMapView<K, V> tailMap( final K fromKey ) {
+            return new IImmutableSortedMapViewImpl<K, V>( _map.tailMap( fromKey ) );
+        }
+
+        @Override
+        public IMutableMap<K, V> mutableCopy() {
+            return MutableTreeMap.copyOf( this );
+        }
+
+    }
+
     private static class ImmutableMapViewImpl<K,V> 
         extends ForwardingMap<K, V>
         implements ImmutableMapView<K, V> {
@@ -55,7 +188,8 @@ public class MapViews {
 
     }
 
-    private static class IMutableSortedMapViewImpl<K, V> implements IMutableSortedMapView<K, V> {
+    private static class IMutableSortedMapViewImpl<K, V> 
+        implements IMutableSortedMapView<K, V> {
 
         private final SortedMap<K, V> _delegate;
 
@@ -64,8 +198,8 @@ public class MapViews {
         }
 
         @Override
-        public MutableMapView<K, V> asMapView() {
-            return new MutableMapViewImpl<K, V>( _delegate );
+        public MutableSortedMapView<K, V> asMapView() {
+            return new MutableSortedMapViewImpl<K, V>( _delegate );
         }
 
         @Override
@@ -129,6 +263,43 @@ public class MapViews {
             return _delegate.remove( key );
         }
 
+        @Override
+        public Comparator<? super K> comparator() {
+            return _delegate.comparator();
+        }
+
+        @Override
+        public K firstKey() {
+            return _delegate.firstKey();
+        }
+
+        @Override
+        public IMutableSortedMapView<K, V> headMap( final K toKey ) {
+            return new IMutableSortedMapViewImpl<K,V>( _delegate.headMap( toKey ) );
+        }
+
+        @Override
+        public K lastKey() {
+            return _delegate.lastKey(); 
+            
+        }
+
+        @Override
+        public IMutableSortedMapView<K, V> subMap( final K fromKey, final K toKey ) {
+            return new IMutableSortedMapViewImpl<K,V>( _delegate.subMap( fromKey, toKey ) );
+        }
+
+        @Override
+        public IMutableSortedMapView<K, V> tailMap( final K fromKey ) {
+            return new IMutableSortedMapViewImpl<K, V>( _delegate.tailMap( fromKey ) );
+            
+        }
+
+        @Override
+        public IImmutableSortedMap<K, V> immutableCopy() {
+            return org.thiesen.collections.map.impl.ImmutableSortedMap.copyOf( this );
+        }
+
     }
 
     private static class SortedMapViewImpl<K,V>
@@ -182,5 +353,12 @@ public class MapViews {
         return new ImmutableMapViewImpl<K,V>( map );
     }
     
+    public static <K,V> IImmutableSortedMapView<K, V> asIImmutableSortedMapView( final ImmutableSortedMap<K, V> map ) {
+        return new IImmutableSortedMapViewImpl<K, V>( map ); 
+    }
+    
+    public static <K,V> ImmutableSortedMapView<K,V> asImmutableSortedMapView( final ImmutableSortedMap<K,V> map ) {
+        return new ImmutableSortedMapViewImpl<K,V>( map );
+    }
     
 }

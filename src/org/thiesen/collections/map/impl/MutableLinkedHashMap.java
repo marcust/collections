@@ -20,6 +20,7 @@ package org.thiesen.collections.map.impl;
 
 import java.util.Map;
 
+import org.thiesen.collections.map.IImmutableMap;
 import org.thiesen.collections.map.IMap;
 
 import com.google.common.collect.Maps;
@@ -39,6 +40,11 @@ public class MutableLinkedHashMap<K, V>
     
     public static <K,V> MutableLinkedHashMap<K,V> create() {
         return new MutableLinkedHashMap<K, V>( Maps.<K, V>newLinkedHashMap() );
+    }
+
+    @Override
+    public IImmutableMap<K, V> immutableCopy() {
+        return ImmutableMap.copyOf( this );
     }
 
 }

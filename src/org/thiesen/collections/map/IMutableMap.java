@@ -41,4 +41,6 @@ public interface IMutableMap<K, V> extends IMap<K, V> {
     IMutableSetView<Map.Entry<K, V>> entrySet();
     
     MutableMapView<K,V> asMapView();
+    
+    IImmutableMap<K,V> immutableCopy();
 }

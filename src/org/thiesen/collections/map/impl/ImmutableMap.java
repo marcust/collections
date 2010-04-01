@@ -18,25 +18,58 @@
  */
 package org.thiesen.collections.map.impl;
 
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.thiesen.collections.collection.impl.CollectionViews;
 import org.thiesen.collections.collection.views.IImmutableCollectionView;
 import org.thiesen.collections.common.view.map.ImmutableMapView;
 import org.thiesen.collections.map.IImmutableMap;
+import org.thiesen.collections.map.IMap;
+import org.thiesen.collections.map.IMutableMap;
 import org.thiesen.collections.set.impl.SetViews;
 import org.thiesen.collections.set.views.IImmutableSetView;
 
-import com.google.common.collect.ImmutableMap;
+public final class ImmutableMap<K,V> implements IImmutableMap<K, V> {
 
-public final class ImmutableMapImpl<K,V> implements IImmutableMap<K, V> {
+    private final com.google.common.collect.ImmutableMap<K, V> _delegate;
 
-    private final ImmutableMap<K, V> _delegate;
-
-    private ImmutableMapImpl( final ImmutableMap<K, V> delegate ) {
+    private ImmutableMap( final com.google.common.collect.ImmutableMap<K, V> delegate ) {
         _delegate = delegate;
     }
 
+    public static <K,V> ImmutableMap<K,V> copyOf( final IMap<? extends K, ? extends V> map ) {
+        return new ImmutableMap<K,V>( com.google.common.collect.ImmutableMap.<K, V>copyOf( map.asMapView() ) );
+    }
+
+    public static <K,V> ImmutableMap<K,V> copyOf( final Map<? extends K, ? extends V> map ) {
+        return new ImmutableMap<K,V>( com.google.common.collect.ImmutableMap.<K, V>copyOf( map ) );
+    }
+
+    public static <K,V> ImmutableMap<K,V> of() {
+        return new ImmutableMap<K,V>( com.google.common.collect.ImmutableMap.<K, V>of() );
+    }
+    
+    public static <K,V> ImmutableMap<K,V> of( final K k1, final V v1 ) {
+        return new ImmutableMap<K,V>( com.google.common.collect.ImmutableMap.<K, V>of( k1, v1 ) );
+    }
+    
+    public static <K,V> ImmutableMap<K,V> of( final K k1, final V v1, final K k2, final V v2 ) {
+        return new ImmutableMap<K,V>( com.google.common.collect.ImmutableMap.<K, V>of( k1, v1, k2, v2 ) );
+    }
+    
+    public static <K,V> ImmutableMap<K,V> of( final K k1, final V v1, final K k2, final V v2, final K k3, final V v3 ) {
+        return new ImmutableMap<K,V>( com.google.common.collect.ImmutableMap.<K, V>of( k1, v1, k2, v2, k3, v3 ) );
+    }
+    
+    public static <K,V> ImmutableMap<K,V> of( final K k1, final V v1, final K k2, final V v2, final K k3, final V v3, final K k4, final V v4 ) {
+        return new ImmutableMap<K,V>( com.google.common.collect.ImmutableMap.<K, V>of( k1, v1, k2, v2, k3, v3, k4, v4 ) );
+    }
+
+    public static <K,V> ImmutableMap<K,V> of( final K k1, final V v1, final K k2, final V v2, final K k3, final V v3, final K k4, final V v4, final K k5, final V v5 ) {
+        return new ImmutableMap<K,V>( com.google.common.collect.ImmutableMap.<K, V>of( k1, v1, k2, v2, k3, v3, k4, v4, k5, v5 ) );
+    }
+    
     @Override
     public ImmutableMapView<K, V> asMapView() {
         return MapViews.asImmutableMapView( _delegate );
@@ -81,6 +114,11 @@ public final class ImmutableMapImpl<K,V> implements IImmutableMap<K, V> {
     @Override
     public int size() {
         return _delegate.size();
+    }
+
+    @Override
+    public IMutableMap<K, V> mutableCopy() {
+        return MutableHashMap.copyOf( this );
     }
     
     

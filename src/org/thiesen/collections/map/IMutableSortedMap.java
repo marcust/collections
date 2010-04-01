@@ -41,5 +41,5 @@ public interface IMutableSortedMap<K, V> extends IMutableMap<K, V>, ISortedMap<K
     
     MutableSortedMapView<K,V> asMapView();
 
-    
+    IImmutableSortedMap<K,V> immutableCopy();
 }

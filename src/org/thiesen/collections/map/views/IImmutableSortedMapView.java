@@ -17,8 +17,13 @@
  *  along with Thiesen Collections.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.thiesen.collections.map.views;
-public interface IImmutableSortedMapView<K, V> extends ISortedMapView<K, V>, IImmutableMapView<K, V> {
 
-    // empty interface
+import org.thiesen.collections.common.view.map.ImmutableSortedMapView;
+
+public interface IImmutableSortedMapView<K, V> extends 
+    ISortedMapView<K, V>, 
+    IImmutableMapView<K, V> {
+
+    ImmutableSortedMapView<K,V> asMapView();
     
 }
