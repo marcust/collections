@@ -41,11 +41,15 @@ public interface ISortedMap<K, V> extends IMap<K, V> {
     
     ISortedMapView<K,V> tailMap(K fromKey);
 
+    @Override
     ISetView<K> keySet();
     
+    @Override
     ICollectionView<V> values();
     
+    @Override
     ISetView<Map.Entry<K, V>> entrySet();
     
+    @Override
     SortedMapView<K,V> asMapView();
 }
