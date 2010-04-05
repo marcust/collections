@@ -66,7 +66,9 @@
                includeantruntime="true"
                >
             <compilerarg value="-Xlint:all"/>
-            <compilerarg value="-warn:unusedArgument"
+            <compilerarg value="-warn:unused,suppress,allDeprecation,assertIdentifier,boxing,charConcat,conditionAssign,constructorName,dep-ann,deprecation,discouraged,emptyBlock,enumSwitch,fallthrough,fieldHiding,finalBound,finally,forbidden,hiding,indirectStatic,assertIdentifier,boxing,charConcat,conditionAssign,constructorName,dep-ann,deprecation,discouraged,emptyBlock,enumSwitch,fallthrough,fieldHiding,finalBound,finally,forbidden,hiding,indirectStatic,intfAnnotation,intfNonInherited,javadoc,localHiding,maskedCatchBlocks,noEffectAssign,null,nullDereference,over-ann,paramAssign,pkgDefaultMethod,raw,semicolon,serial,specialParamHiding,static-access,staticReceiver,typeHiding,unchecked,unnecessaryElse,uselessTypeCheck,varargsCast,suppress"
+               compiler="org.eclipse.jdt.core.JDTCompilerAdapter" /> 
+            <compilerarg value="-enableJavadoc"
                compiler="org.eclipse.jdt.core.JDTCompilerAdapter" />
                           
             <classpath>
