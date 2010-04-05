@@ -20,6 +20,11 @@
        <fileset refid="libs" />
     </path>
 
+    <path id="compiler-classpath">
+      <fileset dir="${lib.home}">
+        <include name="ecj-3.5.2.jar" />
+      </fileset>
+    </path>
 
     <target name="git-info" description="Use the Task">
         <taskdef name="git-info" classname="org.thiesen.ant.git.ExtractGitInfo">
@@ -56,12 +61,18 @@
 
      <target name="compile" depends="prepare" description="compile it">
         <javac srcdir="${src}" source="1.6" target="1.6" 
-               destdir="${classes}" debug="on">
+               destdir="${classes}" debug="on"
+               compiler="org.eclipse.jdt.core.JDTCompilerAdapter"
+               includeantruntime="true"
+               >
             <compilerarg value="-Xlint:all"/>
-            <compilerarg value="-Werror"/>
+            <compilerarg value="-warn:unusedArgument"
+               compiler="org.eclipse.jdt.core.JDTCompilerAdapter" />
+                          
             <classpath>
                 <fileset refid="libs"/>
             </classpath>
+            <compilerclasspath refid="compiler-classpath" />
          </javac>
      </target>
      
