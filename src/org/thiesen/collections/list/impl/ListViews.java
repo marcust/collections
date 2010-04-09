@@ -336,6 +336,15 @@ public class ListViews {
             return _list;
         }
 
+        @Override
+        public boolean addIfNonNull( final E e ) {
+            if ( e == null ) {
+                return false;
+            }
+            
+            return add( e );
+        }
+
 
     }
 

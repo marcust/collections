@@ -384,6 +384,16 @@ public class MapViews {
             
         }
 
+        @Override
+        public boolean putIfNonNull( final K key, final V value ) {
+            if ( value == null ) {
+                return false;
+            }
+            
+            put( key, value );
+            return true;
+        }
+
     }
 
     private static class SortedMapViewImpl<K,V>

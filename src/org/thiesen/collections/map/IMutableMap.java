@@ -29,6 +29,8 @@ public interface IMutableMap<K, V> extends IMap<K, V> {
 
     V put(K key, V value);
     
+    boolean putIfNonNull( final K key, final V value );
+    
     V remove(Object key);
     
     void putAll(Map<? extends K, ? extends V> m);
@@ -46,4 +48,6 @@ public interface IMutableMap<K, V> extends IMap<K, V> {
     IImmutableMap<K,V> immutableCopy();
     
     IUnmodifiableMapView<K,V> asUnmodifiableView();
+    
+    
 }

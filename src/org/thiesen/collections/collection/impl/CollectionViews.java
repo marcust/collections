@@ -362,6 +362,15 @@ public class CollectionViews {
             
         }
 
+        @Override
+        public boolean addIfNonNull( final E e ) {
+            if ( e == null ) {
+                return false;
+            }
+            
+            return add( e );
+        }
+
     }
 
     @SuppressWarnings( "all" )

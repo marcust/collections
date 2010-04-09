@@ -109,5 +109,16 @@ abstract class AbstractDelegatingMutableIMap<K,V>
     }
 
 
+    @Override
+    public boolean putIfNonNull( final K key, final V value ) {
+        if ( value == null ) {
+            return false;
+        }
+        
+        put( key, value );
+        
+        return true;
+    }
+
     
 }

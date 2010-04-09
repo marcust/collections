@@ -59,5 +59,7 @@ public class MutableArrayList<E> extends AbstractDelegatingMutableIList<E>
     @Override
     public java.util.List<E> copyToMutableCollections() {
         return (java.util.List<E>) _arrayList.clone();
-    }    
+    }
+
+  
 }

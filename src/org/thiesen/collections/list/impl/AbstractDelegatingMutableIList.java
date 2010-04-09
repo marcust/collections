@@ -158,7 +158,14 @@ public abstract class AbstractDelegatingMutableIList<E>
         return _delegate;
     }
 
-    
+    @Override
+    public boolean addIfNonNull( final E e ) {
+        if ( e == null ) {
+            return false;
+        }
+        
+        return add( e );
+    }  
     
     
 }
