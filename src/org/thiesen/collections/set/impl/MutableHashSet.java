@@ -45,7 +45,10 @@ public class MutableHashSet<E>
         return new MutableHashSet<T>( Sets.newHashSet( elements ) );
     }
     
-
+    public static <T> MutableHashSet<T> create() {
+        return new MutableHashSet<T>( Sets.<T>newHashSet() );
+    }
+    
     @SuppressWarnings( "unchecked" )
     @Override
     public Set<E> copyToMutableCollections() {
