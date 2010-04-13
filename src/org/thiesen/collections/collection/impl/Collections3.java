@@ -21,8 +21,21 @@ package org.thiesen.collections.collection.impl;
 import java.util.Collection;
 import java.util.Iterator;
 
+/**
+ * Collection helper class for working with iterables.
+ */
 public class Collections3 {
 
+    /**
+     * A contains all implementation.
+     * 
+     * Returns true when the collection contains all of the objects in the given iterable.
+     * 
+     * @see Collection#contains(Object)
+     * @param collection the collection that is tested for containing the objects.
+     * @param iterable the iterable that contains the items which are checked.
+     * @return true if the collection contains all of the items in iterable, false otherwise.
+     */
     public static boolean containsAll( final Collection<?> collection, final Iterable<?> iterable ) {
         final Iterator<?> iterator = iterable.iterator();
         while ( iterator.hasNext() ) {
