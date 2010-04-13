@@ -45,6 +45,10 @@ public class ImmutableList<E>
         return new ImmutableList<T>( com.google.common.collect.ImmutableList.copyOf( iterable ) );
     }
     
+    public static <T> ImmutableList<T> of( final T... elements ) {
+        return new ImmutableList<T>( com.google.common.collect.ImmutableList.of( elements ) );
+    }
+    
     @Override
     public IMutableList<E> mutableCopy() {
         return MutableArrayList.copyOf( _list );

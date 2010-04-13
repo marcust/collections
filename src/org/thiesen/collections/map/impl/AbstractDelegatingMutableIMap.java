@@ -92,6 +92,11 @@ abstract class AbstractDelegatingMutableIMap<K,V>
     public boolean isEmpty() {
         return _delegate.isEmpty();
     }
+    
+    @Override
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
 
     @Override
     public int size() {

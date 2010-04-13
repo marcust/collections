@@ -31,6 +31,8 @@ public interface IMap<K, V> {
     
     boolean isEmpty();
     
+    boolean isNotEmpty();
+    
     boolean containsKey(Object key);
     
     boolean containsValue(Object value);

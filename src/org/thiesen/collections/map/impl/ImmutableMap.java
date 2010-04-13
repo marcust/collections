@@ -120,6 +120,10 @@ public final class ImmutableMap<K,V> implements IImmutableMap<K, V> {
     public IMutableMap<K, V> mutableCopy() {
         return MutableHashMap.copyOf( this );
     }
-    
+
+    @Override
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
     
 }

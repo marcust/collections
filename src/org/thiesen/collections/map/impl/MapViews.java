@@ -120,6 +120,12 @@ public class MapViews {
         public int size() {
             return _map.size();
         }
+        
+        @Override
+        public boolean isNotEmpty() {
+            return !isEmpty();
+        }
+
 
     }
 
@@ -246,6 +252,12 @@ public class MapViews {
         public IMutableMap<K, V> mutableCopy() {
             return MutableTreeMap.copyOf( this );
         }
+        
+        @Override
+        public boolean isNotEmpty() {
+            return !isEmpty();
+        }
+
 
     }
 
@@ -393,6 +405,12 @@ public class MapViews {
             put( key, value );
             return true;
         }
+        
+        @Override
+        public boolean isNotEmpty() {
+            return !isEmpty();
+        }
+
 
     }
 

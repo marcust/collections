@@ -138,4 +138,10 @@ public class ImmutableSortedMap<K,V> implements IImmutableSortedMap<K, V> {
         return MutableTreeMap.copyOf( this );
     }
     
+    @Override
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
+
+    
 }
