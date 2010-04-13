@@ -74,6 +74,12 @@ public class ListViews {
             return Collections3.containsAll( delegate(), c );
         }
         
+        @Override
+        public boolean isNotEmpty() {
+            return !isEmpty();
+        }
+
+        
     }
     
     static abstract class AbstractIMutableList<E>

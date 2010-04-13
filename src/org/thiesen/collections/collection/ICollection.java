@@ -29,6 +29,8 @@ public interface ICollection<E> extends Iterable<E>  {
   
     public boolean isEmpty();
     
+    public boolean isNotEmpty();
+    
     int size();
     
     public Object[] toArray();

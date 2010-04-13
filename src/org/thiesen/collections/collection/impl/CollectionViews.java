@@ -79,6 +79,11 @@ public class CollectionViews {
         public boolean isEmpty() {
             return _delegate.isEmpty();
         }
+        
+        @Override
+        public boolean isNotEmpty() {
+            return !isEmpty();
+        }
 
         @Override
         public int size() {
@@ -114,6 +119,16 @@ public class CollectionViews {
             return Collections3.containsAll( delegate(), i );
         }
         
+        @Override
+        public boolean isEmpty() {
+            return delegate().isEmpty();
+        }
+        
+        @Override
+        public boolean isNotEmpty() {
+            return !delegate().isEmpty();
+        }
+        
     }
 
     private static class MutableCollectionViewImpl<E>
@@ -137,10 +152,11 @@ public class CollectionViews {
             return _delegate.contains( o );
         }
 
+        @Override
         public boolean isEmpty() {
             return _delegate.isEmpty();
         }
-
+     
         public Iterator<E> iterator() {
             return _delegate.iterator();
         }

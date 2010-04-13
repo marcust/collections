@@ -113,6 +113,11 @@ public class SetViews {
         public boolean isEmpty() {
             return _delegate.isEmpty();
         }
+        
+        @Override
+        public boolean isNotEmpty() {
+            return !isEmpty();
+        }
 
         @Override
         public int size() {
@@ -256,6 +261,11 @@ public class SetViews {
         public boolean isEmpty() {
             return _set.isEmpty();
         }
+        
+        @Override
+        public boolean isNotEmpty() {
+            return !isEmpty();
+        }
 
         @Override
         public int size() {
@@ -322,6 +332,11 @@ public class SetViews {
         @Override
         public boolean containsAll( final Iterable<?> c ) {
             return Collections3.containsAll( delegate(), c );
+        }
+        
+        @Override
+        public boolean isNotEmpty() {
+            return !isEmpty();
         }
         
     }

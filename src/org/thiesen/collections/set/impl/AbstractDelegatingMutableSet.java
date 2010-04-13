@@ -81,6 +81,11 @@ public abstract class AbstractDelegatingMutableSet<E>
     }
 
     @Override
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
+    
+    @Override
     public int size() {
         return _delegate.size();
     }

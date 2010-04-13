@@ -51,6 +51,11 @@ abstract class AbstractDelegatingImmutableSet<E>
     public boolean isEmpty() {
         return _set.isEmpty();
     }
+    
+    @Override
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
 
     public ImmutableIterator<E> iterator() {
         return ImmutableIteratorImpl.wrap( _set.iterator() );
