@@ -18,6 +18,7 @@
  */
 package org.thiesen.collections.list.impl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.thiesen.collections.common.iterator.ImmutableIterator;
@@ -33,8 +34,11 @@ import com.google.common.collect.Lists;
 public class ImmutableList<E>
     extends ListViews.AbstractIList<E>
     implements 
-    IImmutableRandomAccessList<E> {
+    IImmutableRandomAccessList<E>,
+    Serializable {
 
+    private static final long serialVersionUID = -105090485056808607L;
+    
     private final com.google.common.collect.ImmutableList<E> _list;
     
     private ImmutableList( final com.google.common.collect.ImmutableList<E> list ) {

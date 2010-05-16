@@ -18,6 +18,7 @@
  */
 package org.thiesen.collections.map.impl;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -30,8 +31,10 @@ import org.thiesen.collections.map.IMutableMap;
 import org.thiesen.collections.set.impl.SetViews;
 import org.thiesen.collections.set.views.IImmutableSetView;
 
-public final class ImmutableMap<K,V> implements IImmutableMap<K, V> {
+public final class ImmutableMap<K,V> implements IImmutableMap<K, V>, Serializable {
 
+    private static final long serialVersionUID = -4095027582339406428L;
+    
     private final com.google.common.collect.ImmutableMap<K, V> _delegate;
 
     private ImmutableMap( final com.google.common.collect.ImmutableMap<K, V> delegate ) {

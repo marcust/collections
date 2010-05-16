@@ -18,6 +18,7 @@
  */
 package org.thiesen.collections.map.impl;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.thiesen.collections.map.IImmutableMap;
@@ -26,8 +27,10 @@ import org.thiesen.collections.map.IMap;
 import com.google.common.collect.Maps;
 
 public class MutableLinkedHashMap<K, V>
-    extends AbstractDelegatingMutableIMap<K,V> {
+    extends AbstractDelegatingMutableIMap<K,V>
+    implements Serializable {
 
+    private static final long serialVersionUID = -6765415598599564931L;
 
     private MutableLinkedHashMap( final Map<K,V> delegate ) {
         super( delegate );

@@ -18,13 +18,16 @@
  */
 package org.thiesen.collections.list.impl;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
 
-public class MutableLinkedList<E> extends AbstractDelegatingMutableIList<E>  {
+public class MutableLinkedList<E> extends AbstractDelegatingMutableIList<E> implements Serializable  {
 
+    private static final long serialVersionUID = -2582283793811761616L;
+    
     private final LinkedList<E> _linkedList;
 
     private MutableLinkedList( final LinkedList<E> list ) {

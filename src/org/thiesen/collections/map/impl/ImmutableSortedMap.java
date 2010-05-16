@@ -18,6 +18,7 @@
  */
 package org.thiesen.collections.map.impl;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedMap;
@@ -34,8 +35,10 @@ import org.thiesen.collections.set.impl.SetViews;
 import org.thiesen.collections.set.views.IImmutableSetView;
 
 
-public class ImmutableSortedMap<K,V> implements IImmutableSortedMap<K, V> {
+public class ImmutableSortedMap<K,V> implements IImmutableSortedMap<K, V>, Serializable {
 
+    private static final long serialVersionUID = 2071488170195702205L;
+    
     private final com.google.common.collect.ImmutableSortedMap<K, V> _delegate;
 
     private ImmutableSortedMap( final com.google.common.collect.ImmutableSortedMap<K, V> delegate ) {

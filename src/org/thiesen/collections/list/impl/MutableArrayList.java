@@ -18,6 +18,7 @@
  */
 package org.thiesen.collections.list.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.thiesen.collections.collection.ICollection;
@@ -26,8 +27,10 @@ import org.thiesen.collections.list.IMutableRandomAccessList;
 import com.google.common.collect.Lists;
 
 public class MutableArrayList<E> extends AbstractDelegatingMutableIList<E>
-    implements IMutableRandomAccessList<E> {
+    implements IMutableRandomAccessList<E>,
+    Serializable {
  
+    private static final long serialVersionUID = 8398250291358733368L;
     private final ArrayList<E> _arrayList;
 
     private MutableArrayList( final ArrayList<E> arrayList ) {

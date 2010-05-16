@@ -18,6 +18,7 @@
  */
 package org.thiesen.collections.set.impl;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.SortedSet;
 
@@ -29,8 +30,9 @@ import org.thiesen.collections.set.views.IImmutableSortedSetView;
 
 public class ImmutableSortedSet<E> 
     extends AbstractDelegatingImmutableSet<E> 
-    implements IImmutableSortedSet<E> {
+    implements IImmutableSortedSet<E>, Serializable {
 
+    private static final long serialVersionUID = 4270687233661901815L;
     private final SortedSet<E> _sortedSet;
 
     private ImmutableSortedSet( final com.google.common.collect.ImmutableSortedSet<E> set ) {

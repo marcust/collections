@@ -18,6 +18,7 @@
  */
 package org.thiesen.collections.map.impl;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.SortedMap;
 
@@ -31,8 +32,10 @@ import com.google.common.collect.Maps;
 
 public class MutableTreeMap<K, V>
     extends AbstractDelegatingMutableIMap<K,V>
-    implements IMutableSortedMap<K, V> {
+    implements IMutableSortedMap<K, V>, Serializable {
 
+    private static final long serialVersionUID = 8160226401221910796L;
+    
     private final SortedMap<K, V> _delegate;
 
     private MutableTreeMap( final SortedMap<K,V> delegate ) {

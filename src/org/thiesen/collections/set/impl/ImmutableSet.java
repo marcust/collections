@@ -18,13 +18,16 @@
  */
 package org.thiesen.collections.set.impl;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import org.thiesen.collections.set.IMutableSet;
 
 
 public class ImmutableSet<E> 
-    extends AbstractDelegatingImmutableSet<E> {
+    extends AbstractDelegatingImmutableSet<E> implements Serializable {
+    
+    private static final long serialVersionUID = -3874566868408234997L;
     
     private final Set<E> _immutableSet;
 

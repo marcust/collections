@@ -18,13 +18,17 @@
  */
 package org.thiesen.collections.set.impl;
 
+import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-public class MutableLinkedHashSet<E> extends AbstractDelegatingMutableSet<E> {
+public class MutableLinkedHashSet<E> extends AbstractDelegatingMutableSet<E> 
+    implements Serializable {
 
+    private static final long serialVersionUID = 6828336468838953342L;
+    
     private final LinkedHashSet<E> _linkedHashSet;
 
     private MutableLinkedHashSet( final LinkedHashSet<E> set ) {

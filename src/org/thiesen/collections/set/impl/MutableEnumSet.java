@@ -18,11 +18,13 @@
  */
 package org.thiesen.collections.set.impl;
 
+import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.Set;
 
-public class MutableEnumSet<E extends Enum<E>> extends AbstractDelegatingMutableSet<E> {
+public class MutableEnumSet<E extends Enum<E>> extends AbstractDelegatingMutableSet<E> implements Serializable {
 
+    private static final long serialVersionUID = -7864965638395369744L;
     private final EnumSet<E> _enumSet;
 
     private MutableEnumSet( final EnumSet<E> set ) {

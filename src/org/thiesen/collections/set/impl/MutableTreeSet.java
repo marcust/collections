@@ -18,6 +18,7 @@
  */
 package org.thiesen.collections.set.impl;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -33,8 +34,10 @@ import com.google.common.collect.Sets;
 
 public class MutableTreeSet<E> 
     extends AbstractDelegatingMutableSet<E> 
-    implements IMutableSortedSet<E> {
+    implements IMutableSortedSet<E>, Serializable {
 
+    private static final long serialVersionUID = -1451034411874694744L;
+    
     private final TreeSet<E> _treeSet;
 
     private MutableTreeSet( final TreeSet<E> set ) {
