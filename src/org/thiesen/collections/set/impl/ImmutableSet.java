@@ -19,7 +19,6 @@
 package org.thiesen.collections.set.impl;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import org.thiesen.collections.set.IMutableSet;
 
@@ -29,7 +28,7 @@ public class ImmutableSet<E>
     
     private static final long serialVersionUID = -3874566868408234997L;
     
-    private final Set<E> _immutableSet;
+    private final com.google.common.collect.ImmutableSet<E> _immutableSet;
 
     private ImmutableSet( final com.google.common.collect.ImmutableSet<E> set ) {
         super( set );
@@ -37,6 +36,10 @@ public class ImmutableSet<E>
     }
     
     public static <T> ImmutableSet<T> copyOf( final Iterable<T> elements ) {
+        if ( elements instanceof ImmutableSet<?> ) {
+            return (ImmutableSet<T>) elements;
+        }
+        
         return new ImmutableSet<T>( com.google.common.collect.ImmutableSet.copyOf( elements ) );
     }
 

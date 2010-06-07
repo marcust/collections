@@ -58,10 +58,20 @@ public class MutableArrayList<E> extends AbstractDelegatingMutableIList<E>
         return new MutableArrayList<T>( Lists.newArrayList( values ) );
     }
     
+    public static <T> MutableArrayList<T> of( final T... values ) {
+        return new MutableArrayList<T>( Lists.newArrayList( values ) );
+    }
+    
     @SuppressWarnings( "unchecked" )
     @Override
     public java.util.List<E> copyToMutableCollections() {
         return (java.util.List<E>) _arrayList.clone();
+    }
+
+    @Override
+    public MutableArrayList<E> append( final E element ) {
+        add( element );
+        return this;
     }
 
   

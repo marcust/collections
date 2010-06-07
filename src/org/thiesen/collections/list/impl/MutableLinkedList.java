@@ -19,6 +19,7 @@
 package org.thiesen.collections.list.impl;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,12 +44,26 @@ public class MutableLinkedList<E> extends AbstractDelegatingMutableIList<E> impl
         return new MutableLinkedList<T>( Lists.newLinkedList( elements ) );
     }
     
+    public static <T> MutableLinkedList<T> copyOf( final T... elements ) {
+        return new MutableLinkedList<T>( Lists.newLinkedList( Arrays.asList( elements ) ) );
+    }
+    
+    public static <T> MutableLinkedList<T> of( final T... elements ) {
+        return new MutableLinkedList<T>( Lists.newLinkedList( Arrays.asList( elements ) ) );
+    }
+    
     @SuppressWarnings( "unchecked" )
     @Override
     public List<E> copyToMutableCollections() {
         return (List<E>) _linkedList.clone();
-
     }
+    
+    @Override
+    public MutableLinkedList<E> append( final E element ) {
+        add( element );
+        return this;
+    }
+
 
 
 }

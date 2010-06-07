@@ -20,7 +20,6 @@ package org.thiesen.collections.set.impl;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.SortedSet;
 
 import org.thiesen.collections.common.view.set.ImmutableSortedSetView;
 import org.thiesen.collections.set.IImmutableSortedSet;
@@ -33,7 +32,7 @@ public class ImmutableSortedSet<E>
     implements IImmutableSortedSet<E>, Serializable {
 
     private static final long serialVersionUID = 4270687233661901815L;
-    private final SortedSet<E> _sortedSet;
+    private final com.google.common.collect.ImmutableSortedSet<E> _sortedSet;
 
     private ImmutableSortedSet( final com.google.common.collect.ImmutableSortedSet<E> set ) {
         super( set );        
@@ -41,6 +40,10 @@ public class ImmutableSortedSet<E>
     }
     
     public static <T> ImmutableSortedSet<T> copyOf( final Iterable<T> elements ) {
+        if ( elements instanceof ImmutableSortedSet<?> ) {
+            return (ImmutableSortedSet<T>) elements;
+        }
+        
         return new ImmutableSortedSet<T>( com.google.common.collect.ImmutableSortedSet.copyOf( elements ) );
     }
 

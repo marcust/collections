@@ -27,6 +27,8 @@ import com.google.common.base.Predicate;
 public interface IMutableSet<E> extends ISet<E> {
 
     boolean add(E e);
+    
+    IMutableSet<E> append(E e);
 
     boolean remove(Object o);
 

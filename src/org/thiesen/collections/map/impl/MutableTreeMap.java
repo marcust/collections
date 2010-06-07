@@ -20,7 +20,7 @@ package org.thiesen.collections.map.impl;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.thiesen.collections.common.view.map.MutableSortedMapView;
 import org.thiesen.collections.map.IImmutableSortedMap;
@@ -36,9 +36,9 @@ public class MutableTreeMap<K, V>
 
     private static final long serialVersionUID = 8160226401221910796L;
     
-    private final SortedMap<K, V> _delegate;
+    private final TreeMap<K, V> _delegate;
 
-    private MutableTreeMap( final SortedMap<K,V> delegate ) {
+    private MutableTreeMap( final TreeMap<K,V> delegate ) {
         super( delegate );
         _delegate = delegate;
     }
@@ -88,6 +88,10 @@ public class MutableTreeMap<K, V>
         return ImmutableSortedMap.copyOf( this );
     }
 
-
+    @Override
+    public MutableTreeMap<K, V> append( final K key, final V value ) {
+        put( key, value );
+        return this;
+    }
     
 }

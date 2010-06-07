@@ -50,4 +50,10 @@ public class MutableLinkedHashMap<K, V>
         return ImmutableMap.copyOf( this );
     }
 
+    @Override
+    public MutableLinkedHashMap<K, V> append( final K key, final V value ) {
+        put( key, value );
+        return this;
+    }
+
 }

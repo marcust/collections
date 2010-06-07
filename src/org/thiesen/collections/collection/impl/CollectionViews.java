@@ -387,6 +387,12 @@ public class CollectionViews {
             return add( e );
         }
 
+        @Override
+        public IMutableCollectionViewImpl<E> append( final E e ) {
+            add( e );
+            return this;
+        }
+
     }
 
     @SuppressWarnings( "all" )

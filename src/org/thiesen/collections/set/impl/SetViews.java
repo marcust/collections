@@ -322,6 +322,12 @@ public class SetViews {
             return Collections3.removeAll( _set, c );
         }
 
+        @Override
+        public IMutableSortedSetViewImpl<E> append( final E e ) {
+            add( e );
+            return this;
+        }
+
     }
 
     static abstract class AbstractISet<E> implements ISet<E> {
@@ -635,6 +641,12 @@ public class SetViews {
         @Override
         protected Set<E> delegate() {
             return _delegate;
+        }
+
+        @Override
+        public IMutableSetViewImpl<E> append( final E e ) {
+            add( e );
+            return this;
         }
         
  

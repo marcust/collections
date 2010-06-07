@@ -29,6 +29,8 @@ public interface IMutableMap<K, V> extends IMap<K, V> {
 
     V put(K key, V value);
     
+    IMutableMap<K,V> append(K key, V value);
+    
     boolean putIfNonNull( final K key, final V value );
     
     V remove(Object key);

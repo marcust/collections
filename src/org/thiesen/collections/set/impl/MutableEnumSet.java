@@ -44,5 +44,11 @@ public class MutableEnumSet<E extends Enum<E>> extends AbstractDelegatingMutable
     public Set<E> copyToMutableCollections() {
         return _enumSet.clone();
     }
+
+    @Override
+    public MutableEnumSet<E> append( final E e ) {
+        add( e );
+        return this;
+    }
     
 }

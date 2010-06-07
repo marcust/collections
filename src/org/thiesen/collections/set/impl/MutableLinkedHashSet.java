@@ -19,6 +19,7 @@
 package org.thiesen.collections.set.impl;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -44,10 +45,24 @@ public class MutableLinkedHashSet<E> extends AbstractDelegatingMutableSet<E>
         return new MutableLinkedHashSet<T>( Sets.<T>newLinkedHashSet( elements ) );
     }
     
+    public static <T> MutableLinkedHashSet<T> copyOf( final T... elements ) {
+        return new MutableLinkedHashSet<T>( Sets.<T>newLinkedHashSet( Arrays.asList( elements ) ) );
+    }
+    
+    public static <T> MutableLinkedHashSet<T> of( final T... elements ) {
+        return new MutableLinkedHashSet<T>( Sets.<T>newLinkedHashSet( Arrays.asList( elements ) ) );
+    }
+    
     @SuppressWarnings( "unchecked" )
     @Override
     public Set<E> copyToMutableCollections() {
         return (Set<E>) _linkedHashSet.clone();
+    }
+
+    @Override
+    public MutableLinkedHashSet<E> append( final E e ) {
+        add( e );
+        return this;
     }
 
 }

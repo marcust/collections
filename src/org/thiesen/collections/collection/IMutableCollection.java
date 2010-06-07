@@ -26,6 +26,8 @@ public interface IMutableCollection<E> extends ICollection<E>, Iterable<E> {
 
     boolean add(E e);
     
+    IMutableCollection<E> append( E e );
+    
     boolean addIfNonNull(E e);
     
     boolean remove(Object o);

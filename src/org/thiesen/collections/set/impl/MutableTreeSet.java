@@ -19,6 +19,7 @@
 package org.thiesen.collections.set.impl;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -61,7 +62,14 @@ public class MutableTreeSet<E>
         return new MutableTreeSet<T>( new TreeSet<T>( elements.asCollectionsView() ) );
     }
     
+    public static <T> MutableTreeSet<T> copyOf( final T... elements ) {
+        return new MutableTreeSet<T>( new TreeSet<T>( Arrays.asList( elements ) ) );
+    }
     
+    public static <T> MutableTreeSet<T> of( final T... elements ) {
+        return new MutableTreeSet<T>( new TreeSet<T>( Arrays.asList( elements ) ) );
+    }
+
     public static <T> MutableTreeSet<T> copyOf(
             final Comparator<? super T> comparator,
             final Iterable<T> elements ) {
@@ -115,5 +123,11 @@ public class MutableTreeSet<E>
     @Override
     public MutableSortedSetView<E> asCollectionsView() {
         return SetViews.asMutableSortedSetView( _treeSet );
+    }
+
+    @Override
+    public MutableTreeSet<E> append( final E e ) {
+        add( e );
+        return this;
     }
 }

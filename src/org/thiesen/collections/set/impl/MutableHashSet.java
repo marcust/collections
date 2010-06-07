@@ -49,6 +49,10 @@ public class MutableHashSet<E>
         return new MutableHashSet<T>( Sets.newHashSet( elements ) );
     }
     
+    public static <T> MutableHashSet<T> of( final T... elements ) {
+        return new MutableHashSet<T>( Sets.newHashSet( elements ) );
+    }
+    
     public static <T> MutableHashSet<T> create() {
         return new MutableHashSet<T>( Sets.<T>newHashSet() );
     }
@@ -58,6 +62,11 @@ public class MutableHashSet<E>
     public Set<E> copyToMutableCollections() {
         return (Set<E>) _hashSet.clone();
     }
-    
+
+    @Override
+    public MutableHashSet<E> append( final E e ) {
+        add( e );
+        return this;
+    }
   
 }

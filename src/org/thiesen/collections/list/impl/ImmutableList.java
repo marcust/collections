@@ -46,6 +46,9 @@ public class ImmutableList<E>
     }
     
     public static <T> ImmutableList<T> copyOf( final Iterable<T> iterable ) {
+        if ( iterable instanceof ImmutableList<?> ) {
+            return (ImmutableList<T>) iterable;
+        }
         return new ImmutableList<T>( com.google.common.collect.ImmutableList.copyOf( iterable ) );
     }
     

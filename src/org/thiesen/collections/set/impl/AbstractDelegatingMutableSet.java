@@ -39,6 +39,11 @@ public abstract class AbstractDelegatingMutableSet<E>
     protected AbstractDelegatingMutableSet( final Set<E> set ) {
         _delegate = set;
     }
+    
+    AbstractDelegatingMutableSet() {
+        _delegate = null;
+        // for deserialization
+    }
 
     @Override
     public boolean add( final E e ) {

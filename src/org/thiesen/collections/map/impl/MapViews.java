@@ -411,6 +411,11 @@ public class MapViews {
             return !isEmpty();
         }
 
+        @Override
+        public IMutableSortedMapViewImpl<K, V> append( final K key, final V value ) {
+            put( key, value );
+            return this;
+        }
 
     }
 

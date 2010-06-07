@@ -41,7 +41,12 @@ public final class ImmutableMap<K,V> implements IImmutableMap<K, V>, Serializabl
         _delegate = delegate;
     }
 
+    @SuppressWarnings( "unchecked" )
     public static <K,V> ImmutableMap<K,V> copyOf( final IMap<? extends K, ? extends V> map ) {
+        if ( map instanceof ImmutableMap<?,?> ) {
+            return (ImmutableMap<K, V>) map;
+        }
+        
         return new ImmutableMap<K,V>( com.google.common.collect.ImmutableMap.<K, V>copyOf( map.asMapView() ) );
     }
 

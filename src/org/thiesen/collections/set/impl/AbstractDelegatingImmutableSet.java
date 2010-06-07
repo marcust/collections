@@ -39,7 +39,12 @@ abstract class AbstractDelegatingImmutableSet<E>
     public AbstractDelegatingImmutableSet( final Set<E> set ) {
         _set = set;
     }
-
+    
+    AbstractDelegatingImmutableSet() {
+        _set = null;
+        // for deserialization
+    }
+    
     public boolean contains( final Object arg0 ) {
         return _set.contains( arg0 );
     }

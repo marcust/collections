@@ -28,6 +28,7 @@ import org.thiesen.collections.collection.impl.CollectionViews;
 import org.thiesen.collections.collection.views.IImmutableCollectionView;
 import org.thiesen.collections.common.view.map.ImmutableSortedMapView;
 import org.thiesen.collections.map.IImmutableSortedMap;
+import org.thiesen.collections.map.IMap;
 import org.thiesen.collections.map.IMutableSortedMap;
 import org.thiesen.collections.map.ISortedMap;
 import org.thiesen.collections.map.views.IImmutableSortedMapView;
@@ -49,7 +50,21 @@ public class ImmutableSortedMap<K,V> implements IImmutableSortedMap<K, V>, Seria
         return new ImmutableSortedMap<K,V>( com.google.common.collect.ImmutableSortedMap.<K, V>copyOf( map ) );
     }
     
+    @SuppressWarnings( "unchecked" )
+    public static <K,V> ImmutableSortedMap<K,V> copyOf( final IMap<? extends K, ? extends V> map ) {
+        if ( map instanceof ImmutableSortedMap<?,?> ) {
+            return (ImmutableSortedMap<K, V>) map;
+        }
+        
+        return new ImmutableSortedMap<K,V>( com.google.common.collect.ImmutableSortedMap.<K, V>copyOf( map.asMapView() ) );
+    }
+    
+    @SuppressWarnings( "unchecked" )
     public static <K,V> ImmutableSortedMap<K,V> copyOf( final ISortedMap<? extends K, ? extends V> map ) {
+        if ( map instanceof ImmutableSortedMap<?,?> ) {
+            return (ImmutableSortedMap<K, V>) map;
+        }
+        
         return new ImmutableSortedMap<K,V>( com.google.common.collect.ImmutableSortedMap.<K, V>copyOf( map.asMapView() ) );
     }
     

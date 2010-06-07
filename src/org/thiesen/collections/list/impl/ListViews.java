@@ -351,6 +351,12 @@ public class ListViews {
             return add( e );
         }
 
+        @Override
+        public IMutableList<E> append( final E element ) {
+            add( element );
+            return this;
+        }
+
 
     }
 

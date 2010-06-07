@@ -37,6 +37,11 @@ abstract class AbstractDelegatingMutableIMap<K,V>
     public AbstractDelegatingMutableIMap( final Map<K, V> delegate ) {
         _delegate = delegate;
     }
+    
+    AbstractDelegatingMutableIMap() {
+        _delegate = null;
+        // for deserialization
+    }
 
     @Override
     public void clear() {

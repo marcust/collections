@@ -29,6 +29,8 @@ public interface IMutableList<E> extends IList<E>, IMutableCollection<E> {
 
     void add(int index, E element);
     
+    IMutableList<E> append( E element );
+    
     E remove(int index);
 
     boolean addAll(int index, ICollection<? extends E> c);

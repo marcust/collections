@@ -42,6 +42,11 @@ public abstract class AbstractDelegatingMutableIList<E>
         _delegate = delegate;
     }
 
+    AbstractDelegatingMutableIList() {
+        // for dezerialisation
+        _delegate = null;
+    }
+    
     public boolean add( final E e ) {
         return _delegate.add( e );
     }
