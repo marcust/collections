@@ -23,6 +23,7 @@ import org.thiesen.collections.common.view.collection.ImmutableCollectionView;
 
 public interface IImmutableCollectionView<E> extends ICollectionView<E>, IImmutableCollection<E> {
 
+    @Override
     public ImmutableCollectionView<E> asCollectionsView();
     
 }

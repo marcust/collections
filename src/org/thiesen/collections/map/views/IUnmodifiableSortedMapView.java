@@ -22,6 +22,7 @@ import org.thiesen.collections.common.view.map.UnmodifiableSortedMapView;
 
 public interface IUnmodifiableSortedMapView<K, V> extends ISortedMapView<K, V>, IUnmodifiableMapView<K, V> {
 
+    @Override
     UnmodifiableSortedMapView<K,V> asMapView();
     
     

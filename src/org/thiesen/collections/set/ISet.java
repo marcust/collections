@@ -25,7 +25,7 @@ import org.thiesen.collections.set.views.ISetView;
 import com.google.common.base.Predicate;
 
 
-public interface ISet<E> extends Iterable<E>, ICollection<E> {
+public interface ISet<E> extends ICollection<E> {
 
     @Override
     public java.util.Set<E> copyToMutableCollections();

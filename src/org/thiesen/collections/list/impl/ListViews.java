@@ -79,6 +79,16 @@ public class ListViews {
             return !isEmpty();
         }
 
+        @Override
+        public boolean hasSingleValueOnly() {
+            return Iterables.size( delegate() ) == 1;
+        }
+
+        @Override
+        public E getSingleValue() {
+            return Iterables.getOnlyElement( delegate() );
+        }
+
         
     }
     

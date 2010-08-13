@@ -27,6 +27,7 @@ public interface IMutableCollectionView<E> extends
     IMutableCollection<E>, 
     ICollectionView<E> {
 
+    @Override
     public MutableCollectionView<E> asCollectionsView();
     
 }

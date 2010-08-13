@@ -26,14 +26,18 @@ import org.thiesen.collections.set.views.IImmutableSetView;
 
 public interface IImmutableMap<K, V> extends IMap<K, V> {
 
+    @Override
     IImmutableSetView<K> keySet();
     
+    @Override
     IImmutableCollectionView<V> values();
     
+    @Override
     IImmutableSetView<Map.Entry<K, V>> entrySet();
 
     IMutableMap<K,V> mutableCopy();
     
+    @Override
     ImmutableMapView<K,V> asMapView();
     
 }

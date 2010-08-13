@@ -28,6 +28,7 @@ import org.thiesen.collections.set.views.IMutableSetView;
 import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 
 public abstract class AbstractDelegatingMutableSet<E> 
@@ -125,5 +126,17 @@ public abstract class AbstractDelegatingMutableSet<E>
     protected Set<E> delegate() {
         return _delegate;
     }
+    
+
+    @Override
+    public boolean hasSingleValueOnly() {
+        return Iterables.size( delegate() ) == 1;
+    }
+
+    @Override
+    public E getSingleValue() {
+        return Iterables.getOnlyElement( delegate() );
+    }
+
     
 }

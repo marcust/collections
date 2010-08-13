@@ -31,6 +31,8 @@ import org.thiesen.collections.map.IMutableMap;
 import org.thiesen.collections.set.impl.SetViews;
 import org.thiesen.collections.set.views.IImmutableSetView;
 
+import com.google.common.collect.Iterables;
+
 public final class ImmutableMap<K,V> implements IImmutableMap<K, V>, Serializable {
 
     private static final long serialVersionUID = -4095027582339406428L;
@@ -132,6 +134,21 @@ public final class ImmutableMap<K,V> implements IImmutableMap<K, V>, Serializabl
     @Override
     public boolean isNotEmpty() {
         return !isEmpty();
+    }
+
+    @Override
+    public boolean hasSingleEntryOnly() {
+        return size() == 1;
+    }
+
+    @Override
+    public K getSingleEntryKey() {
+        return Iterables.getOnlyElement( keySet() );
+    }
+
+    @Override
+    public V getSingleEntryValue() {
+        return Iterables.getOnlyElement( values() );
     }
     
 }

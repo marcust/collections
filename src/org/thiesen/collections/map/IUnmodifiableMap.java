@@ -26,12 +26,16 @@ import org.thiesen.collections.set.views.IUnmodifiableSetView;
 
 public interface IUnmodifiableMap<K, V> extends IMap<K, V> {
 
+    @Override
     IUnmodifiableSetView<K> keySet();
     
+    @Override
     IUnmodifiableCollectionView<V> values();
     
+    @Override
     IUnmodifiableSetView<Map.Entry<K, V>> entrySet();
     
+    @Override
     UnmodifiableMapView<K,V> asMapView();
 
 }

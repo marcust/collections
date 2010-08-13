@@ -29,6 +29,7 @@ import org.thiesen.collections.set.IImmutableSet;
 import org.thiesen.collections.set.views.IImmutableSetView;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 
 abstract class AbstractDelegatingImmutableSet<E> 
@@ -45,6 +46,7 @@ abstract class AbstractDelegatingImmutableSet<E>
         // for deserialization
     }
     
+    @Override
     public boolean contains( final Object arg0 ) {
         return _set.contains( arg0 );
     }
@@ -53,6 +55,7 @@ abstract class AbstractDelegatingImmutableSet<E>
         return _set.containsAll( arg0 );
     }
 
+    @Override
     public boolean isEmpty() {
         return _set.isEmpty();
     }
@@ -62,18 +65,22 @@ abstract class AbstractDelegatingImmutableSet<E>
         return !isEmpty();
     }
 
+    @Override
     public ImmutableIterator<E> iterator() {
         return ImmutableIteratorImpl.wrap( _set.iterator() );
     }
 
+    @Override
     public int size() {
         return _set.size();
     }
 
+    @Override
     public Object[] toArray() {
         return _set.toArray();
     }
 
+    @Override
     public <T> T[] toArray( final T[] arg0 ) {
         return _set.toArray( arg0 );
     }
@@ -101,6 +108,16 @@ abstract class AbstractDelegatingImmutableSet<E>
     @Override
     public IImmutableSetView<E> filter( final Predicate<E> predicate ) {
         return SetViews.asIImmutableSetView( Sets.filter( _set, predicate ) );
+    }
+
+    @Override
+    public boolean hasSingleValueOnly() {
+        return Iterables.size( _set ) == 1;
+    }
+
+    @Override
+    public E getSingleValue() {
+        return Iterables.getOnlyElement( _set );
     }
 
 }

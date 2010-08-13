@@ -27,19 +27,27 @@ import org.thiesen.collections.set.views.IMutableSetView;
 
 public interface IMutableSortedMap<K, V> extends IMutableMap<K, V>, ISortedMap<K, V> {
 
+    @Override
     IMutableSortedMapView<K,V> subMap(K fromKey, K toKey);
     
+    @Override
     IMutableSortedMapView<K,V> headMap(K toKey);
     
+    @Override
     IMutableSortedMapView<K,V> tailMap(K fromKey);
 
+    @Override
     IMutableSetView<K> keySet();
     
+    @Override
     IMutableCollectionView<V> values();
     
+    @Override
     IMutableSetView<Map.Entry<K, V>> entrySet();
     
+    @Override
     MutableSortedMapView<K,V> asMapView();
 
+    @Override
     IImmutableSortedMap<K,V> immutableCopy();
 }

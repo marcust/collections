@@ -24,6 +24,7 @@ public interface IImmutableSortedMapView<K, V> extends
     ISortedMapView<K, V>, 
     IImmutableMapView<K, V> {
 
+    @Override
     ImmutableSortedMapView<K,V> asMapView();
     
 }

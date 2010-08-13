@@ -47,10 +47,12 @@ public abstract class AbstractDelegatingMutableIList<E>
         _delegate = null;
     }
     
+    @Override
     public boolean add( final E e ) {
         return _delegate.add( e );
     }
 
+    @Override
     public void add( final int index, final E element ) {
         _delegate.add( index, element );
     }
@@ -59,14 +61,17 @@ public abstract class AbstractDelegatingMutableIList<E>
         return _delegate.addAll( c.copyToMutableCollections() );
     }
 
+    @Override
     public boolean addAll( final int index, final ICollection<? extends E> c ) {
         return _delegate.addAll( index, c.copyToMutableCollections() );
     }
 
+    @Override
     public void clear() {
         _delegate.clear();
     }
 
+    @Override
     public boolean contains( final Object o ) {
         return _delegate.contains( o );
     }
@@ -79,26 +84,32 @@ public abstract class AbstractDelegatingMutableIList<E>
         return _delegate.get( index );
     }
 
+    @Override
     public int indexOf( final Object o ) {
         return _delegate.indexOf( o );
     }
 
+    @Override
     public boolean isEmpty() {
         return _delegate.isEmpty();
     }
 
+    @Override
     public Iterator<E> iterator() {
         return _delegate.iterator();
     }
 
+    @Override
     public int lastIndexOf( final Object o ) {
         return _delegate.lastIndexOf( o );
     }
 
+    @Override
     public E remove( final int index ) {
         return _delegate.remove( index );
     }
 
+    @Override
     public boolean remove( final Object o ) {
         return _delegate.remove( o );
     }
@@ -115,10 +126,12 @@ public abstract class AbstractDelegatingMutableIList<E>
         return _delegate.set( index, element );
     }
 
+    @Override
     public int size() {
         return _delegate.size();
     }
 
+    @Override
     public Object[] toArray() {
         return _delegate.toArray();
     }

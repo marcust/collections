@@ -46,5 +46,10 @@ public interface IMap<K, V> {
     ISetView<Map.Entry<K, V>> entrySet();
  
     MapView<K,V> asMapView();
+ 
+    public boolean hasSingleEntryOnly();
     
+    public K getSingleEntryKey();
+    
+    public V getSingleEntryValue();
 }

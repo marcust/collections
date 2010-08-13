@@ -39,12 +39,16 @@ public interface IMutableMap<K, V> extends IMap<K, V> {
     
     void clear();
     
+    @Override
     IMutableSetView<K> keySet();
     
+    @Override
     IMutableCollectionView<V> values();
     
+    @Override
     IMutableSetView<Map.Entry<K, V>> entrySet();
     
+    @Override
     MutableMapView<K,V> asMapView();
     
     IImmutableMap<K,V> immutableCopy();

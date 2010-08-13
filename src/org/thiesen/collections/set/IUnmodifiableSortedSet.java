@@ -22,9 +22,12 @@ import org.thiesen.collections.set.views.IUnmodifiableSortedSetView;
 
 public interface IUnmodifiableSortedSet<E> extends ISortedSet<E> {
 
+    @Override
     IUnmodifiableSortedSetView<E> subSet(E fromElement, E toElement);
     
+    @Override
     IUnmodifiableSortedSetView<E> headSet(E toElement);
     
+    @Override
     IUnmodifiableSortedSetView<E> tailSet(E fromElement);
 }

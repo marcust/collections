@@ -22,5 +22,6 @@ import org.thiesen.collections.common.view.set.MutableSortedSetView;
 
 public interface IMutableSortedSetView<E> extends IMutableSetView<E>, ISortedSetView<E> {
 
+    @Override
     MutableSortedSetView<E> asCollectionsView();
 }

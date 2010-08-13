@@ -47,6 +47,7 @@ import com.google.common.collect.ForwardingMap;
 import com.google.common.collect.ForwardingSortedMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedMap;
+import com.google.common.collect.Iterables;
 
 public class MapViews {
 
@@ -126,6 +127,20 @@ public class MapViews {
             return !isEmpty();
         }
 
+        @Override
+        public boolean hasSingleEntryOnly() {
+            return size() == 1;
+        }
+
+        @Override
+        public K getSingleEntryKey() {
+            return Iterables.getOnlyElement( keySet() );
+        }
+
+        @Override
+        public V getSingleEntryValue() {
+            return Iterables.getOnlyElement( values() );
+        }
 
     }
 
@@ -256,6 +271,21 @@ public class MapViews {
         @Override
         public boolean isNotEmpty() {
             return !isEmpty();
+        }
+        
+        @Override
+        public boolean hasSingleEntryOnly() {
+            return size() == 1;
+        }
+
+        @Override
+        public K getSingleEntryKey() {
+            return Iterables.getOnlyElement( keySet() );
+        }
+
+        @Override
+        public V getSingleEntryValue() {
+            return Iterables.getOnlyElement( values() );
         }
 
 
@@ -415,6 +445,21 @@ public class MapViews {
         public IMutableSortedMapViewImpl<K, V> append( final K key, final V value ) {
             put( key, value );
             return this;
+        }
+        
+        @Override
+        public boolean hasSingleEntryOnly() {
+            return size() == 1;
+        }
+
+        @Override
+        public K getSingleEntryKey() {
+            return Iterables.getOnlyElement( keySet() );
+        }
+
+        @Override
+        public V getSingleEntryValue() {
+            return Iterables.getOnlyElement( values() );
         }
 
     }

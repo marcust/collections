@@ -26,6 +26,7 @@ public interface IUnmodifiableCollectionView<E> extends
     IUnmodifiableCollection<E>,
     ICollectionView<E> {
 
+    @Override
     public UnmodifiableCollectionView<E> asCollectionsView();
     
 }

@@ -29,6 +29,8 @@ import org.thiesen.collections.map.views.IUnmodifiableMapView;
 import org.thiesen.collections.set.impl.SetViews;
 import org.thiesen.collections.set.views.IMutableSetView;
 
+import com.google.common.collect.Iterables;
+
 abstract class AbstractDelegatingMutableIMap<K,V>
     implements IMutableMap<K, V> {
 
@@ -128,6 +130,21 @@ abstract class AbstractDelegatingMutableIMap<K,V>
         put( key, value );
         
         return true;
+    }
+    
+    @Override
+    public boolean hasSingleEntryOnly() {
+        return size() == 1;
+    }
+
+    @Override
+    public K getSingleEntryKey() {
+        return Iterables.getOnlyElement( keySet() );
+    }
+
+    @Override
+    public V getSingleEntryValue() {
+        return Iterables.getOnlyElement( values() );
     }
 
     

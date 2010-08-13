@@ -19,12 +19,10 @@
 package org.thiesen.collections.list.views;
 
 import org.thiesen.collections.collection.views.IUnmodifiableCollectionView;
-import org.thiesen.collections.list.IList;
 import org.thiesen.collections.list.IUnmodifiableList;
 
 
 public interface IUnmodifiableListView<E> extends 
-    IList<E>,
     IListView<E>,
     IUnmodifiableCollectionView<E>,
     IUnmodifiableList<E> {

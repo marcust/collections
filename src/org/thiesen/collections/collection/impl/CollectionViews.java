@@ -104,8 +104,17 @@ public class CollectionViews {
         public UnmodifiableIterator<E> iterator() {
             return UnmodifiableIteratorImpl.wrap( _delegate.iterator() );
         }
-
         
+        @Override
+        public boolean hasSingleValueOnly() {
+            return Iterables.size( _delegate ) == 1;
+        }
+
+        @Override
+        public E getSingleValue() {
+            return Iterables.getOnlyElement( _delegate );
+        }
+
     }
 
     private static abstract class AbstractICollection<E> implements ICollection<E> {
@@ -140,14 +149,17 @@ public class CollectionViews {
             _delegate = delegate;
         }
 
+        @Override
         public boolean add( final E e ) {
             return _delegate.add( e );
         }
 
+        @Override
         public void clear() {
             _delegate.clear();
         }
 
+        @Override
         public boolean contains( final Object o ) {
             return _delegate.contains( o );
         }
@@ -157,22 +169,27 @@ public class CollectionViews {
             return _delegate.isEmpty();
         }
      
+        @Override
         public Iterator<E> iterator() {
             return _delegate.iterator();
         }
 
+        @Override
         public boolean remove( final Object o ) {
             return _delegate.remove( o );
         }
 
+        @Override
         public int size() {
             return _delegate.size();
         }
 
+        @Override
         public Object[] toArray() {
             return _delegate.toArray();
         }
 
+        @Override
         public <T> T[] toArray( final T[] a ) {
             return _delegate.toArray( a );
         }
@@ -284,6 +301,16 @@ public class CollectionViews {
             return _delegate;
         }
 
+        @Override
+        public boolean hasSingleValueOnly() {
+            return Iterables.size( _delegate ) == 1;
+        }
+
+        @Override
+        public E getSingleValue() {
+            return Iterables.getOnlyElement( _delegate );
+        }
+
     }
 
     private static class IMutableCollectionViewImpl<E>
@@ -393,6 +420,16 @@ public class CollectionViews {
             return this;
         }
 
+        @Override
+        public boolean hasSingleValueOnly() {
+            return Iterables.size( _collection ) == 1;
+        }
+
+        @Override
+        public E getSingleValue() {
+            return Iterables.getOnlyElement( _collection );
+        }
+        
     }
 
     @SuppressWarnings( "all" )

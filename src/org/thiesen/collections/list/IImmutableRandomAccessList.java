@@ -25,6 +25,7 @@ public interface IImmutableRandomAccessList<E>
     extends IRandomAccessList<E>,
             IImmutableList<E> {
 
+    @Override
     ImmutableListView<E> asCollectionsView();
     
 }

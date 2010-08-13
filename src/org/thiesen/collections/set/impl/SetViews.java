@@ -170,6 +170,15 @@ public class SetViews {
             return new IImmutableSortedSetViewImpl<E>( _delegate.tailSet( fromElement ) );
         }
 
+        @Override
+        public boolean hasSingleValueOnly() {
+            return Iterables.size( _delegate ) == 1;
+        }
+
+        @Override
+        public E getSingleValue() {
+            return Iterables.getOnlyElement( _delegate );
+        }
     }
 
     private static class MutableSortedSetViewImpl<E>
@@ -328,6 +337,15 @@ public class SetViews {
             return this;
         }
 
+        @Override
+        public boolean hasSingleValueOnly() {
+            return Iterables.size( _set ) == 1;
+        }
+
+        @Override
+        public E getSingleValue() {
+            return Iterables.getOnlyElement( _set );
+        }
     }
 
     static abstract class AbstractISet<E> implements ISet<E> {
@@ -448,6 +466,16 @@ public class SetViews {
         protected Set<E> delegate() {
             return _delegate;
         }
+        
+        @Override
+        public boolean hasSingleValueOnly() {
+            return Iterables.size( _delegate ) == 1;
+        }
+
+        @Override
+        public E getSingleValue() {
+            return Iterables.getOnlyElement( _delegate );
+        }
 
     }
 
@@ -539,6 +567,16 @@ public class SetViews {
         protected Set<E> delegate() {
             return _delegate;
         }
+        
+        @Override
+        public boolean hasSingleValueOnly() {
+            return Iterables.size( _delegate ) == 1;
+        }
+
+        @Override
+        public E getSingleValue() {
+            return Iterables.getOnlyElement( _delegate );
+        }
     }
 
 
@@ -571,38 +609,47 @@ public class SetViews {
             _delegate = set;
         }
 
+        @Override
         public boolean add( final E e ) {
             return _delegate.add( e );
         }
 
+        @Override
         public void clear() {
             _delegate.clear();
         }
 
+        @Override
         public boolean contains( final Object o ) {
             return _delegate.contains( o );
         }
 
+        @Override
         public boolean isEmpty() {
             return _delegate.isEmpty();
         }
 
+        @Override
         public Iterator<E> iterator() {
             return _delegate.iterator();
         }
 
+        @Override
         public boolean remove( final Object o ) {
             return _delegate.remove( o );
         }
 
+        @Override
         public int size() {
             return _delegate.size();
         }
 
+        @Override
         public Object[] toArray() {
             return _delegate.toArray();
         }
 
+        @Override
         public <T> T[] toArray( final T[] a ) {
             return _delegate.toArray( a );
         }
@@ -649,6 +696,15 @@ public class SetViews {
             return this;
         }
         
+        @Override
+        public boolean hasSingleValueOnly() {
+            return Iterables.size( _delegate ) == 1;
+        }
+
+        @Override
+        public E getSingleValue() {
+            return Iterables.getOnlyElement( _delegate );
+        }
  
     }
 

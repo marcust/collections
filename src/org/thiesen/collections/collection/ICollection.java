@@ -41,5 +41,9 @@ public interface ICollection<E> extends Iterable<E>  {
     
     public CollectionView<E> asCollectionsView();
     
+    public boolean hasSingleValueOnly();
+    
+    public E getSingleValue();
+    
     
 }

@@ -29,6 +29,7 @@ public interface IMutableList<E> extends IList<E>, IMutableCollection<E> {
 
     void add(int index, E element);
     
+    @Override
     IMutableList<E> append( E element );
     
     E remove(int index);

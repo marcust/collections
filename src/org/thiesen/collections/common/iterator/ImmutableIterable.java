@@ -21,6 +21,7 @@ package org.thiesen.collections.common.iterator;
 
 public interface ImmutableIterable<T> extends Iterable<T> {
 
+    @Override
     public ImmutableIterator<T> iterator();
     
 }

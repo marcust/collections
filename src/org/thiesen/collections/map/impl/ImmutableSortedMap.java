@@ -35,6 +35,8 @@ import org.thiesen.collections.map.views.IImmutableSortedMapView;
 import org.thiesen.collections.set.impl.SetViews;
 import org.thiesen.collections.set.views.IImmutableSetView;
 
+import com.google.common.collect.Iterables;
+
 
 public class ImmutableSortedMap<K,V> implements IImmutableSortedMap<K, V>, Serializable {
 
@@ -85,54 +87,67 @@ public class ImmutableSortedMap<K,V> implements IImmutableSortedMap<K, V>, Seria
         _delegate.clear();
     }
 
+    @Override
     public Comparator<? super K> comparator() {
         return _delegate.comparator();
     }
 
+    @Override
     public boolean containsKey( final Object key ) {
         return _delegate.containsKey( key );
     }
 
+    @Override
     public boolean containsValue( final Object arg0 ) {
         return _delegate.containsValue( arg0 );
     }
 
+    @Override
     public IImmutableSetView<Entry<K, V>> entrySet() {
         return SetViews.asIImmutableSetView( _delegate.entrySet() );
     }
 
+    @Override
     public K firstKey() {
         return _delegate.firstKey();
     }
 
+    @Override
     public V get( final Object arg0 ) {
         return _delegate.get( arg0 );
     }
 
+    @Override
     public IImmutableSortedMapView<K, V> headMap( final K toKey ) {
         return MapViews.asIImmutableSortedMapView( _delegate.headMap( toKey ) );
     }
 
+    @Override
     public boolean isEmpty() {
         return _delegate.isEmpty();
     }
 
+    @Override
     public IImmutableSetView<K> keySet() {
         return SetViews.asIImmutableSetView( _delegate.keySet() );
     }
 
+    @Override
     public K lastKey() {
         return _delegate.lastKey();
     }
 
+    @Override
     public int size() {
         return _delegate.size();
     }
 
+    @Override
     public IImmutableSortedMapView<K, V> subMap( final K fromKey, final K toKey ) {
         return MapViews.asIImmutableSortedMapView( _delegate.subMap( fromKey, toKey ) );
     }
 
+    @Override
     public IImmutableSortedMapView<K, V> tailMap( final K fromKey ) {
         return MapViews.asIImmutableSortedMapView( _delegate.tailMap( fromKey ) );
     }
@@ -142,6 +157,7 @@ public class ImmutableSortedMap<K,V> implements IImmutableSortedMap<K, V>, Seria
         return _delegate.toString();
     }
 
+    @Override
     public IImmutableCollectionView<V> values() {
         return CollectionViews.asIImmutableCollectionView( _delegate.values() );
     }
@@ -160,6 +176,20 @@ public class ImmutableSortedMap<K,V> implements IImmutableSortedMap<K, V>, Seria
     public boolean isNotEmpty() {
         return !isEmpty();
     }
+    
+    @Override
+    public boolean hasSingleEntryOnly() {
+        return size() == 1;
+    }
 
+    @Override
+    public K getSingleEntryKey() {
+        return Iterables.getOnlyElement( keySet() );
+    }
+
+    @Override
+    public V getSingleEntryValue() {
+        return Iterables.getOnlyElement( values() );
+    }
     
 }

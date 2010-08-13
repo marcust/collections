@@ -22,6 +22,7 @@ import org.thiesen.collections.common.view.set.UnmodifiableSortedSetView;
 
 public interface IUnmodifiableSortedSetView<E> extends IUnmodifiableSetView<E>, ISortedSetView<E> {
 
+    @Override
     UnmodifiableSortedSetView<E> asCollectionsView();
     
 }

@@ -22,7 +22,7 @@ import org.thiesen.collections.collection.views.IMutableCollectionView;
 
 import com.google.common.base.Predicate;
 
-public interface IMutableCollection<E> extends ICollection<E>, Iterable<E> {
+public interface IMutableCollection<E> extends ICollection<E> {
 
     boolean add(E e);
     

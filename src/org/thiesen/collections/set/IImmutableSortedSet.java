@@ -23,14 +23,19 @@ import org.thiesen.collections.set.views.IImmutableSortedSetView;
 
 public interface IImmutableSortedSet<E> extends ISortedSet<E>, IImmutableSet<E> {
 
+    @Override
     IImmutableSortedSetView<E> subSet(E fromElement, E toElement);
     
+    @Override
     IImmutableSortedSetView<E> headSet(E toElement);
     
+    @Override
     IImmutableSortedSetView<E> tailSet(E fromElement);
     
+    @Override
     public IMutableSortedSet<E> mutableCopy();
 
+    @Override
     ImmutableSortedSetView<E> asCollectionsView();
 
 }
