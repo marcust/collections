@@ -179,6 +179,11 @@ public class SetViews {
         public E getSingleValue() {
             return Iterables.getOnlyElement( _delegate );
         }
+
+        @Override
+        public ImmutableSortedSet<E> append( final E value ) {
+            return ImmutableSortedSet.copyOf( Iterables.concat( this, Collections.singleton( value ) ) );
+        }
     }
 
     private static class MutableSortedSetViewImpl<E>
@@ -576,6 +581,11 @@ public class SetViews {
         @Override
         public E getSingleValue() {
             return Iterables.getOnlyElement( _delegate );
+        }
+
+        @Override
+        public ImmutableSet<E> append( final E value ) {
+            return ImmutableSet.copyOf( Iterables.concat( this, Collections.singleton( value ) ) );
         }
     }
 

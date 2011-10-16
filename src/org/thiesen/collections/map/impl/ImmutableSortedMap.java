@@ -21,8 +21,8 @@ package org.thiesen.collections.map.impl;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.Map.Entry;
+import java.util.SortedMap;
 
 import org.thiesen.collections.collection.impl.CollectionViews;
 import org.thiesen.collections.collection.views.IImmutableCollectionView;
@@ -36,6 +36,7 @@ import org.thiesen.collections.set.impl.SetViews;
 import org.thiesen.collections.set.views.IImmutableSetView;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Maps;
 
 
 public class ImmutableSortedMap<K,V> implements IImmutableSortedMap<K, V>, Serializable {
@@ -190,6 +191,13 @@ public class ImmutableSortedMap<K,V> implements IImmutableSortedMap<K, V>, Seria
     @Override
     public V getSingleEntryValue() {
         return Iterables.getOnlyElement( values() );
+    }
+    
+    @Override
+    public ImmutableSortedMap<K, V> append( final K key, final V value ) {
+        final Map<K,V> newMap = Maps.newHashMap( asMapView() );
+        newMap.put( key, value );
+        return copyOf( newMap ); 
     }
     
 }

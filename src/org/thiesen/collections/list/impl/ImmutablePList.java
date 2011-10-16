@@ -19,9 +19,11 @@
 package org.thiesen.collections.list.impl;
 
 import java.io.Serializable;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
+import org.pcollections.ConsPStack;
+import org.pcollections.PStack;
 import org.thiesen.collections.common.iterator.ImmutableIterator;
 import org.thiesen.collections.common.iterator.ImmutableIteratorImpl;
 import org.thiesen.collections.common.view.list.ImmutableListView;
@@ -30,10 +32,9 @@ import org.thiesen.collections.list.IMutableList;
 import org.thiesen.collections.list.views.IUnmodifiableListView;
 
 import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-public class ImmutableList<E>
+public class ImmutablePList<E>
     extends ListViews.AbstractIList<E>
     implements 
     IImmutableRandomAccessList<E>,
@@ -41,25 +42,29 @@ public class ImmutableList<E>
 
     private static final long serialVersionUID = -105090485056808607L;
     
-    private final com.google.common.collect.ImmutableList<E> _list;
+    private final ConsPStack<E> _list;
     
-    private ImmutableList( final com.google.common.collect.ImmutableList<E> list ) {
-        _list = list;
+    private ImmutablePList( final PStack<E> list ) {
+        _list = ConsPStack.<E>empty().plusAll(  list );
     }
     
-    public static <T> ImmutableList<T> wrap( final com.google.common.collect.ImmutableList<T> immutableList ) {
-        return new ImmutableList<T>( immutableList );
+    public static <T> ImmutablePList<T> wrap( final PStack<T> existingStack ) {
+        return new ImmutablePList<T>( existingStack );
     }
     
-    public static <T> ImmutableList<T> copyOf( final Iterable<T> iterable ) {
-        if ( iterable instanceof ImmutableList<?> ) {
-            return (ImmutableList<T>) iterable;
+    public static <T> ImmutablePList<T> copyOf( final Iterable<T> iterable ) {
+        if ( iterable instanceof ImmutablePList<?> ) {
+            return (ImmutablePList<T>) iterable;
         }
-        return new ImmutableList<T>( com.google.common.collect.ImmutableList.copyOf( iterable ) );
+        if ( iterable instanceof PStack<?> ) {
+            return wrap( (PStack<T>)iterable );
+        }
+        
+        return new ImmutablePList<T>( ConsPStack.<T>empty().plusAll(  com.google.common.collect.ImmutableList.copyOf( iterable ) ) );
     }
     
-    public static <T> ImmutableList<T> of( final T... elements ) {
-        return new ImmutableList<T>( com.google.common.collect.ImmutableList.of( elements ) );
+    public static <T> ImmutablePList<T> of( final T... elements ) {
+        return copyOf( Arrays.asList( elements ) );
     }
     
     @Override
@@ -129,13 +134,13 @@ public class ImmutableList<E>
     }
 
     @Override
-    protected List<E> delegate() {
+    protected PStack<E> delegate() {
         return _list;
     }
 
     @Override
-    public ImmutableList<E> append( final E value ) {
-        return copyOf( Iterables.concat( this, Collections.singleton( value ) ) );
+    public ImmutablePList<E> append( final E value ) {
+        return wrap( _list.plus( value ) );
     }
     
 }

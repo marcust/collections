@@ -32,6 +32,7 @@ import org.thiesen.collections.set.impl.SetViews;
 import org.thiesen.collections.set.views.IImmutableSetView;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Maps;
 
 public final class ImmutableMap<K,V> implements IImmutableMap<K, V>, Serializable {
 
@@ -149,6 +150,13 @@ public final class ImmutableMap<K,V> implements IImmutableMap<K, V>, Serializabl
     @Override
     public V getSingleEntryValue() {
         return Iterables.getOnlyElement( values() );
+    }
+
+    @Override
+    public ImmutableMap<K, V> append( final K key, final V value ) {
+        final Map<K,V> newMap = Maps.newHashMap( asMapView() );
+        newMap.put( key, value );
+        return copyOf( newMap ); 
     }
     
 }

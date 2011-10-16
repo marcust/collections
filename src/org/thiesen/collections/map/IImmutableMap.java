@@ -39,6 +39,10 @@ public interface IImmutableMap<K, V> extends IMap<K, V> {
     
     @Override
     ImmutableMapView<K,V> asMapView();
+ 
+    IImmutableMap<K, V> append( K key, V value );
+    
+    
     
 }
 

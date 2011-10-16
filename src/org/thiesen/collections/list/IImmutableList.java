@@ -32,6 +32,7 @@ public interface IImmutableList<E> extends
     @Override
     public ImmutableListView<E> asCollectionsView();
     
+    public IImmutableList<E> append( E value );
     
-    
+
 }

@@ -19,8 +19,11 @@
 package org.thiesen.collections.set.impl;
 
 import java.io.Serializable;
+import java.util.Collections;
 
 import org.thiesen.collections.set.IMutableSet;
+
+import com.google.common.collect.Iterables;
 
 
 public class ImmutableSet<E> 
@@ -50,6 +53,12 @@ public class ImmutableSet<E>
     @Override
     public IMutableSet<E> mutableCopy() {
         return MutableHashSet.copyOf( _immutableSet );
+    }
+
+
+    @Override
+    public ImmutableSet<E> append( final E value ) {
+        return copyOf( Iterables.concat( this, Collections.singleton( value ) ) );
     }
     
 }

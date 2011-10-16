@@ -21,8 +21,8 @@ package org.thiesen.collections.map.impl;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.Map.Entry;
+import java.util.SortedMap;
 
 import org.thiesen.collections.collection.impl.CollectionViews;
 import org.thiesen.collections.collection.views.IImmutableCollectionView;
@@ -48,6 +48,7 @@ import com.google.common.collect.ForwardingSortedMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Maps;
 
 public class MapViews {
 
@@ -286,6 +287,13 @@ public class MapViews {
         @Override
         public V getSingleEntryValue() {
             return Iterables.getOnlyElement( values() );
+        }
+
+        @Override
+        public IImmutableSortedMap<K, V> append( final K key, final V value ) {
+            final Map<K,V> newMap = Maps.newHashMap( asMapView() );
+            newMap.put( key, value );
+            return org.thiesen.collections.map.impl.ImmutableSortedMap.copyOf( newMap ); 
         }
 
 

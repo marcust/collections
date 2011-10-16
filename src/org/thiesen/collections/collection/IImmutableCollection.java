@@ -25,5 +25,4 @@ public interface IImmutableCollection<E> extends IUnmodifiableCollection<E>, Imm
 
     public IMutableCollection<E> copyToMutable();
     
-    
 }

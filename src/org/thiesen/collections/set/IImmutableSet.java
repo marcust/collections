@@ -37,4 +37,6 @@ public interface IImmutableSet<E> extends ISet<E> {
     public ImmutableIterator<E> iterator();
     
     public IMutableSet<E> mutableCopy();
+    
+    public IImmutableSet<E> append( E value );
 }

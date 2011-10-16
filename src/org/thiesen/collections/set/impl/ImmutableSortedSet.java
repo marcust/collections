@@ -19,12 +19,15 @@
 package org.thiesen.collections.set.impl;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Comparator;
 
 import org.thiesen.collections.common.view.set.ImmutableSortedSetView;
 import org.thiesen.collections.set.IImmutableSortedSet;
 import org.thiesen.collections.set.IMutableSortedSet;
 import org.thiesen.collections.set.views.IImmutableSortedSetView;
+
+import com.google.common.collect.Iterables;
 
 
 public class ImmutableSortedSet<E> 
@@ -89,5 +92,10 @@ public class ImmutableSortedSet<E>
     @Override
     public ImmutableSortedSetView<E> asCollectionsView() {
         return SetViews.asImmutableSortedSetView( _sortedSet );
+    }    
+
+    @Override
+    public ImmutableSortedSet<E> append( final E value ) {
+        return copyOf( Iterables.concat( this, Collections.singleton( value ) ) );
     }
 }
